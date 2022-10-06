@@ -14,9 +14,9 @@ Permite acesso direto a qualquer elemento na sequência, mesmo por meio de aritm
 ### Dinamicamente Alocado
 O contêiner usa um objeto alocador para lidar dinamicamente com suas necessidades de armazenamento.
 
-As principais funções utilizadas na stack são as citadas abaixo:
+As principais funções utilizadas no vetor são as citadas abaixo:
 
-### Iteração
+### Iteração:
 - begin(): retorna um iterador a partir do inicio do vetor; 
 - end(): retorna um iterador a partir do fim do vetor (não pega a ultima casa);
 - rbegin(): retorna um iterador _reverso_ a partir do fim do vetor; 

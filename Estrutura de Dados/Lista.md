@@ -16,7 +16,7 @@ O contêiner usa um objeto alocador para lidar dinamicamente com suas necessidad
 
 
 As principais funções utilizadas nas listas são as citadas abaixo:
-### Iteração
+### Iteração:
 - begin(): retorna um iterador a partir do inicio da lista; 
 - end(): retorna um iterador a partir do fim da lista (não pega a ultima casa);
 - rbegin(): retorna um iterador _reverso_ a partir do fim da lista; 

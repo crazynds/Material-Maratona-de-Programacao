@@ -7,16 +7,9 @@ Pilhas são fundamentalmente compostas por duas operações: push (empilhar) que
 
 ## C++ - [std::stack](https://cplusplus.com/reference/stack/stack/) 
 
-Declaração da stack:
-```C++
-#include <stack>          // std::stack
 
-int main ()
-{
-  std::stack<int> first;                    // empty stack
-}
-```
 As principais funções utilizadas na stack são as citadas abaixo:
+
 - empty(): testa se a stack está vazia;
 - size(): retorna o tamanho da stack;
 - push(T): insere no topo da pilha o item T;
