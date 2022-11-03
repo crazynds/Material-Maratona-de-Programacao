@@ -26,7 +26,7 @@ f(n) = {({1+\sqrt{5} \over 2 })^n \over \sqrt{5}}
 $$
 
 
-**Período de Pisano:** A sequência de Fibonacci mod M é sempre periódica. Ou seja, para um M no qual o periodo seja 6, como o Pisano de 4, fibonacci de 0 e o de 6 será o mesmo, e o de 1 e o 7 também, e assim por diante, então o que é possivel representar a equação abaixo:
+**Período de Pisano:** A sequência de Fibonacci mod M é sempre periódica. Ou seja, para um M no qual o periodo seja 6, como o Pisano de 4, fibonacci de 0 e o de 6 será o mesmo, e o de 1 e o 7 também, e assim por diante, de forma que a equação abaixo é verdadeira:
 
 Função de Pisano = $\pi (k)$  
 
