@@ -13,7 +13,11 @@ $0,1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, ...$
 
 **Pré-computar a sequência:** O maior valor que um unsigned long long pode guardar da sequência é fib(93). Portanto, muito dificilmente será vantajoso utilizar essa técnica. A não ser que a questão trate, por exemplo, de fib(n) mod m, sendo m constante.
 
-**Fórmula de Binet**: Essa fórmula generaliza os termos da sequência, porém não é utilizável. Isso porque envolve potenciação de números com ponto flutuante. Ou seja, não terá precisão para números grandes. 
+**Fórmula de Binet**: Essa fórmula generaliza os termos da sequência, porém não é utilizável. Isso porque envolve potenciação de números com ponto flutuante. Ou seja, não terá precisão para números grandes. A formula é representada abaixo:
+
+$$
+ f(n) = {({1+sqrt(5)})}
+$$
 
 
 **Período de Pisano:** A sequência de Fibonacci mod M é sempre periódica. Ou seja, para um M no qual o periodo seja 6, como o Pisano de 4, fibonacci de 0 e o de 6 será o mesmo, e o de 1 e o 7 também, e assim por diante, então o que é possivel representar a equação abaixo:
@@ -175,3 +179,11 @@ long long fibonatiMod (long long n,long long mod)
     return a;
 }
 ```
+
+
+
+### Exercícios sobre esse tema:
+
+ - [1151 - Fibonacci Fácil](https://www.beecrowd.com.br/judge/pt/problems/view/1151) [Fácil]
+ - [1176 - Fibonacci em Vetor](https://www.beecrowd.com.br/judge/pt/problems/view/1176) [Fácil]
+ - [1531 - Fibonacci Denovo](https://www.beecrowd.com.br/judge/pt/problems/view/1531) [Dificil]
