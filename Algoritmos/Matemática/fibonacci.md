@@ -13,10 +13,16 @@ $0,1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, ...$
 
 **Pré-computar a sequência:** O maior valor que um unsigned long long pode guardar da sequência é fib(93). Portanto, muito dificilmente será vantajoso utilizar essa técnica. A não ser que a questão trate, por exemplo, de fib(n) mod m, sendo m constante.
 
-**Fórmula de Binet**: Essa fórmula generaliza os termos da sequência, porém não é utilizável. Isso porque envolve potenciação de números com ponto flutuante. Ou seja, não terá precisão para números grandes. A formula é representada abaixo:
+**Fórmula de Binet**: Essa fórmula generaliza os termos da sequência. Uma desvantagem é que ao utilizar pontos flutuantes, é possivel se perder precisão durante o calculo e resultar na resposta errada. A formula que chega no valor exato de fibonacci é representada abaixo:
 
 $$
- f(n) = {({1+sqrt(5)})}
+f(n) = {({1+\sqrt{5} \over 2 })^n - ({1-\sqrt{5} \over 2 })^n \over \sqrt{5}}
+$$
+
+É possivel também chegar ao valor aproximado usando apenas uma parte da equação:
+
+$$
+f(n) = {({1+\sqrt{5} \over 2 })^n \over \sqrt{5}}
 $$
 
 
@@ -24,7 +30,7 @@ $$
 
 Função de Pisano = $\pi (k)$  
 $$
-    f(X) \bmod M = f(X \bmod \pi (M))
+f(X) \bmod M = f(X \bmod \pi (M))
 $$
 
 
