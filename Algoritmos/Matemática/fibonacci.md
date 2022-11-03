@@ -150,9 +150,11 @@ ll fibRapido(ll n, ll mod)
 É a versão simplificada do algoritmo de multiplicação de matriz, evitando contas desnecessárias. 
 
 O método Fast Doubling  é baseado nas seguintes duas formulas:
+
 $$
 F(2n) = F(n)[2F(n+1) – F(n)]
 $$
+
 $$
 F(2n + 1) = F(n)2 + F(n+1)2
 $$
