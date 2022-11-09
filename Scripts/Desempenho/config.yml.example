@@ -1,15 +1,15 @@
 filenames: ['./fernando.exe', './luizh.exe']
 config:
-  start: 1
-  end: 1_000_000_000
-  step: 100_000
-  repeat: 5
+  start: 1            # Inicia com quantos inputs
+  end: 1_000_000_000  # Termina com quantos inputs
+  step: 100_000       # O passo da ultima quantidade para a atual
+  repeat: 5           # Quantas vezes ele tem que repetir e tirar a média do tempo
 input:
   variables:
     n:
-      type: intrand
-      start: 1
-      end: 1_000_000_000
+      type: intrand       # Tipo de variavel, pode ser tambem floatrand para pontos flutuantes
+      start: 1            # Valor mínimo da variavel
+      end: 1_000_000_000  # Valor máximo da variavel
     k:
       type: intrand
       start: 2
