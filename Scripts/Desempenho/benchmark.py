@@ -16,10 +16,8 @@
     Colaboradores: 
      - Luiz Henrique B. Lago
 
-    22/10/2022
 '''
 import yaml
-import sys
 import subprocess
 from random import randint,uniform
 from datetime import datetime

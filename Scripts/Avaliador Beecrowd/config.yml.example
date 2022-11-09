@@ -1,0 +1,24 @@
+lists:
+  problems: [1001, 1005, 1010, 1018, 1021, 1037, 1047, 1216, 2091, 1124, 1232, 1087, 1129, 1140, 1912]
+  bonus: [1086, 1032]
+users:
+  - id: 732820
+    name: 'Eduardo Lima'
+  - id: 417367
+    name: 'Fernando Pozzer'
+  - id: 464560
+    name: 'Bento Borges Schirmer'
+  - id: 722880
+    name: 'Luiz Henrique Lago'
+  - id: 722844
+    name: 'Natã Ismael Schmitt'
+  - id: 723759
+    name: 'Jonathan Nogueira'
+  - id: 722914
+    name: 'Felipe Becker'
+  - id: 724137
+    name: 'Luis Henrique Chesani'
+  - id: 722836
+    name: 'Enzo Hahn Veroneze'
+  - id: 722923
+    name: 'Matheus de Almeida'

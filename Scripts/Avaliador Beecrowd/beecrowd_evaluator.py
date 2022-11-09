@@ -9,55 +9,113 @@
         e os valores são dicionários com informações dos alunos.
 
     Autor: Eduardo Machado de Lima
-    04/11/2022 
+    
+    Contribuidores: 
+     - Luiz Henrique B Lago
+     
 '''
 
+import yaml
+import re
+import multiprocessing
+from tqdm.contrib.concurrent import thread_map
 from requests import get
 
-p_list = [1001, 1005, 1010, 1018, 1021, 1037, 1047, 1216, 2091, 1124, 1232, 1087, 1129, 1140, 1912]
-bonusp_list = [1086, 1032]
 
-ids = {'732820' : {'name' : 'Eduardo Lima'},
-       '417367' : {'name' : 'Fernando Pozzer'},
-       '464560' : {'name' : 'Bento Borges Schirmer'},
-       '722880' : {'name' : 'Luiz Henrique Lago'},
-       '722844' : {'name' : 'Natã Ismael Schmitt'},
-       '723759' : {'name' : 'Jonathan Nogueira'},
-       '722914' : {'name' : 'Felipe Becker'},
-       '724137' : {'name' : 'Luis Henrique Chesani'},
-       '722836' : {'name' : 'Enzo Hahn Veroneze'},
-       '722923' : {'name' : 'Matheus de Almeida'}}
-
+config = yaml.safe_load(open("config.yml",encoding='utf8'))
 headers = {"user-agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"}
-for idt in ids.keys():
-    print('\n{}'.format(ids[idt]['name']))
+
+EX_LISTS = config['lists']
+
+p_list = EX_LISTS['problems']
+bonusp_list = EX_LISTS['bonus']
+
+num_cores = multiprocessing.cpu_count()
+
+
+users = config['users']
+problems = {}
+
+def updateProblemsUser(user):
+    name = user['name']
+    id = user['id']
     p = 1
     np = 1
     lines = []
     while p <= np:
-        url = "https://www.beecrowd.com.br/judge/pt/profile/{}?page={}".format(idt,p)
+        url = f"https://www.beecrowd.com.br/judge/pt/profile/{id}?page={p}"
         flag = False
         for line in get(url, headers=headers).content.decode().split('\n'):
             if line == '</tbody>':    
-                flag = not flag
-            if flag:
+                flag = False
+            elif line == '<tbody>':
+                flag = True
+            elif flag:
                 lines.append(line)
-            if line == '<tbody>':
-                flag = not flag
+
             if len(line.split(' ')) == 3 and line.split(' ')[1] == 'of':
                 np = int(line.split(' ')[2][:-6])
         p += 1
-    
     dic = {}
     for i in range(len(lines)):
         if lines[i] == '<tr class="impar">' or lines[i] == '<tr class="par">':
             if lines[i+1] == '<td colspan="7"></td>':
                 break
-            dic[int(lines[i+2][55:59].replace('>', ''))] = {'name' : lines[i+4][55:].split('<')[0],
-                                                            'pos' : int(lines[i+6][57:].split('&ordm')[0].replace('>', '')),
-                                                            'lang' : lines[i+9][18:].split('<')[0],
-                                                            'time' : float(lines[i+11].split(' <')[0]),
-                                                            'date' : lines[i+13].split(' <')[0]}
+            number = int(lines[i+2][55:59].replace('>', ''))
+            dic[number] = { 
+                'name' : lines[i+4][55:].split('<')[0],
+                'pos' : int(lines[i+6][57:].split('&ordm')[0].replace('>', '')),
+                'lang' : lines[i+9][18:].split('<')[0],
+                'time' : float(lines[i+11].split(' <')[0]),
+                'date' : lines[i+13].split(' <')[0],
+                'code' : number 
+            }
+    user['solved'] = dic
+    return user
+
+
+def updateProblemStats(problem):
+    key = problem['code']
+    levelReg = re.compile("Nível ([0-9]+) \/ 10")
+    typeReg = re.compile("\/judge\/pt\/problems\/index\/([0-9]+)")
+    url = f"https://www.beecrowd.com.br/judge/pt/questions/index/{problem['code']}"
+    types= ['Iniciante', 'Ad-Hoc', 'Strings', 'Estrutura e Bibliotecas', 'Matemática', 'Paradigmas', 'Grafos', 'Geometria Computacional', 'SQL']
+    for line in get(url, headers=headers).content.decode().split('\n'):
+        level = levelReg.search(line)
+        if level:
+            problem['level'] = level.group(1)
+        type = typeReg.search(line)
+        if type:
+            problem['type'] = type.group(1)
+            problem['type'] = types[int(problem['type'])-1]
+    return problem
+
+
+def generateExcelOutput(users):
+    pass
+
+
+print('Carregando dados de usuários')
+users = thread_map(updateProblemsUser,users,max_workers=num_cores)
+
+for user in users:
+    for number in user['solved']:
+        if number not in problems:
+            problems[number] = {
+                'name': user['solved'][number]['name'],
+                'code': number
+            }
+
+
+print('Carregando dados dos problemas')
+problems = thread_map(updateProblemStats,[problems[key] for key in problems],max_workers=num_cores)
+problems = dict((x['code'],x) for x in problems)
+
+for user in users:
+    name = user['name']
+    print(f'{name}')
+    dic = user['solved']
+    
     print('Realizados:', len(dic))
     for n in p_list:
         if n not in dic.keys():
@@ -65,4 +123,4 @@ for idt in ids.keys():
     for n in bonusp_list:
         if n in dic.keys():
             print('Bônus:', n, dic[n]['name'])
-    ids[idt]['solved'] = dic
+    print()
