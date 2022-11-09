@@ -20,6 +20,8 @@ import re
 import multiprocessing
 from tqdm.contrib.concurrent import thread_map
 from requests import get
+import pandas as pd
+
 
 
 config = yaml.safe_load(open("config.yml",encoding='utf8'))
@@ -92,7 +94,20 @@ def updateProblemStats(problem):
 
 
 def generateExcelOutput(users):
-    pass
+    header = ["Dev","Data","Nome","Tipo","Nivel"]
+    rows = []
+    for user in users:
+        for code in user['solved']:
+            problemData = problems[code]
+            rows.append([
+                user['name'],
+                user['solved'][code]['date'],
+                problemData['name'] +f' ({code})',
+                problemData['type'],
+                problemData['level'],
+            ])
+    df = pd.DataFrame(rows,columns=header)
+    df.to_csv('relatorio.csv')
 
 
 print('Carregando dados de usuários')
@@ -124,3 +139,5 @@ for user in users:
         if n in dic.keys():
             print('Bônus:', n, dic[n]['name'])
     print()
+
+generateExcelOutput(users)
