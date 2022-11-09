@@ -104,7 +104,7 @@ def generateExcelOutput(users):
             try:
                 rows.append([
                     user['name'],
-                    user['solved'][code]['date'],
+                    user['solved'][code]['date'].strip(),
                     problemData['name'] +f' ({code})',
                     problemData['type'],
                     problemData['level'],
@@ -114,6 +114,9 @@ def generateExcelOutput(users):
                 print(problemData['name']+ " - "+ str(code))
                 print(str(e))
     df = pd.DataFrame(rows,columns=header)
+    df['Data'] = pd.to_datetime(df['Data'],format="%d/%m/%Y %H:%M:%S")
+    df = df.sort_values(by = ['Data'])
+    df = df.reset_index(drop=True)
     df.to_csv('relatorio.csv')
 
 
