@@ -44,6 +44,7 @@ def updateProblemsUser(user):
     p = 1
     np = 1
     lines = []
+    numberReg = re.compile('<a href="/judge/pt/problems/view/([0-9]+)"')
     while p <= np:
         url = f"https://www.beecrowd.com.br/judge/pt/profile/{id}?page={p}"
         flag = False
@@ -62,8 +63,8 @@ def updateProblemsUser(user):
     for i in range(len(lines)):
         if lines[i] == '<tr class="impar">' or lines[i] == '<tr class="par">':
             if lines[i+1] == '<td colspan="7"></td>':
-                break
-            number = int(lines[i+2][55:59].replace('>', ''))
+                break            
+            number = int(numberReg.search(lines[i+2]).group(1))            
             dic[number] = { 
                 'name' : lines[i+4][55:].split('<')[0],
                 'pos' : int(lines[i+6][57:].split('&ordm')[0].replace('>', '')),
@@ -72,6 +73,7 @@ def updateProblemsUser(user):
                 'date' : lines[i+13].split(' <')[0],
                 'code' : number 
             }
+
     user['solved'] = dic
     return user
 
@@ -99,13 +101,18 @@ def generateExcelOutput(users):
     for user in users:
         for code in user['solved']:
             problemData = problems[code]
-            rows.append([
-                user['name'],
-                user['solved'][code]['date'],
-                problemData['name'] +f' ({code})',
-                problemData['type'],
-                problemData['level'],
-            ])
+            try:
+                rows.append([
+                    user['name'],
+                    user['solved'][code]['date'],
+                    problemData['name'] +f' ({code})',
+                    problemData['type'],
+                    problemData['level'],
+                ])
+            except KeyError as e:
+                print('Problema com dados não encontrados')
+                print(problemData['name']+ " - "+ str(code))
+                print(str(e))
     df = pd.DataFrame(rows,columns=header)
     df.to_csv('relatorio.csv')
 
