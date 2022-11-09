@@ -1,7 +1,7 @@
 lists:
-  problems: [1001, 1005, 1010, 1018, 1021, 1037, 1047, 1216, 2091, 1124, 1232, 1087, 1129, 1140, 1912]
-  bonus: [1086, 1032]
-users:
+  problems: [1001, 1005, 1010]  # O array dos exercícios obrigatórios
+  bonus: [1086, 1032]           # O array dos exercícios bonus
+users:  # O id e o nome de todos os usuário que vai ser buscado os dados
   - id: 732820
     name: 'Eduardo Lima'
   - id: 417367
