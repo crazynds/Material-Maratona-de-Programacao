@@ -24,14 +24,17 @@
 '''
 
 
+import yaml
 from datetime import datetime as dt
 import subprocess
 import os
 
+config = yaml.safe_load(open("config.yml"))
 
-PROGRAM = './PROGRAMA_A_SER_TESTADO' # nome do binário, pode ser usado python também
 
-PROBLEM_LETTER = 'F' # letra da questão
+PROGRAM = config['filename'] # nome do binário, pode ser usado python também
+
+PROBLEM_LETTER = config['letter'] # letra da questão
 
 
 
@@ -45,12 +48,15 @@ for pth,_,files in os.walk(f'./{PROBLEM_LETTER}/input'):
     files = sorted(files)
     for f in sorted(files, key=len):
 
+        output = open("out", "w+")
+        input = open(f"{pth}/{f}", "r")
         s = dt.now()
-        subprocess.check_output(f'cat {pth}/{f} | {PROGRAM} > out', shell=True,text=True)
+        subprocess.run(PROGRAM,stdout=output,stdin=input)
         e = dt.now()
-
+        input.close()
+        output.close()
         try:
-            res = subprocess.check_output(f'diff out ./{PROBLEM_LETTER}/output/{f}', shell=True,text=True)
+            res = subprocess.check_output(f'diff out ./{PROBLEM_LETTER}/output/{f} --strip-trailing-cr')
         except Exception as e:
             res = e.output
 
