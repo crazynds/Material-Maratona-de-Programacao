@@ -5,6 +5,7 @@ config:
   step: 100_000       # O passo da ultima quantidade para a atual
   repeat: 5           # Quantas vezes ele tem que repetir e tirar a média do tempo
 input:
+  format: '{n} {k}'
   variables:
     n:
       type: intrand       # Tipo de variavel, pode ser tambem floatrand para pontos flutuantes
@@ -14,5 +15,3 @@ input:
       type: intrand
       start: 2
       end: 1_000_000
-    
-  format: '{n} {k}'
