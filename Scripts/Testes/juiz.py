@@ -62,7 +62,7 @@ for pth,_,files in os.walk(f'./{PROBLEM_LETTER}/input'):
 
 
         if len(res) == 0:
-            print(f'{cor.G}TEST CASE #{f[2:]} OK! took {(e-s).total_seconds():.4f}s\n{cor.END}')
+            print(f'{cor.G}TEST CASE #{f[2:]} OK! took {(e-s).total_seconds():.3f}s\n{cor.END}')
         else:
             print(f'{cor.R}TEST CASE #{f[2:]} `cat {pth}/{f} | {PROGRAM} > out` ERROR!!!!{cor.END}')
             print(res)
