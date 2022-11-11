@@ -9,7 +9,7 @@ Cada chave é única e ao definir outro valor para uma mesma chave, o comportame
 
 
 
-## Map - [std::map](https://cplusplus.com/reference/map/map/)
+## C++ - [std::map](https://cplusplus.com/reference/map/map/)
 
 ### Associativo
 Elementos em contêineres associativos são referenciados por sua chave e não por sua posição absoluta no contêiner.
