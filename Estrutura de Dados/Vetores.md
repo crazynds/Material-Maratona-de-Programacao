@@ -60,3 +60,8 @@ vector<int>::iterator it;
 for(it = y.begin(); it != y.end(); it++)
 cout << *it << endl;  
 ```
+
+
+## Python - [list](https://docs.python.org/3/tutorial/datastructures.html)
+
+Em python não existem vetores, ao invéz disso todos as estruturas de array que são trabalhadas na linguagem se utiliza a estrutura de [listas](./Lista.md#python-list).

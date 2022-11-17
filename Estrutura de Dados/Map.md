@@ -81,3 +81,38 @@ int main ()
   return 0;
 }
 ```
+
+
+
+## Python - [dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries)
+
+Os _dictionaries_ não possuem nenhuma função importante, e todos as manipulações deles são exemplificadas abaixo:
+
+```python
+
+d1 = {} # forma de criar um dicionário vazio
+d2 = {
+  1: 'S1', 
+  2:'s2'
+} # forma de criar um dicionário com elementos já
+d3 = {x: x**2 for x in range(10)} # declarar um dicionario com elementos dinamicos
+
+bool1 = 1 is in d1 # forma de verificar se a chave existe no dicionario
+bool2 = 2 not is in d1 # forma de verificar se a chave não existe no dicionario
+
+d1[1] = 'ola mundo' # forma de adicionar item no dicionario
+d1[1] += '!' # é possivel manipular os itens do dicionaro também
+
+del d1[1] # deleta o item com a chave 1 do dicionário
+
+
+for key in d1:  # essa é a forma de iterar sobre o dicionário, porém o valor que é iterado é sobre as chaves, e não sobre os valores
+    print(key,d1[key])
+
+for key,val in d1.items():  # essa é a forma de iterar sobre o dicionário incluindo os valores
+    print(key,val)
+
+l = list(d1)  # cria uma lista com todas as chaves do dicionário
+l = list(d1.items())  # cria uma lista com tuplas contendo a relação entre chave e o dicionário
+
+```
