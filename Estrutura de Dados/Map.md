@@ -113,6 +113,6 @@ for key,val in d1.items():  # essa é a forma de iterar sobre o dicionário incl
     print(key,val)
 
 l = list(d1)  # cria uma lista com todas as chaves do dicionário
-l = list(d1.items())  # cria uma lista com tuplas contendo a relação entre chave e o dicionário
+l = list(d1.items())  # cria uma lista com tuplas contendo a relação entre chave e valor
 
 ```
