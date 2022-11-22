@@ -29,9 +29,7 @@ $$
 A definição de congruencia também é aplicada a valores negativos. Por exemplo:
 
 $$
-    2 \equiv -3 \,(\mathrm{mod}\ 5)\\
-    -8 \equiv 7 \,(\mathrm{mod}\ 5)\\
-    -3 \equiv -8 \,(\mathrm{mod}\ 5)
+    \displaylines{2 \equiv -3 \,(\mathrm{mod}\ 5) \\ -8 \equiv 7 \,(\mathrm{mod}\ 5) \\ -3 \equiv -8 \,(\mathrm{mod}\ 5)}
 $$
 
 Perceba que pela definição, o módulo de um número não pode ser negativo. E que o módulo de um número negativo pode ser diferente para o mesmo número absoluto.
