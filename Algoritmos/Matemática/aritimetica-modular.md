@@ -52,15 +52,15 @@ Perceba que pela definição, o módulo de um número não pode ser negativo. E 
 
 Primeiramente, a relação de módulo satisfazem todas as condições de relação de equivalência:
 * Reflexividade: $a\equiv a(\mathrm{mod}\ n)$
-* Simetria: $a\equiv b(\mathrm{mod}\ n)$ se $b\equiv a(\mathrm{mod}\ n)$ para todo $a$,$b$ e $n$
+* Simetria: $a\equiv b(\mathrm{mod}\ n)$ se $b\equiv a(\mathrm{mod}\ n)$ para todo $a$, $b$ e $n$
 * Transitividade: Se $a\equiv b(\mathrm{mod}\ n)$ e $b\equiv c(\mathrm{mod}\ n)$ então $a\equiv c(\mathrm{mod}\ n)$
 
 
 Seja $a_1 \equiv b_1 (\mathrm{mod}\ n)$, $a_2 \equiv b_2 (\mathrm{mod}\ n)$ e $a \equiv b (\mathrm{mod}\ n)$ e $k \in \mathbb{Z}$ então:
 
 * $a+k\equiv b+k (\mathrm{mod}\ n)$ 
-* $a*k\equiv b*k (\mathrm{mod}\ n)$
-* $a*k\equiv b*k (\mathrm{mod}\ k*n)$
+* $a*k\equiv b*k (\mathrm{mod}\ n)$ 
+* $a*k\equiv b*k (\mathrm{mod}\ k*n)$ 
 * $a_1+a_2\equiv b_1+b_2 (\mathrm{mod}\ n)$ Compatibilidade com soma
 * $a_1-a_2\equiv b_1+b_2 (\mathrm{mod}\ n)$ Compatibilidade com subtração
 * $a_1*a_2\equiv b_1*b_2 (\mathrm{mod}\ n)$ Compatibilidade com multiplicação 
