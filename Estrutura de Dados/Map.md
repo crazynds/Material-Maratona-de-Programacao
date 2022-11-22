@@ -97,8 +97,8 @@ d2 = {
 } # forma de criar um dicionário com elementos já
 d3 = {x: x**2 for x in range(10)} # declarar um dicionario com elementos dinamicos
 
-bool1 = 1 is in d1 # forma de verificar se a chave existe no dicionario
-bool2 = 2 not is in d1 # forma de verificar se a chave não existe no dicionario
+bool1 = 1 in d1 # forma de verificar se a chave existe no dicionario
+bool2 = 2 not in d1 # forma de verificar se a chave não existe no dicionario
 
 d1[1] = 'ola mundo' # forma de adicionar item no dicionario
 d1[1] += '!' # é possivel manipular os itens do dicionaro também
@@ -113,6 +113,6 @@ for key,val in d1.items():  # essa é a forma de iterar sobre o dicionário incl
     print(key,val)
 
 l = list(d1)  # cria uma lista com todas as chaves do dicionário
-l = list(d1.items())  # cria uma lista com tuplas contendo a relação entre chave e o dicionário
+l = list(d1.items())  # cria uma lista com tuplas contendo a relação entre chave e valor
 
 ```
