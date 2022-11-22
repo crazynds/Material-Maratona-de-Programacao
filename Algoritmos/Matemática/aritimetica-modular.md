@@ -20,7 +20,9 @@ $$
 Note que pela notação o trecho $\,(\mathrm{mod}\ n)$ deve aparecer sempre ao lado direito da equação e é aplicado a ambos os lados da equação, e não só ao lado em que ele aparece. Ou seja, ambos os exemplos abaixo são verdade:
 
 $$
-    4 \equiv 9 \,(\mathrm{mod}\ 5)\\
+    4 \equiv 9 \,(\mathrm{mod}\ 5)
+$$
+$$
     9 \equiv 4 \,(\mathrm{mod}\ 5)
 $$ 
 
@@ -29,7 +31,13 @@ $$
 A definição de congruencia também é aplicada a valores negativos. Por exemplo:
 
 $$
-    \displaylines{2 \equiv -3 \,(\mathrm{mod}\ 5) \\ -8 \equiv 7 \,(\mathrm{mod}\ 5) \\ -3 \equiv -8 \,(\mathrm{mod}\ 5)}
+    2 \equiv -3 \,(\mathrm{mod}\ 5)
+$$
+$$
+    -8 \equiv 7 \,(\mathrm{mod}\ 5)
+$$
+$$
+    -3 \equiv -8 \,(\mathrm{mod}\ 5)
 $$
 
 Perceba que pela definição, o módulo de um número não pode ser negativo. E que o módulo de um número negativo pode ser diferente para o mesmo número absoluto.
