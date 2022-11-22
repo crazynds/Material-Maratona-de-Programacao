@@ -5,7 +5,7 @@ Na matemática, a aritmética modular é um sistema de aritmética para números
 
 A definição de módulo é dada por:
 
-Dado um inteiro $ n \gt 1 $ , chamado módulo, e dois inteiros $a$ e $b$ são ditos congruentes módulo $n$, se e somente se $n$ é um divisor da diferença entre eles.
+Dado um inteiro $n \gt 1$ , chamado módulo, e dois inteiros $a$ e $b$ são ditos congruentes módulo $n$, se e somente se $n$ é um divisor da diferença entre eles.
 
 $$
     a - b = k*n
@@ -19,7 +19,7 @@ $$
     a \equiv b (\mathrm{mod}\ n)
 $$
 
-Note que pela notação o trecho $ (\mathrm{mod}\ n)$ deve aparecer sempre ao lado direito da equação e é aplicado a ambos os lados da equação, e não só ao lado em que ele aparece. Ou seja, ambos os exemplos abaixo são verdade:
+Note que pela notação o trecho $(\mathrm{mod}\ n)$ deve aparecer sempre ao lado direito da equação e é aplicado a ambos os lados da equação, e não só ao lado em que ele aparece. Ou seja, ambos os exemplos abaixo são verdade:
 
 $$
     4 \equiv 9 (\mathrm{mod}\ 5)
