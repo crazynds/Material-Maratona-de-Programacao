@@ -1,6 +1,7 @@
 # Aritimética modular
 
 $$
+    \documentclass{scrartcl}
     \newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
 $$
 
