@@ -24,6 +24,7 @@ Note que pela notação o trecho $(\mathrm{mod}\ n)$ deve aparecer sempre ao lad
 $$
     4 \equiv 9 (\mathrm{mod}\ 5)
 $$
+
 $$
     9 \equiv 4 (\mathrm{mod}\ 5)
 $$ 
@@ -35,9 +36,11 @@ A definição de congruencia também é aplicada a valores negativos. Por exempl
 $$
     2 \equiv -3 (\mathrm{mod}\ 5)
 $$
+
 $$
     -8 \equiv 7 (\mathrm{mod}\ 5)
 $$
+
 $$
     -3 \equiv -8 (\mathrm{mod}\ 5)
 $$
