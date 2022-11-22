@@ -59,11 +59,11 @@ Primeiramente, a relação de módulo satisfazem todas as condições de relaç�
 Seja $a_1 \equiv b_1 (\mathrm{mod}\ n)$, $a_2 \equiv b_2 (\mathrm{mod}\ n)$ e $a \equiv b (\mathrm{mod}\ n)$ e $k \in \mathbb{Z}$ então:
 
 * $a+k\equiv b+k (\mathrm{mod}\ n)$ 
-* $a*k\equiv b*k (\mathrm{mod}\ n)$ 
-* $a*k\equiv b*k (\mathrm{mod}\ k*n)$ 
+* $a.k\equiv b.k (\mathrm{mod}\ n)$ 
+* $a.k\equiv b.k (\mathrm{mod}\ n.k)$
 * $a_1+a_2\equiv b_1+b_2 (\mathrm{mod}\ n)$ Compatibilidade com soma
 * $a_1-a_2\equiv b_1+b_2 (\mathrm{mod}\ n)$ Compatibilidade com subtração
-* $a_1*a_2\equiv b_1*b_2 (\mathrm{mod}\ n)$ Compatibilidade com multiplicação 
+* $a_1.a_2\equiv b_1.b_2 (\mathrm{mod}\ n)$ Compatibilidade com multiplicação 
 * $a^k\equiv b^k (\mathrm{mod}\ n)$ Para $k$ não negativo. Compatibilidade com exponenciação
 * $p(a)\equiv p(b) (\mathrm{mod}\ n)$ Para qualquer função polinomial $p(x)$ com coeficientes inteiros.
 
