@@ -13,7 +13,7 @@ $0,1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, ...$
 
 **Pré-computar a sequência:** O maior valor que um unsigned long long pode guardar da sequência é fib(93). Portanto, muito dificilmente será vantajoso utilizar essa técnica. A não ser que a questão trate, por exemplo, de fib(n) mod m, sendo m constante.
 
-**Fórmula de Binet**: Essa fórmula generaliza os termos da sequência. Uma desvantagem é que ao utilizar pontos flutuantes, é possivel se perder precisão durante o calculo e resultar na resposta errada. A formula que chega no valor exato de fibonacci é representada abaixo:
+**Fórmula de Binet**: Essa fórmula generaliza os termos da sequência. Uma desvantagem é que ao utilizar pontos flutuantes, é possivel se perder precisão durante o calculo e resultar na resposta errada. Por esse motivo, muito dificilmente será utilizada.
 
 $$
 f(n) = {({1+\sqrt{5} \over 2 })^n - ({1-\sqrt{5} \over 2 })^n \over \sqrt{5}}
@@ -25,13 +25,16 @@ $$
 f(n) = {({1+\sqrt{5} \over 2 })^n \over \sqrt{5}}
 $$
 
+## Período de Pisano
 
-**Período de Pisano:** A sequência de Fibonacci mod M é sempre periódica. Ou seja, para um M no qual o periodo seja 6, como o Pisano de 4, fibonacci de 0 e o de 6 será o mesmo, e o de 1 e o 7 também, e assim por diante, de forma que a equação abaixo é verdadeira:
+A sequência de Fibonacci mod M é sempre periódica. Ou seja, para um M no qual o periodo seja 6, como o Pisano de 4, fibonacci de 0 e o de 6 será o mesmo, e o de 1 e o 7 também, e assim por diante, de forma que a equação abaixo é verdadeira:
 
 Função de Pisano = $\pi (k)$  
 
+**OBS:** Essa propriedade é muito útil para calcular $fib(n) \bmod M$ quando n for um número muito grande, pois:
+
 $$
-f(X) \bmod M = f(X \bmod \pi (M))
+fib(n) \bmod M = fib(n \bmod \pi (M)) \bmod M
 $$
 
 *Exemplo:*
@@ -43,31 +46,10 @@ Fibonacci (mod 4): $1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1, 0 …$
 O período de Pisano de 4 é 6, pois, após 6 números, a sequência começa a se repetir.
 
 **Obs:**
-A grande desvantagem do período de pisano é que não existe fórmula para calculá-lo (deve ser feito de maneira iterativa), tendo complexidade $O(n^2)$.
+Note que o Período de Pisano não serve para otimizar o cálculo, pois não existe fórmula para calculá-lo (deve ser feito de maneira iterativa), tendo complexidade $O(n^2)$.
 
+**Algoritmo:**
 
-## Algoritmo Pré-calculado (mais lento)
-
-Fibonacci: Pré-computa um vetor com n valores fibonacci
-```c++
-#define MAX 100000
-int fibonacci[MAX];
-void buildFibonacci(int n)
-{
-    fibonacci[0] = 0;
-    fibonacci[1] = 1;
-    if(n < 3)// 1 ou 2
-    {
-        return;
-    }
-    for(int i = 2 ; i < n ; i++)
-    {
-        fibonacci[i] = fibonacci[i-1] + fibonacci[i-2];
-    }
-}
-```
-
-## Algoritmo do periodo de Pisano
 ```c++
 long long pisano(long long m)
 {
@@ -84,7 +66,51 @@ long long pisano(long long m)
 }
 ```
 
-## Algoritmo de Fibonacci por multiplicação de Matriz
+## Algoritmos para calcular fib(n)
+
+## Recursivo - $O(2^n)$.
+
+Esse algoritmo é, provavelmente, o mais famoso para encontrar um valor da sequência de Fibonacci. Porém, sua complexidade é muito alta e, dificilmente, será utilizado. 
+
+```c++
+int fib(int n)
+{
+    if(n == 0)
+        return 0;
+
+    if(n == 1 || n == 2)
+        return 1;
+
+    return fib(n-1) + fib(n-2);
+}
+```
+
+## Com Laço de Repetição - $O(n)$.
+
+Essa solução é bem mais rápida que a primeira e é o melhor algoritmo para montar um vetor da sequência de Fibonacci. Porém, ainda é lento para se trabalhar com números muito grandes.
+
+```c++
+int fib(int n)
+{
+    int a = 0, b = 1, c;
+
+    if( n == 0)
+        return 0;
+
+    for(int i = 2; i <= n; i++)
+    {
+       c = a + b;
+       a = b;
+       b = c;
+    }
+    return b;
+}
+```
+
+## Exponenciação de Matriz - $O(log(n))$.
+
+Essa solução é muito pouco conhecida e se baseia na seguinte propriedade:
+elevar a matriz { {1,1} , {1, 0} } no expoente n resulta na matriz { {fib(n+1) ,fib(n)} , {fib(n), fib(n-1)} }.
 
 ```C++
 void mult(ll m[2][2], ll m2[2][2], ll mod)
@@ -143,6 +169,8 @@ ll fibRapido(ll n, ll mod)
     return resp[0][1];
 }
 ```
+
+O algoritmo apresentado retorna a resposta mod m, pois ele serve para trabalhar com números muito grandes, os quais resultam em overflow se não houver operação de módulo envolvida. Ex: fib(1.000.000.000) mod 100. É importante notar que apesar de ele ser muito mais rápido que o algoritmo anterior, ele deve ser utilizado somente quando for imprescindível, posto que demanda muito mais código.
 
 
 ## Algoritmo de Fibonacci Fast Doubling
