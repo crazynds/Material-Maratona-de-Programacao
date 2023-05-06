@@ -1,4 +1,4 @@
-# Matemática
+# Grafos
 
 1. [Teoria dos grafos](./teoria.md)
 2. [Passeio Euleriano](./konisgsberg.md)
