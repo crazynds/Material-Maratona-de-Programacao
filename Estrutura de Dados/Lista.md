@@ -34,7 +34,7 @@ As principais funções utilizadas nas listas são as citadas abaixo:
 - push_back(): adiciona um elemento ao final da lista;
 - pop_back(): remove um elemento do final da lista;
 - push_front(): adiciona um elemento ao inicio da lista;
-- pop_front()): remove um elemento do inicio da lista;
+- pop_front(): remove um elemento do inicio da lista;
 - insert(): existem algumas versões para o insert, sendo elas:
  - insert(iterator pos, val): a partir da posição, insere o item val;
  - insert(iterator pos, start, end): a partir da posição, insere o array que começa em start e termina em end;
