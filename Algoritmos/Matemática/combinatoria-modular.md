@@ -18,7 +18,7 @@ a^{p-2} = a^{-1} (\mathrm{mod}\ p)
 $$
 
 
-Código em python:
+Código em python: (Precisa testar, não acredito que esteja dando a resposta certa)
 
 ```python
 def ncr(n, r, p):
@@ -34,3 +34,27 @@ Dicas de otimização:
  - Se o $p$ é constante, é possivel pre-computalo no inicio do programa. 
  - Se o $n$ é constante, é possivel pré-computar.
  
+
+Exemplo do programa em c++: (TESTADO E FUNCIONANDO!!) 
+ ```c++
+// fatorial já ta pre computado FAT[]
+// invFatorial também INV[]
+
+const long long MOD = XXXXXX    // Funciona apenas para primos entre si, ou seja, se o MOD for primo vai funcionar
+invFatoria[0] = 1
+
+for(int x=1;x<LIMIT;x++){
+    invFatorial[x] = pow(i,MOD-2);
+}
+
+long long comb_mob(long long n, long long p)
+{
+    // O resto da divisão de (n p) = (n!/(p!(n-p)!)) modulo q poder ser calculado da senguinte forma:
+    // FAT[n]*INV[n-p]*INV[p]%MOD
+    long long resp = fatorial[n]*invFatorial[n-p];
+    resp %= MOD;
+    resp *= invFatorial[p];
+    resp %= MOD;
+    return resp;
+}
+```
