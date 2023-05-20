@@ -5,13 +5,7 @@ não seja negativo (REVISAR)
 
 (COLOCAR VERSAO EM C++)
 
-(TESTAR E REVISAR CODIGO)
 ```python
-from collections import deque
-from collections import defaultdict
-import math
-import struct
-import bisect 
 import heapq
 
 def dijkstra(nodes,src):
