@@ -54,13 +54,12 @@ for s in v: # for each item in set
 v.add('laranja') # add item to set
 v.remove('banana') # remove item from set
 
+d = {'banana', 'tomate', 'feijão'}
 
-
-
-
-
-
-
+d | v # in set d or v
+d - v # in d but not in v (order matters)
+d & v # in both sets (d and v)
+d ^ v # in set d or in set v but not in both
 
 ```
 
