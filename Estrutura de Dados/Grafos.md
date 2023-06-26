@@ -6,3 +6,10 @@ Um grafo $G$ consiste de um conjunto finito e não vazio $V (G)$ de objetos cham
 Mais sobre caracteristicas de grafos pode ser consultado [Aqui](./../Algoritmos/Grafos/teoria.md).
 
 
+## Repesentação de grafos
+
+
+## Transformação entre representações de grafos
+
+
+
