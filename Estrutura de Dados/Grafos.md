@@ -8,8 +8,7 @@ Mais sobre caracteristicas de grafos pode ser consultado [Aqui](./../Algoritmos/
 
 ## Repesentação de grafos
 
-
-## Transformação entre representações de grafos
+Você pode ver algumas representações de grafos por Crazynds [aqui](./../Algoritmos/Grafos/GrafosCrazynds/grafos_estruturas.md);
 
 
 
