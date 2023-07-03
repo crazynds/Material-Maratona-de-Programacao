@@ -8,10 +8,10 @@ Alguns casos de usos são no caso de algoritmos como o Dijkstra que quando você
 
 
 ### Desvantagens:
- - Aumenta o custo da inserção e remoção do item do topo
+ - Aumenta o custo da inserção e remoção do item do topo;
 
 ### Vantagem:
- - Dependendo do algoritmo previne a inserção de valores que nunca vão ser iterados na heap
- - Diminui o consumo de memória da heap
- - Remove elementos da heap se um novo elemento melhor for adicionado
+ - Dependendo do algoritmo previne a inserção de valores que nunca vão ser iterados na heap (valores repetidos para os mesmos nós/caminhos);
+ - Diminui o consumo de memória da heap;
+ - Remove elementos da heap se um novo elemento melhor for adicionado para o mesmo nó/caminho;
 
