@@ -9,4 +9,6 @@
 5. Minimum Spanning Tree
      - [Prim's Algorithm](./prims-algorithm.md)
      - [Kruskal's MST](./kruskalsmst.md)
+6. Graph Clustering 
+     - [Maximum Spacing K-Clustering](./spacingClustering.md)
 

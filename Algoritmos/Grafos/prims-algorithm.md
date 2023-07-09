@@ -12,7 +12,7 @@ def primAlgorithm(graph,initialNode = 0):
         m = edges
         n = nodes
 
-        this function return a tree of MST
+        this function return a list of edges of MST
 
         can be faster if you replace s(set) to a array of True or False
             - code needs to be adapted to this change;
