@@ -8,6 +8,7 @@ Abaixo vai ter um súmario de conteudo que você pode encontrar minhas anotaçõ
 ## Sumário
 
 1. [Estrutura de dados para grafos](./grafos_estruturas.md)
+   - [Conversão entre Estruturas](./conversao_estruturas.md)
 
 
 ## Fórum de duvidas
