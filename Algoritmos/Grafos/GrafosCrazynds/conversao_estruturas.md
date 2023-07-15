@@ -26,6 +26,18 @@ def convertSimpleGraphToEdgesArray(simplegraph):
             if a<b:
                 edges.append((a,b,simplegraph[a][b]))
     return edges
+
+
+    
+def getReverseGraph(graph):
+    reverse = [{} for _ in range(len(graph))]
+    for a in range(len(graph)):
+        for b in graph[a]:
+            reverse[b][a] = graph[a][b]
+    return reverse
+
 ```	
+
+
 
 

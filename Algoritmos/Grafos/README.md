@@ -11,4 +11,5 @@
      - [Kruskal's MST](./kruskalsmst.md)
 6. Graph Clustering 
      - [Maximum Spacing K-Clustering](./spacingClustering.md)
-
+     - [Perfect Match Graph](./perfect-match-graph.md)
+7. [Experiencia de Grafos com Crazynds](./GrafosCrazynds/README.md)
