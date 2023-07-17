@@ -5,3 +5,5 @@
 3. [Aritimética modular](./aritimetica-modular.md)
     * [Combinatória modular](./combinatoria-modular.md)
 4. [MDC/MMC](./mdc-mmc.md)
+5. Geometria
+    * [Area de formas](./areas-formas.md)
