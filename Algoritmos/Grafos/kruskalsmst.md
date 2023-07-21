@@ -6,7 +6,7 @@ Para verificar se existe ciclos no grafo, é usado uma estrutura de [DisjoinSet]
 
 
 ```python
-def kruskalsMST(nodes: int,edges: list):
+def kruskalsMST(edges: list,nodes: int):
     '''
         complexity: O(m*alpha(n)) + (sort operation)
         m = edges

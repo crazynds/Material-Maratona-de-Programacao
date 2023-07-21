@@ -71,8 +71,6 @@ private:
 
 O algoritmo abaixo é extremamente eficiente, sendo a busca e a união em O(alpha(n))
 ```python
-import random
- 
  
 class DisjointSetUnion:
     def __init__(self, n):

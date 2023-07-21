@@ -23,3 +23,4 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
    - [Heap/PriorityQueue](./Estrutura%20de%20Dados/Heap.md)
      - [HeapDictionaried](./Estrutura%20de%20Dados/HeapDictionaried.md)
    - [Grafos](./Estrutura%20de%20Dados/Grafos.md)
+   - [DisjoinSet](./Estrutura%20de%20Dados/DisjoinSet.md)
