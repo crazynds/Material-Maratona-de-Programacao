@@ -27,8 +27,20 @@ def convertSimpleGraphToEdgesArray(simplegraph):
                 edges.append((a,b,simplegraph[a][b]))
     return edges
 
+def convertEdgesArrayToTreeGraph(edges,vertices):
+    FATHER = 0
+    CHILD = 1
+    treeGraph = [[None,[]] for _ in range(vertices)]
+    simpleGraph = convertEdgesArrayToNonDirectedSimpleGraph(edges,vertices)
+    def iterOverGraph(currentNode,father):
+        treeGraph[currentNode][FATHER] = father
+        for node in simpleGraph[currentNode]:
+            if node!=father:
+                treeGraph[currentNode][CHILD].append(iterOverGraph(node,currentNode))
+        return currentNode
+    root = iterOverGraph(0,None)
+    return (treeGraph,root)
 
-    
 def getReverseGraph(graph):
     reverse = [{} for _ in range(len(graph))]
     for a in range(len(graph)):

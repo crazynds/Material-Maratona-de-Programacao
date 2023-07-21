@@ -80,6 +80,42 @@ for _ in range(ed):
 ```
 
 
+
+# Lista de Nós Simples
+
+Essa estrutura é uma lista com um dicionario para todas as arestas que o vertice está ligado, no qual cada par _chave_ -> _valor_ significa qual o outro vertice e o peso da aresta.
+
+### Vantagens:
+ - Mais simples e rápido de escrever código usando essa estrutura;
+ - Em comparação ao algoritmo complexo, evita ficar buscando no dicionaro campos como _'id'_ ou _'childrens'_;
+ - Estrutura mais útil por performance;
+
+### Desvantagens:
+ - Não é possivel extrair muitas informações do nó além dos filhos;
+ - Dificil trabalhar nessa estrutura como se fosse uma arvore;
+
+### Operações:
+ - ```aresta(a,b)->int```: O(1)
+ - ```nosConectados(a)->nos[]```: O(N) (_N é relativo a quantidade de nós conectados a esse_)
+ - ```nosConectadosReverso(a)->nos[]```: O(N) 
+
+
+```python
+nodes,ed = map(int,input().split())
+
+edges = []
+for _ in range(ed):
+    a,b,cost = map(int,input().split())
+    edges.append((a-1,b-1,cost))
+
+graph = [{} for i in range(vertices)]
+
+for (a,b,cost) in edges:
+    graph[a][b] = cost
+    graph[b][a] = cost
+return graph
+```
+
 # Lista de Nós Complexos
 
 Esta é a minha estrutura favoria e a mais complexa. A ideia é criar uma lista de $0..(N-1)$ em que cada posição é relativo ao $N_i$ nó. Nessa posição está um objeto com os dados daquele nó, abaixo algumas informações que é possivel armazenar nesse objeto:
@@ -123,24 +159,26 @@ for (a,b,cost) in edges:
 return graph
 ```
 
+# Lista de Nós Complexos V2
 
-# Lista de Nós Simples
+Essa estrutura é derivada da estrutura anterior, o maior diferencial dela é que não tem um dicionario e sim um array, no qual a busca dos dados do nó é feito de maneira mais rápida. 
 
-Essa estrutura é muito semelhante a estrutura anterior, com o único diferencial é que ao invez de existir um objeto inteiro com diversos campos para a estrutura de nós, existe apenas um dicionario conténdo as *childrens* daquele nó.
+Essa estrutura é caracterizada por armazenar os indices de cada coisa do array em uma constante. 
 
 ### Vantagens:
- - Mais simples e rápido de escrever código usando essa estrutura;
- - Em comparação ao algoritmo complexo, evita ficar buscando no dicionaro campos como _'id'_ ou _'childrens'_;
- - Estrutura mais útil por performance;
+ - Uso de memória não é o melhor, porém é o suficiente para não ultrapassar o limite de qualquer problema;
+ - Acesso constante a maioria das operações de grafos;
 
 ### Desvantagens:
- - Não é possivel extrair muitas informações do nó além dos filhos;
+ - As vezes o objeto do nó pode se tornar complexo demais e dificil de entender ou de continuar desenvolvendo;
 
 ### Operações:
  - ```aresta(a,b)->int```: O(1)
  - ```nosConectados(a)->nos[]```: O(N) (_N é relativo a quantidade de nós conectados a esse_)
- - ```nosConectadosReverso(a)->nos[]```: O(N) 
+ - ```nosConectadosReverso(a)->nos[]```: O(N) (_N é relativo a quantidade de nós conectados a esse_)
 
+
+Abaixo uma versão utilizando um dicionário como nó, mas a forma mais performática é utilizando um clases e objetos.
 
 ```python
 nodes,ed = map(int,input().split())
@@ -150,11 +188,13 @@ for _ in range(ed):
     a,b,cost = map(int,input().split())
     edges.append((a-1,b-1,cost))
 
-graph = [{} for i in range(vertices)]
+ID = 0
+CHILD = 1
+
+graph = [[0,{}] for i in range(vertices)]
 
 for (a,b,cost) in edges:
-    graph[a][b] = cost
-    graph[b][a] = cost
+    graph[a][CHILD][b] = cost
+    graph[b][CHILD][a] = cost
 return graph
 ```
-
