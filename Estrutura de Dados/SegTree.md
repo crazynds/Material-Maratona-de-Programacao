@@ -38,7 +38,7 @@ void build(int a[], int v, int tl, int tr) {
     }
 }
 int sum(int v, int tl, int tr, int l, int r) {
-    if (l > r) 
+    if (l > r) // the default value for empty 
         return 0;
     if (l == tl && r == tr) {
         return t[v];
@@ -89,7 +89,7 @@ private:
         }
     }
     T __query(int v, int tl, int tr, int l, int r) {
-        if (l > r) // Change here the default value for
+        if (l > r) // Change here the default value for empty
             return 0;
         if (l == tl && r == tr) {
             return t[v];
@@ -166,7 +166,7 @@ class SegTree:
     def query(self,left_query,right_query):
         return self.__query(self.vertex_start,self.left,self.right,left_query,right_query)
     def __query(self,vertex,left,right,left_query,right_query):
-        if left_query>right_query:
+        if left_query>right_query: # Change here the default value for empty
             return 0
         if left_query==left and right_query == right:
             return self.t[vertex]
