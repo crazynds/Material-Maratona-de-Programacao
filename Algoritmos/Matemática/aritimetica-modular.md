@@ -71,5 +71,40 @@ Se $a\equiv b (\mathrm{mod}\ n)$, é geralmente falsto que $k^a \equiv k^b (\mat
 
 * Se $c\equiv d (\mathrm{mod}\ φ(n))$, onde $φ$ é a [função tociente de Euler](https://en.wikipedia.org/wiki/Euler%27s_totient_function), então $a^c \equiv a^d (\mathrm{mod}\ n)$ desde que $a$ seja [coprimo](https://en.wikipedia.org/wiki/Coprime_integers) de $n$.
 
+## Inverso Modular
+
+O inverso modular de $a$ com módulo $m$ é um número $x$ tal que, quando multiplicado com $a$, gera um valor cujo resto da divisão com $m$ é 1. Ou seja, $$ax \equiv1 (\mathrm{mod}\ m)$$
+
+**Notação:** $a^{-1}$
+
+**Exemplo:** $a = 5$ e $m = 7$ resulta em $a^{-1} = 3$ , pois $3 * 5 = 15$ e $15 \equiv1 (\mathrm{mod}\ 7)$
+
+**OBS:** O inverso modular existe se, e somente se, $a$ e $m$ forem coprimos (ou primos entre si), isto é: $mdc(a, m) = 1$.
+
+O algoritmo para calcular o inverso modular utiliza o algoritmo extendido de Euclides (`egcd`). Note que a função `modInv` retorna 0 caso não exista o inverso modular. É interessante apontar que questões que envolvem módulo - na maioria das vezes - possuem um número $m$ primo (geralemente, $10^9 + 7$). Isso garante que o inverso modular irá existir caso $a$ não seja múltiplo de $m$. Portanto, dependendo da questão, pode-se remover a verificação da função `modInv`.
+
+(NÃO TESTADO)
+```python
+# algoritmo extendido de Euclides
+def egcd(a, b):
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, y, x = egcd(b % a, a)
+        return (g, x - (b // a) * y, y)
+
+# a^-1 mod m = 1
+def modInv(a, m):
+    g, x, y = egcd(a, m)
+    if g != 1:
+        return 0 # inverso modular não existe
+    else:
+        return x % m
+```
+Fontes do inverso modular:
+
+[Definições](https://link-url-here.org](https://cp-algorithms.com/algebra/module-inverse.html#practice-problems)https://cp-algorithms.com/algebra/module-inverse.html#practice-problems)
+
+[Algoritmo original](https://link-url-here.org](https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python)https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python)
 
 
