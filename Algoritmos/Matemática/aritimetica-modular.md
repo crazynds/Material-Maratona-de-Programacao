@@ -103,8 +103,8 @@ def modInv(a, m):
 ```
 Fontes do inverso modular:
 
-[Definições](https://link-url-here.org](https://cp-algorithms.com/algebra/module-inverse.html#practice-problems)https://cp-algorithms.com/algebra/module-inverse.html#practice-problems)
+[Definições](https://cp-algorithms.com/algebra/module-inverse.html#practice-problems)
 
-[Algoritmo original](https://link-url-here.org](https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python)https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python)
+[Algoritmo original](https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python)
 
 
