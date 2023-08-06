@@ -9,6 +9,15 @@ não seja negativo (REVISAR)
 import heapq
 
 def dijkstra(nodes,src):
+    """
+        complexity: O(m*log(n))
+        m = edges
+        n = nodes
+
+        this function return a list of distances from src
+
+        can be faster if you implement heapDictionary
+    """
     inf = float('inf')
     queue = []
     dist = [float('inf')] * len(nodes)

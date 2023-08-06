@@ -131,3 +131,32 @@ def knapsack_optimal(currentWeight,i):
     return cache[key]
 ```
 
+
+# Variações do problema
+
+## Dois sacos
+
+Agora imaginando que no problema existam dois recimentes que carreguem itens, quero preencher o máximo deles que no final eu tenha o maior valor possivel. Essa é uma variação bem ardilosa pensando inicialmente, mas quando se pega o algoritmo base inicial e pensa numa adpatação é possivel chega ao seguinte código:
+
+```python
+# mudança nos parametros
+def encontraSolucao(itens,pesoDispA,pesoDispB,i)
+    if i >= len(itens):
+        return 0
+    valor, peso = itens[i]
+    return max(
+        encontraSolucao(itens,pesoDispA,i+1),
+        encontraSolucao(itens,pesoDispA-peso,i+1)+valor if pesoDispA-peso >= 0 else 0
+        # nova linha
+        encontraSolucao(itens,pesoDispA,pesoDispB-peso,i+1)+valor if pesoDispB-peso >= 0 else 0
+    )
+```
+
+Todas as técnicas de otmizações são aplicaveis, então a partir daqui deixo com você o código perfeito.
+
+
+## N sacos
+
+Esse é um caso realmente mais complicado, porém se você conseguiu entender as mudanças que acontecem quando vamos de 1 saco para 2 sacos, da para ter uma ideia da estrutura que vamos aplicar para calcular com numero $N$ de sacos. Deixo esse para você também.
+
+
