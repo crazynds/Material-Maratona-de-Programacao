@@ -56,7 +56,7 @@ Algumas vezes queremos saber quais são os itens que vão ser levados na mochila
 def backtrackItensMaxChoise(mat,itens,weight):
     itensSelected = []
     currentWeight = weight
-    for i in range(len(mat)-2,0,-1):
+    for i in range(len(itens)-1,-1,-1):
         if mat[i+1][currentWeight] != mat[i][currentWeight]:
             val,peso = itens[i]
             itensSelected.append((val,peso))
