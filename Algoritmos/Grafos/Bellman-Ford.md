@@ -51,3 +51,61 @@ def bellmanford(edges: list,src):
     return last,trace
 
 ```
+
+
+# ASAP
+
+Existe uma variação do algoritmo no qual é possivel calcular a distancia entre todos os pares de vertices do grafo, o algoritmo é semelhante a executar o algoritmo original N vezes, sendo cada vez uma origem diferente, porém a implementação abaixo ela possibilita o uso de instruções SIMD.
+
+
+```python
+def bellmanford_asap(edges: list):
+    """
+        complexity: O(m*n^2)
+        m = edges
+        n = nodes
+
+        this function return a list of distances from every pair of nodes
+        this is a variation of the original bellmanford algorithm that execute N * belmanford for every vertice
+
+    """
+    # In theory, sort the edges array can make the code fast because of the sequential reading of the array, but in reality this is over engineering
+    # edges.sort()
+    inf = float('inf')
+    current = [[inf]*n  for _ in range(n)]
+    last = [[inf]*n  for _ in range(n)]
+    for i in range(n):
+        last[i][i] = 0
+
+    ## Optional, only for backtrace
+    trace = [[i for i in range(n)] for _ in range(n)]
+
+    for _ in range(1,n): # run n-1 times
+        change = False # premature optimization
+        for s,d,w in edges:
+
+            # this for loop can be boosted if implemented using SIMD instructions
+            for i in range(n):
+                current[d][i] = min(current[d][i],last[d][i],last[s][i] + w)
+                change |= current[d][i] != last[d][i] # check if some change ocurr at all
+
+                ## Optional, only for backtrace
+                if current[d][i] == last[s][i] + w:
+                    trace[d][i] = s
+
+        current,last = last,current
+        if not change: # if any change in array ocurr, then already got the final result
+            break
+    else: # Run one more to check infinit loops
+        # the path between 2 vertices has at max n-1 edges without negative loops, 
+        # if the path has more than n-1 edges, so it has a negative loop in the graph 
+        for s,d,w in edges:
+            for i in range(n):
+                if last[s][i] + w < last[d][i]:
+                    ## 2nd return value is optional, only for backtrace
+                    return [float('-inf')]*n,trace
+
+    ## 2nd return value is optional, only for backtrace
+    return last,trace
+
+```
