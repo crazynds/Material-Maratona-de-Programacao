@@ -55,11 +55,12 @@ Essa estrutura é a que sempre vai ser passada como parametro de input, então �
  - Extremamente eficiente quando o objetivo é apenas iterar sobre as arestas;
  - Uso de memória mínimo;
  - O input sempre vai estar nesse formato;
+ - Algoritmos muito complicados trabalham usando essa estrutura;
 
 
 ### Desvantagens:
- - Algoritmos muito complicados trabalham usando essa estrutura;
  - Muito ocasional, não necessáriamente todos os problemas podem ser resolvidos usando essa estrutura;
+ - Dificil navegar de vertice em vertice;
 
 ![representacao](./lista_rep.png)
 
