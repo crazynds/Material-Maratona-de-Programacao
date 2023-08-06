@@ -5,7 +5,7 @@ Não somente isso, ele também é o algoritmo usado para o roteamento de pacotes
 
 ```python
 
-def bellmanford(edges: list,src):
+def bellmanford(edges: list,vertices,src):
     """
         complexity: O(m*n)
         m = edges
@@ -19,14 +19,14 @@ def bellmanford(edges: list,src):
     # In theory, sort the edges array can make the code fast because of the sequential reading of the array, but in reality this is over engineering
     # edges.sort()
     inf = float('inf')
-    current = [inf]*n
-    last = [inf]*n
+    current = [inf]*vertices
+    last = [inf]*vertices
     last[src] = 0
 
     ## Optional, only for backtrace
-    trace = [i for i in range(n)]
+    trace = [i for i in range(vertices)]
 
-    for _ in range(1,n): # run n-1 times
+    for _ in range(1,vertices): # run n-1 times
         change = False # premature optimization
         for s,d,w in edges:
             current[d] = min(current[d],last[d],last[s] + w)
@@ -45,7 +45,7 @@ def bellmanford(edges: list,src):
         for s,d,w in edges:
             if last[s] + w < last[d]:
                 ## 2nd return value is optional, only for backtrace
-                return [float('-inf')]*n,trace
+                return [float('-inf')]*vertices,trace
 
     ## 2nd return value is optional, only for backtrace
     return last,trace
@@ -59,7 +59,7 @@ Existe uma variação do algoritmo no qual é possivel calcular a distancia entr
 
 
 ```python
-def bellmanford_asap(edges: list):
+def bellmanford_asap(edges: list,vertices):
     """
         complexity: O(m*n^2)
         m = edges
@@ -72,20 +72,20 @@ def bellmanford_asap(edges: list):
     # In theory, sort the edges array can make the code fast because of the sequential reading of the array, but in reality this is over engineering
     # edges.sort()
     inf = float('inf')
-    current = [[inf]*n  for _ in range(n)]
-    last = [[inf]*n  for _ in range(n)]
-    for i in range(n):
+    current = [[inf]*vertices  for _ in range(vertices)]
+    last = [[inf]*vertices  for _ in range(vertices)]
+    for i in range(vertices):
         last[i][i] = 0
 
     ## Optional, only for backtrace
-    trace = [[i for i in range(n)] for _ in range(n)]
+    trace = [[i for i in range(vertices)] for _ in range(vertices)]
 
-    for _ in range(1,n): # run n-1 times
+    for _ in range(1,vertices): # run n-1 times
         change = False # premature optimization
         for s,d,w in edges:
 
             # this for loop can be boosted if implemented using SIMD instructions
-            for i in range(n):
+            for i in range(vertices):
                 current[d][i] = min(current[d][i],last[d][i],last[s][i] + w)
                 change |= current[d][i] != last[d][i] # check if some change ocurr at all
 
@@ -100,10 +100,10 @@ def bellmanford_asap(edges: list):
         # the path between 2 vertices has at max n-1 edges without negative loops, 
         # if the path has more than n-1 edges, so it has a negative loop in the graph 
         for s,d,w in edges:
-            for i in range(n):
+            for i in range(vertices):
                 if last[s][i] + w < last[d][i]:
                     ## 2nd return value is optional, only for backtrace
-                    return [float('-inf')]*n,trace
+                    return [float('-inf')]*vertices,trace
 
     ## 2nd return value is optional, only for backtrace
     return last,trace

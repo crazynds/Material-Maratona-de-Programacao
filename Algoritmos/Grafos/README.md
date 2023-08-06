@@ -8,6 +8,8 @@
      - [Bellman-Ford](./Bellman-Ford.md)
 5. Menor Distância entre todos os pares de vértices (APSP)
      - [Bellman-Ford (Adaptado)](./Bellman-Ford.md#ASAP)
+     - [Floyd-warshall](./floyd-warshall.md)
+     - [Johnson Algorithm](./johnson-algorithm.md)
 6. Minimum Spanning Tree
      - [Prim's Algorithm](./prims-algorithm.md)
      - [Kruskal's MST](./kruskalsmst.md)
