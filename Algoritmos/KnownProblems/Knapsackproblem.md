@@ -38,7 +38,7 @@ for _ in range(n):
 mat = [[0]*(weight+1) for _ in range(n+1)]
 for i, (val,weightItem) in enumerate(itens,1):
     for x in range(weight+1):
-        mat[i][x] = max(mat[i-1][x],(mat[i-1][x-weightItem] if x-weightItem > 0 else 0) + val if x >= weightItem else 0)
+        mat[i][x] = max(mat[i-1][x],(mat[i-1][x-weightItem] + val) if x >= weightItem else 0)
 
 print('Maximo peso:',mat[-1][weight])
 ```
