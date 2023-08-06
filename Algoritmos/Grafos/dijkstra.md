@@ -1,9 +1,7 @@
 # Algoritmo de Dijkstra
 
 Esse algoritmo serve para determinar o menor caminho entre dois vértices de um grafo, desde que o peso das arestas
-não seja negativo (REVISAR)
-
-(COLOCAR VERSAO EM C++)
+não seja negativo.
 
 ```python
 import heapq
