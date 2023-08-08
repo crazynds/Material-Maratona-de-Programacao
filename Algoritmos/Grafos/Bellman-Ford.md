@@ -22,6 +22,7 @@ def bellmanford(edges: list,vertices,src):
     current = [inf]*vertices
     last = [inf]*vertices
     last[src] = 0
+    current[src] = 0
 
     ## Optional, only for backtrace
     trace = [i for i in range(vertices)]
@@ -86,7 +87,10 @@ def bellmanford_asap(edges: list,vertices):
 
             # this for loop can be boosted if implemented using SIMD instructions
             for i in range(vertices):
-                current[d][i] = min(current[d][i],last[d][i],last[s][i] + w)
+                current[d][i] = min(
+                    current[d][i],
+                    last[d][i],
+                    last[s][i] + w)
                 change |= current[d][i] != last[d][i] # check if some change ocurr at all
 
                 ## Optional, only for backtrace
@@ -103,9 +107,13 @@ def bellmanford_asap(edges: list,vertices):
             for i in range(vertices):
                 if last[s][i] + w < last[d][i]:
                     ## 2nd return value is optional, only for backtrace
-                    return [float('-inf')]*vertices,trace
+                    return [float('-inf')]*n,trace
+
+    # You need to rotate the array, so the src is the first index, and the dst is the second,
+    # You can skip this if you wish, but the index are reversed, like: result[dst][src] = ShortestPath(src,dst)
+    result = list(zip(*last))
 
     ## 2nd return value is optional, only for backtrace
-    return last,trace
+    return result,trace
 
 ```

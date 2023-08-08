@@ -4,8 +4,6 @@ Esse algoritmo serve para determinar o menor caminho entre dois vértices de um 
 não seja negativo.
 
 ```python
-import heapq
-
 def dijkstra(nodes,src):
     """
         complexity: O(m*log(n))
@@ -30,10 +28,10 @@ def dijkstra(nodes,src):
             continue
         visited[node] = True
         
-        for child in nodes[node]['child']:
+        for child in nodes[node]:
             if visited[child]:
                 continue
-            heigth = nodes[node]['child'][child]
+            heigth = nodes[node][child]
             aux = dist[node] + heigth
             if aux < dist[child]:
                 dist[child] = aux

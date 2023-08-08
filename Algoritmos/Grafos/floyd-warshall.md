@@ -17,9 +17,9 @@ O funcionamento desse algoritmo usa uma matriz, no qual a posição $(i,j)$ cont
 ```python
 
 
-def floydwarshall(edges: list,src):
+def floydwarshall(edges: list, vertices):
     """
-        complexity: O(n^3)
+        complexity: O(n^3 + m)
         m = edges
         n = nodes
 
@@ -27,20 +27,26 @@ def floydwarshall(edges: list,src):
 
     """
     inf = float('inf')
-    last = [[0 if k==0 and j==i else inf for j in range(n)] for i in range(n)]
-    current = [[0 if k==0 and j==i else inf for j in range(n)] for i in range(n)]
+    last = [[0 if j==i else inf for j in range(vertices)] for i in range(vertices)]
+    current = [[inf for j in range(vertices)] for i in range(vertices)]
 
     for s,d,w in edges:
         last[s][d] = w
 
-    for k in range(n):
-        for i in range(n):
-            for j in range(n):
+    for k in range(vertices):
+        for i in range(vertices):
+            for j in range(vertices):
                 current[i][j] = min(
                     current[i][j],
                     last[i][j],
-                    last[i][k]+last[k][j])
+                    last[i][k]+last[k][j] )
+                
         last, current = current,last #swap
+    
+    # check if exists a negative cycle
+    for i in range(vertices):
+        if last[i][i] < 0:
+            return [[float('-inf')]*vertices for _ in range (vertices)]
 
     return last
 
@@ -57,4 +63,4 @@ Para $M >= N$ então $O(M*N^2) >= O(N^3)$
 
 ## Reconstruindo o caminho
 
-É possivel reconstruir o caminho. Não entendi a explicação, mas você que é esperto vai descobrir e adicionar um commit nesse repositório. 😉
+É possivel reconstruir o caminho. Não entendi a explicação, mas você que é esperto, vai descobrir e adicionar um commit nesse repositório. 😉
