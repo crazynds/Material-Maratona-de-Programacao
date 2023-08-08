@@ -1,4 +1,4 @@
-# Heap + dictionary
+# Heap + Dictionary
 
 Uma estrutura mística nos contos de fadas, que sempre se ouviu falar <s>mas até hoje não foi encontrado uma implementação decente (Não foi procurado muito, mas não deve ser dificil fazer)</s>. Agora com uma implementação quentinha pra você em python.
 
