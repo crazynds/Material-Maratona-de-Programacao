@@ -12,28 +12,24 @@ def dijkstra(nodes,src):
 
         this function return a list of distances from src
 
-        can be faster if you implement heapDictionary
+        can be faster if you implement heapDictionary (maybe?, in C++ using heapDictionary is faster, but in python i dont think...)
     """
     inf = float('inf')
     queue = []
-    dist = [float('inf')] * len(nodes)
-    visited = [False] * len(nodes)
+    dist = [inf] * len(nodes)
 
     heapq.heappush(queue,(0,src))
     dist[src] = 0
 
-    while len(queue)>0:
-        _,node = heapq.heappop(queue)
-        if visited[node]:
+    while queue:
+        d,node = heapq.heappop(queue)
+        if d > dist[node]:
             continue
-        visited[node] = True
         
         for child in nodes[node]:
-            if visited[child]:
-                continue
-            heigth = nodes[node][child]
-            aux = dist[node] + heigth
-            if aux < dist[child]:
+            weigth = nodes[node][child]
+            aux = dist[node] + weigth
+            if dist[child] > aux:
                 dist[child] = aux
                 heapq.heappush(queue,(aux,child))
     return dist
@@ -42,30 +38,21 @@ def dijkstra(nodes,src):
 
 ## Implementação usando [HeapDictionary](./../../Estrutura%20de%20Dados/HeapDictionaried.md)
 
-Abaixo a implementação usando a biblioteca de Heap + Dictionary.
+Abaixo a implementação usando a biblioteca de Heap + Dictionary. Recomendo em python usar a versão normal do dijkstra, mas se for traduzir para C++ acredito que tenha um ganho.
 
 ```python
 def dijkstra(nodes,src):
     inf = float('inf')
     queue = HeapDictionary([(0,src)],key= lambda a:a[1])
-    dist = [float('inf')] * len(nodes)
-    visited = [False] * len(nodes)
-
+    dist = [inf] * len(nodes)
     dist[src] = 0
-
     while queue.len()>0:
-        _,node = queue.pop()
-        if visited[node]:
-            continue
-        visited[node] = True
+        d,node = queue.pop()
         
-        for child in nodes[node]['child']:
-            if visited[child]:
-                continue
-            heigth = nodes[node]['child'][child]
-            aux = dist[node] + heigth
-            if aux < dist[child]:
-                dist[child] = aux
-                queue.push((aux,child))
+        for child in nodes[node]:
+            newDist = dist[node] + nodes[node][child]
+            if dist[child] > newDist:
+                dist[child] = newDist
+                queue.push((newDist,child))
     return dist
 ```

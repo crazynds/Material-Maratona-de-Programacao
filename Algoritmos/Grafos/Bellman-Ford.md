@@ -20,8 +20,6 @@ def bellmanford(edges: list,vertices,src):
     # edges.sort()
     inf = float('inf')
     current = [inf]*vertices
-    last = [inf]*vertices
-    last[src] = 0
     current[src] = 0
 
     ## Optional, only for backtrace
@@ -30,14 +28,12 @@ def bellmanford(edges: list,vertices,src):
     for _ in range(1,vertices): # run n-1 times
         change = False # premature optimization
         for s,d,w in edges:
-            current[d] = min(current[d],last[d],last[s] + w)
-            change |= current[d] != last[d] # check if some change ocurr at all
-
-            ## Optional, only for backtrace
-            if current[d] == last[s] + w:
+            if current[s]!=inf and current[s] + w < current[d]:
+                change = True
+                current[d] = current[s] + w
+                ## Optional, only for backtrace
                 trace[d] = s
 
-        current,last = last,current
         if not change: # if any change in array ocurr, then already got the final result
             break
     else: # Run one more to check infinit loops
@@ -52,7 +48,6 @@ def bellmanford(edges: list,vertices,src):
     return last,trace
 
 ```
-
 
 # ASAP
 
@@ -74,9 +69,8 @@ def bellmanford_asap(edges: list,vertices):
     # edges.sort()
     inf = float('inf')
     current = [[inf]*vertices  for _ in range(vertices)]
-    last = [[inf]*vertices  for _ in range(vertices)]
     for i in range(vertices):
-        last[i][i] = 0
+        current[i][i] = 0
 
     ## Optional, only for backtrace
     trace = [[i for i in range(vertices)] for _ in range(vertices)]
@@ -87,17 +81,12 @@ def bellmanford_asap(edges: list,vertices):
 
             # this for loop can be boosted if implemented using SIMD instructions
             for i in range(vertices):
-                current[d][i] = min(
-                    current[d][i],
-                    last[d][i],
-                    last[s][i] + w)
-                change |= current[d][i] != last[d][i] # check if some change ocurr at all
-
-                ## Optional, only for backtrace
-                if current[d][i] == last[s][i] + w:
+                if current[s][i]!=inf and current[s][i] + w < current[d][i]:
+                    change = True
+                    current[d][i] = current[s][i] + w
+                    ## Optional, only for backtrace
                     trace[d][i] = s
 
-        current,last = last,current
         if not change: # if any change in array ocurr, then already got the final result
             break
     else: # Run one more to check infinit loops
@@ -105,15 +94,20 @@ def bellmanford_asap(edges: list,vertices):
         # if the path has more than n-1 edges, so it has a negative loop in the graph 
         for s,d,w in edges:
             for i in range(vertices):
-                if last[s][i] + w < last[d][i]:
+                if current[s][i] + w < current[d][i]:
                     ## 2nd return value is optional, only for backtrace
                     return [float('-inf')]*n,trace
 
     # You need to rotate the array, so the src is the first index, and the dst is the second,
     # You can skip this if you wish, but the index are reversed, like: result[dst][src] = ShortestPath(src,dst)
-    result = list(zip(*last))
+    result = list(zip(*current))
 
     ## 2nd return value is optional, only for backtrace
     return result,trace
 
 ```
+
+É preferivel usar qualquer outro algoritmo para resolver esse problema, esse algoritmo é muiiiito lento, procure usar [Johnson](./johnson-algorithm.md) para resolver esse problema.
+
+
+

@@ -27,28 +27,23 @@ def floydwarshall(edges: list, vertices):
 
     """
     inf = float('inf')
-    last = [[0 if j==i else inf for j in range(vertices)] for i in range(vertices)]
-    current = [[inf for j in range(vertices)] for i in range(vertices)]
+    current = [[0 if j==i else inf for j in range(vertices)] for i in range(vertices)]
 
     for s,d,w in edges:
-        last[s][d] = w
+        current[s][d] = w
 
     for k in range(vertices):
         for i in range(vertices):
             for j in range(vertices):
-                current[i][j] = min(
-                    current[i][j],
-                    last[i][j],
-                    last[i][k]+last[k][j] )
-                
-        last, current = current,last #swap
-    
+                if current[i][j] < current[i][k] + current[k][j]:
+                    current[i][j] = current[i][k] + current[k][j]
+                    
     # check if exists a negative cycle
     for i in range(vertices):
-        if last[i][i] < 0:
+        if current[i][i] < 0:
             return [[float('-inf')]*vertices for _ in range (vertices)]
 
-    return last
+    return current
 
 ```
 
