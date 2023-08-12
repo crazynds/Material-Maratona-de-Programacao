@@ -125,7 +125,7 @@ def knapsack_optimal(currentWeight,i):
     val,weight = itens[i]
 
     cache[key] = max(
-        (knapsack_optimal(currentWeight-weight,i-1)+val) if currentWeight > weight else 0,
+        (knapsack_optimal(currentWeight-weight,i-1)+val) if currentWeight >= weight else 0,
         knapsack_optimal(currentWeight,i-1)
     )
     return cache[key]
