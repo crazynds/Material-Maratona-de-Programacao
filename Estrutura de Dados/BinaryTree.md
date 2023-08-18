@@ -1,15 +1,15 @@
-# Map
+# Binary Tree
 
-A estrutura de dados map, conhecida em algumas linguagens como dicionário tem como objetivo armazenar de forma ordenada duplas de dados, sendo uma a chave e outra um valor. É um tipo de array associativo. 
+Uma árvore binária é compostas por nós, no qual cada nó pode apontar para um nó na esquerda e na direita. Os nós a esquerda do nó principal são sempre menores que o nó principal, e os a direita são sempre maiores.
 
-Os dados são armazenados seguindo uma ordem das chaves, e o valor não influencia nessa ordem. 
+<img src="binary-tree.png" width=300/>
 
-Cada chave é única e ao definir outro valor para uma mesma chave, o comportamento esperado é que o novo valor deve sobrescrever o antigo.
-
-
+Uma árvore binária tem a vantagem no melhor caso, para uma inserção, remoção e busca ter custo de tempo O(log N). Porém quanto menos balanceada uma árvore binária estiver, maior vai ser o custo das operações, por isso existem implementações de algoritmos de balanceamento para esse tipo de árvore.
 
 
-## C++ - [std::map](https://cplusplus.com/reference/map/map/)
+# C++ - [std::map](https://cplusplus.com/reference/map/map/)
+
+Em C++ existe a implementação de árvore binária na biblioteca padrão. A estrutura de dados ```std::map``` por padrão implementa uma árvore binária Red-Black, que já traz uma estrutura de balanceamento da árvore. Geralmente a ```std::map``` já implementa a versão mais omitizada de uma árvore binária. 
 
 ### Associativo
 Elementos em contêineres associativos são referenciados por sua chave e não por sua posição absoluta no contêiner.
@@ -32,7 +32,9 @@ As principais funções utilizadas no map são as citadas abaixo:
 
 ### Getters:
 - operator[]: retorna o elemento da _chave_ indicada dentro do operator. Caso seja uma chave que não existe é inserido um novo item com o construtor padrão (para números geralmente é zero) e retornado uma referencia desse item;
-- find
+- find(): retorna um iterador a partir desse elemento, caso não encontre retorna o map.end();
+- lower_bound(K): retorna um iterator para o maior elemento que é menor que K;
+- upper_bound(K): retorna um iterator para o menor elemento que é maior que K;
 
 ### Capacidade:
 - size(): retorna o tamanho do vetor;
@@ -46,10 +48,6 @@ As principais funções utilizadas no map são as citadas abaixo:
  - erase(iterator): remove o item dessa posição do iterador;
  - erase(start,end): remove os items desde a posição start até end;
 
-### Operadores:
-- find(): retorna um iterador a partir desse elemento, caso não encontre retorna o map.end();
-- lower_bound(K): retorna um iterator para o maior elemento que é menor que K;
-- upper_bound(K): retorna um iterator para o menor elemento que é maior que K;
 
 Exemplo de uso do std::map
 
@@ -83,36 +81,6 @@ int main ()
 ```
 
 
+# Python - [Binary Tree](./AVLTree.md)
 
-## Python - [dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries)
-
-Os _dictionaries_ não possuem nenhuma função importante, e todos as manipulações deles são exemplificadas abaixo:
-
-```python
-
-d1 = {} # forma de criar um dicionário vazio
-d2 = {
-  1: 'S1', 
-  2:'s2'
-} # forma de criar um dicionário com elementos já
-d3 = {x: x**2 for x in range(10)} # declarar um dicionario com elementos dinamicos
-
-bool1 = 1 in d1 # forma de verificar se a chave existe no dicionario
-bool2 = 2 not in d1 # forma de verificar se a chave não existe no dicionario
-
-d1[1] = 'ola mundo' # forma de adicionar item no dicionario
-d1[1] += '!' # é possivel manipular os itens do dicionaro também
-
-del d1[1] # deleta o item com a chave 1 do dicionário
-
-
-for key in d1:  # essa é a forma de iterar sobre o dicionário, porém o valor que é iterado é sobre as chaves, e não sobre os valores
-    print(key,d1[key])
-
-for key,val in d1.items():  # essa é a forma de iterar sobre o dicionário incluindo os valores
-    print(key,val)
-
-l = list(d1)  # cria uma lista com todas as chaves do dicionário
-l = list(d1.items())  # cria uma lista com tuplas contendo a relação entre chave e valor
-
-```
+Em python, não existe nenhuma implementação na biblioteca padrão para árvores binárias. Depende muito do caso se você deve usar árvores binárias, mas se você realmente precisa utilizar essa estrutura, recomendo que pegue uma implementação que já inclui balanceamento. [Clique aqui](./AVLTree.md) para uma implementação que inclui balanceamento.
