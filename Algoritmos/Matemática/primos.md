@@ -1,6 +1,31 @@
 # Números primos
 
 
+## Fatorização de um número
+
+A fatorização de um número é a decomposição de um números pelos seus primos geradores. Por exemplo o número 24 pode ser decomposto em: $2*2*2*3$ ou $2^3*3$. 
+
+A função abaixo faz a fatorização de um número pelos seus primos. Ela pode ser otimizada se já houver uma lista de primos pré computados. Para primos muito grandes essa função pode levar um tempo para fatorizar.
+
+
+```python
+def factorization(number):
+    solution = []
+    while number&1==0:
+        number//=2
+        solution.append(2)
+    i = 3
+    while math.sqrt(number) > i:
+        if number % i == 0:
+            number //= i 
+            solution.append(i)
+        i += 2
+    if number!=1:
+        solution.append(number)
+    return solution
+```
+
+
 
 ## Algoritmo Sieve (Pré-computar primos)
 Sieve: Algoritmo para verificar se um número é primo.
