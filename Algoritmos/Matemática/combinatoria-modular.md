@@ -5,7 +5,7 @@ Fermat’s little theorem states that if $p$ is a prime number, then for any int
 $$
 a^p = a (\mathrm{mod}\ p) 
 $$
-For example, if $a = 2$ and $p = 7$, $2^7 = 128$, and $128 – 2 = 7 × 18$ is an integer multiple of 7.
+For example, if $a = 2$ and $p = 7$ so $2^7 = 128$ and $128 – 2 = 7 × 18$ is an integer multiple of 7.
 
 If a is not divisible by p, Fermat’s little theorem is equivalent to the statement $a^{p–1} – 1$ is an integer multiple of p, i.e 
 $$
