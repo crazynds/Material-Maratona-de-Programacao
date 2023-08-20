@@ -35,7 +35,7 @@ Dicas de otimização:
  - Se o $n$ é constante, é possivel pré-computar.
  
 
-Exemplo do programa em c++: (TESTADO E FUNCIONANDO!!) 
+Exemplo do programa em c++:
  ```c++
 // fatorial já ta pre computado FAT[]
 // invFatorial também INV[]
