@@ -71,6 +71,27 @@ Se $a\equiv b (\mathrm{mod}\ n)$, é geralmente falsto que $k^a \equiv k^b (\mat
 
 * Se $c\equiv d (\mathrm{mod}\ φ(n))$, onde $φ$ é a [função tociente de Euler](https://en.wikipedia.org/wiki/Euler%27s_totient_function), então $a^c \equiv a^d (\mathrm{mod}\ n)$ desde que $a$ seja [coprimo](https://en.wikipedia.org/wiki/Coprime_integers) de $n$.
 
+
+## Potencia com Módulo
+
+Para potencia com módulo, em C temos o seguinte código:
+```c
+// Fast pow and mod
+long long modpow(long long base, long long exp, long long modulus) {
+    base %= modulus;
+    T result = 1;
+    while (exp > 0) {
+        if (exp & 1) result = (result * base) % modulus;
+        base = (base * base) % modulus;
+        exp >>= 1;
+    }
+    return result;
+}
+```
+
+Em python temos a função modpow implementada nativamente na função ```pow```. O primeiro parametro é a base, o segundo o expoente e o terceiro é o módulo.
+
+
 ## Inverso Modular
 
 O inverso modular de $a$ com módulo $m$ é um número $x$ tal que, quando multiplicado com $a$, gera um valor cujo resto da divisão com $m$ é 1. Ou seja, $$ax \equiv1 (\mathrm{mod}\ m)$$
