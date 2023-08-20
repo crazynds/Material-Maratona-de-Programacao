@@ -100,12 +100,13 @@ for i, (val,peso) in enumerate(itens,1):
 print('Maximo peso:',lastColumn[weight])
 ```
 
-# Melhor Solução 
+# Solução ótima 
 
 Melhor solução para o problema independente de tudo o que foi dito.
 
 ```python
 import sys
+# If some recursion error apear, increase this number
 sys.setrecursionlimit(2500)
 
 weight, n = map(int,input().split())
@@ -115,8 +116,7 @@ for _ in range(n):
     val,peso = map(int,input().split())
     itens.append((val,peso))
 
-cache = {}
-def knapsack_optimal(currentWeight,i):
+def knapsack_optimal(itens,cache,currentWeight,i):
     if i < 0:
         return 0
     key = (i,currentWeight)
@@ -125,10 +125,46 @@ def knapsack_optimal(currentWeight,i):
     val,weight = itens[i]
 
     cache[key] = max(
-        (knapsack_optimal(currentWeight-weight,i-1)+val) if currentWeight >= weight else 0,
-        knapsack_optimal(currentWeight,i-1)
+        (knapsack_optimal(itens,cache,currentWeight-weight,i-1)+val) if currentWeight >= weight else 0,
+        knapsack_optimal(itens,cache,currentWeight,i-1)
     )
     return cache[key]
+
+cache = {}
+solve = knapsack_optimal(itens,cache,weight,len(itens)-1)
+```
+
+## BackTrace da solução otima
+
+Vou te entregar de bandeja o backtrace, então vc deve aprender como usar e fazer o resto. Essa função utiliza a solução ótima para o Knapsack problem, então deve ser usado com as duas funçoes.
+
+
+```python
+
+def knapsack_optimal_with_backtrace(itens,maxWeight):
+    currentWeight = maxWeight
+    solution = []
+    cache = {}
+    totalValue = knapsack_optimal(itens,cache,maxWeight,len(itens)-1)
+    currentValue = totalValue
+    
+    # Executa todos menos o item na casa 0
+    for i in range(len(itens)-1,0,-1):
+        # se o valor do passo anterior for diferente do valor atual, então foi adicionado o item ao valor atual
+        if cache[(i-1,currentWeight)] != cache[(i,currentWeight)]:
+            # inclui o iten no conjunto solução
+            val,weight = itens[i]
+            currentWeight -= weight
+            currentValue -= val
+            solution.append(itens[i])
+    else:
+        # Depois que executou tudo
+        # Se ainda tem valor sobrando, então inclui o ultimo
+        if currentValue > 0:
+            solution.append(itens[0])
+    
+    return solution,totalValue
+
 ```
 
 
