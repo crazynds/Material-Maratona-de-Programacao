@@ -11,9 +11,10 @@
         - [Dijkstra](./dijkstra.md)
         - [Bellman-Ford](./Bellman-Ford.md)
    4. Menor Distância entre todos os pares de vértices (APSP)
-        - [Bellman-Ford (Adaptado)](./Bellman-Ford.md#ASAP)
+        - [Bellman-Ford (Adaptado)](./Bellman-Ford.md#APSP)
         - [Floyd-warshall](./floyd-warshall.md)
         - [Johnson Algorithm](./johnson-algorithm.md)
+        - [Dijkstra](./dijkstra.md#APSP)
    5. Minimum Spanning Tree
         - [Prim's Algorithm](./prims-algorithm.md)
         - [Kruskal's MST](./kruskalsmst.md)

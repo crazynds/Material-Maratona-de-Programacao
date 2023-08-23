@@ -23,6 +23,7 @@ def floydwarshall(edges: list, vertices):
         m = edges
         n = nodes
 
+        this function recives a directed list of edges that can contain negative weights
         this function return a list of distances from every pair of nodes
 
     """

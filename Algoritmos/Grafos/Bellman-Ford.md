@@ -11,6 +11,7 @@ def bellmanford(edges: list,vertices,src):
         m = edges
         n = nodes
 
+        this function recives a directed list of edges that can contain negative weights
         this function return a list of distances from src
         different than dijkstra, the bellman ford can compute correct distances over negative edges
         work in directed graphs, there is no sense a non directed graph with negative edges (think about)
@@ -49,18 +50,19 @@ def bellmanford(edges: list,vertices,src):
 
 ```
 
-# ASAP
+# APSP
 
 Existe uma variação do algoritmo no qual é possivel calcular a distancia entre todos os pares de vertices do grafo, o algoritmo é semelhante a executar o algoritmo original N vezes, sendo cada vez uma origem diferente, porém a implementação abaixo ela possibilita o uso de instruções SIMD.
 
 
 ```python
-def bellmanford_asap(edges: list,vertices):
+def bellmanford_apsp(edges: list,vertices):
     """
         complexity: O(m*n^2)
         m = edges
         n = nodes
 
+        this function recives a directed list of edges that can contain negative weights
         this function return a list of distances from every pair of nodes
         this is a variation of the original bellmanford algorithm that execute N * belmanford for every vertice
 

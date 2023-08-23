@@ -56,3 +56,25 @@ def dijkstra(nodes,src):
                 queue.push((newDist,child))
     return dist
 ```
+
+
+## APSP
+
+
+Implementação de _All Pairs Shortest Path_ usando Dijkstra para grafos direcionados com pesos não negativos.
+Ele apenas repete o Dijkstra para cada nó $i$ como inicial e armazena numa matriz os resultados.
+
+```python
+def dijkstra_apsp(nodes):
+    """
+        complexity: O(n*m*log(n))
+        m = edges
+        n = nodes
+
+
+        this function recive a list of nodes from a graph that can be directed or not
+        this function return a matriz of shortest path from every node to other node
+    """
+    return [dijkstra(nodes,i) for i in range(len(nodes))]
+
+```

@@ -27,6 +27,7 @@ def johnson(edges: list, vertices):
         m = edges
         n = nodes
 
+        this function recives a directed list of edges that can contain negative weights
         this function return a list of distances from every pair of nodes
 
     """
@@ -49,7 +50,7 @@ def johnson(edges: list, vertices):
     # Convert the new edges to a grahp
     nodes = convertEdgesArrayToDirectedSimpleGraph(newEdges,vertices)
 
-    # Compute dijkstra to get the ASAP
+    # Compute dijkstra to get the APSP
     bestPaths = [dijkstra(nodes,i) for i in range(vertices)]
 
     # Correct the values of the paths
