@@ -16,7 +16,7 @@ def factorization(number):
         solution.append(2)
     i = 3
     while math.sqrt(number) > i:
-        if number % i == 0:
+        while number % i == 0:
             number //= i 
             solution.append(i)
         i += 2
