@@ -1,6 +1,33 @@
 # Números primos
 
 
+## Checagem rápida de se um número é primo
+
+Se retornar false então é 100% de certeza que não é primo, mas não garante que é primo se retornar True. Aumentar o $k$ aumenta a certeza. 
+
+
+```python
+def isPrime(n, k=5): # miller-rabin
+    from random import randint
+    if n < 2: return False
+    for p in [2,3,5,7,11,13,17,19,23,29]:
+       if n % p == 0: return n == p
+    s, d = 0, n-1
+    while d % 2 == 0:
+        s, d = s+1, d//2
+    for _ in range(k):
+        x = pow(randint(2, n-1), d, n)
+        if x == 1 or x == n-1: continue
+        for _ in range(1, s):
+            x = (x * x) % n
+            if x == 1: return False
+            if x == n-1: break
+        else: return False
+    return True
+```
+
+
+
 ## Fatorização de um número
 
 A fatorização de um número é a decomposição de um números pelos seus primos geradores. Por exemplo o número 24 pode ser decomposto em: $2*2*2*3$ ou $2^3*3$. 
