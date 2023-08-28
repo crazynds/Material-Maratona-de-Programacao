@@ -106,6 +106,56 @@ bool isPrime(int p)
 }
 ```
 
+## Sieve em Python (comparação)
+
+```python
+import math
+from itertools import compress
+import timeit
+
+def sieve(n):
+    "Primes less than n"
+    # sieve(30) --> 2 3 5 7 11 13 17 19 23 29
+    data = bytearray((0, 1)) * (n // 2)
+    data[:3] = 0, 0, 0
+    limit = math.isqrt(n) + 1
+    for p in compress(range(limit), data):
+        data[p*p : n : p+p] = bytes(len(range(p*p, n, p+p)))
+    data[2] = 1
+    i = -1
+    try:
+        while True:
+            yield (i := data.index(1, i+1))
+    except ValueError:
+        pass
+
+def SieveOfEratosthenes(num):
+    prime = [True for _ in range(num+1)]
+    # boolean array
+    p = 2
+    while (p * p <= num):
+ 
+        # If prime[p] is not
+        # changed, then it is a prime
+        if (prime[p] == True):
+ 
+            # Updating all multiples of p
+            for i in range(p * p, num+1, p):
+                prime[i] = False
+        p += 1
+ 
+    # Print all prime numbers
+    for p in range(2, num+1):
+        if prime[p]:
+            yield p
+
+print(timeit.timeit(lambda: list(sieve(1_000_000)), number=1))
+# 0.013812200020765886
+print(timeit.timeit(lambda: list(SieveOfEratosthenes(1_000_000)), number=1))
+# 0.0916068000078667v
+
+```
+
 ## Prime Factor
 Retorna o menor fator primo de um valor n.
 
