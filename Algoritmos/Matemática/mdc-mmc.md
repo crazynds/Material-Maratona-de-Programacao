@@ -29,3 +29,32 @@ int mmc(int a, int b)
 }
 ```
 **OBS: mmc(a, b, c) = mmc(mmc(a, b), c)**
+
+
+# Em Python (melhor)
+
+```python
+from math import gcd, lcm
+
+print(gcd(12,8)) # maior divisor comum
+# 4
+
+print(lcm(3,4)) # menor divisor comum
+# 12
+
+# Função feita na mão:
+def mdc(a, b):
+    while b > 0:
+        a = a % b
+        a ^= b
+        b ^= a
+        a ^= b
+    return a
+    
+timeit.timeit(lambda : mdc(1_000_000_009, 7649869))
+# 2.1112466999911703
+
+timeit.timeit(lambda : gcd(1_000_000_009, 7649869))
+# 0.10977650000131689
+
+```
