@@ -52,6 +52,34 @@ def factorization(number):
     return solution
 ```
 
+## Se tiver um sieve pré-computado (até sqrt(n)) é melhor usar essa versão:
+```python
+import math
+import timeit
+
+def factor(n, primes):
+    "Prime factors of n."
+    # factor(99) --> 3 3 11
+    for prime in primes:
+        while True:
+            quotient, remainder = divmod(n, prime)
+            if remainder:
+                break
+            yield prime
+            n = quotient
+            if n == 1:
+                return
+    if n > 1:
+        yield n
+
+n = 1_000_000
+primes = sieve(math.isqrt(n) + 1) # isqrt é a int(sqrt(n)) ou raiz inteira
+
+print(timeit.timeit(lambda: factorization(n)))
+# 1.0270138000196312
+print(timeit.timeit(lambda: list(factor(n, primes))))
+# 0.207188899978064
+```
 
 
 ## Algoritmo Sieve (Pré-computar primos)
