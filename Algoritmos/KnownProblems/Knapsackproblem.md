@@ -167,6 +167,10 @@ def knapsack_optimal_with_backtrace(itens,maxWeight):
 
 ```
 
+Teste o que aprendeu com o problema abaixo.
+
+- [Beecrowd 1767](https://www.beecrowd.com.br/judge/pt/problems/view/1767)
+
 
 # Variações do problema
 
