@@ -13,6 +13,7 @@ Os custos das operações seguem abaixo:
  - Find: O(1) _dictionary acess_
  - Min: O(k log n) k* _heap pop_
  - Max: O(k log n) k* _heap pop_
+ - Iterate: O(n log n + (n + k)) _sort_ + (_valid values_ + _deleted value_)
 
 Para k sendo a quantidade de elementos que foram removidos da árvore entre as chamadas de _min_ e _max_.
 
@@ -58,7 +59,21 @@ class BizarreTree:
         while self.data[-self.maxArr[0]] == 0:
             heapq.heappop(self.maxArr)
         return -self.maxArr[0]
+
+    def iterate(self,reverse = False):
+        # https://stackoverflow.com/questions/59903948/how-to-iterate-heapq-without-losing-data
+        if not reverse:
+            self.minArr.sort()  # using heap structure makes sort faster
+            # sorted array is also a valid heap
+            it = self.minArr
+        else:
+            self.maxArr.sort()
+            it = map(lambda a: -a,self.maxArr)
+        cont = 0
+        lastI = 0
+        for i in self.minArr:
+            cont = (cont+1) if i == lastI else 1
+            if self.data[i] >= cont:
+                yield i
+
 ```
-
-
-É possivel fazer a iteração dessa árvore de forma crescente, mas deixo com você essa parte. Só por ter lido até aqui sei que você é uma pessoa esperta. 
