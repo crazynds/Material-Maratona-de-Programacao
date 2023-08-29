@@ -30,11 +30,20 @@ class TreeNode():
     def getBalance(self):
         return (self.left.getHeight() if self.left else 0) - (self.right.getHeight() if self.right else 0)
 
-    def getMinValueNode(self):
+    def getMinNode(self):
         if not self.left:
             return self
-        return self.left.getMinValueNode()
-    
+        return self.left.getMinNode()
+
+    def find(self,key):
+        if self.key == key:
+            return True
+        elif self.key > key and self.left:
+            return self.left.find(key)
+        elif self.key > key and self.right:
+            return self.right.find(key)
+        return False
+
         # Function to perform left rotation
     def leftRotate(self):
         y = self.right
@@ -106,7 +115,7 @@ class TreeNode():
                 temp = self.left
                 self = None
                 return temp
-            temp = self.right.getMinValueNode()
+            temp = self.right.getMinNode()
             self.key = temp.key
             self.right = self.right.delete_node(temp.key) if self.right else None
         if self is None:
@@ -160,20 +169,42 @@ class AVLTree(object):
 
     def __init__(self) -> None:
         self.root = None
+        self.size = 0
+        self.min = None
+        self.max = None
         pass
 
     def insert(self,value):
+        self.size += 1
+        self.min = min(self.min if self.min else float('inf'),value)
+        self.max = max(self.max if self.max else float('-inf'),value)
         if not self.root:
             self.root = TreeNode(value)
         else:
             self.root = self.root.insert_node(value)
+
+    def find(self,value):
+        if not self.root:
+            return False
+        return self.root.find(value)
+
     def delete(self,value):
         if not self.root:
             return None
-        self.root = self.root.delete_node(value)
+        if self.root.find(value):
+            self.root = self.root.delete_node(value)
+            self.size-=1
+            if value == self.min:
+                self.min = next(self.root.iterate()) if self.root else None
+            if value == self.max:
+                self.max = next(self.root.iterate(reverse=True)) if self.root else None
+    
+    def empty(self):
+        return self.size==0
 
     def iterate(self,reverse= False):
         if not self.root:
             return range(0)
         return self.root.iterate(reverse)
+
 ```
