@@ -24,11 +24,12 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
      - [HeapDictionaried](./Estrutura%20de%20Dados/HeapDictionaried.md)
    - [Grafos](./Estrutura%20de%20Dados/Grafos.md)
    - [DisjoinSet](./Estrutura%20de%20Dados/DisjoinSet.md)
-   - Arvores
+   - Árvores
      - [Binary Tree](./Estrutura%20de%20Dados/BinaryTree.md)
        - [AVLTree](./Estrutura%20de%20Dados/AVLTree.md)
      - [C++ Trees](./Estrutura%20de%20Dados/cplusplustree.md)
      - [Segment Tree](./Estrutura%20de%20Dados/SegTree.md)
-       - [FenwickTree](./Estrutura%20de%20Dados/FenwickTree.md)
+       - [Fenwick Tree](./Estrutura%20de%20Dados/FenwickTree.md)
+     - [Bizarre Tree](./Estrutura%20de%20Dados/BizarreTree.md)
  - Problemas Conhecidos
    - [Problema da mochila/Knapsack (Pesos e valores)](./Algoritmos/KnownProblems/Knapsackproblem.md)
