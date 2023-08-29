@@ -1,6 +1,33 @@
 # Números primos
 
 
+## Checagem rápida de se um número é primo
+
+Se retornar false então é 100% de certeza que não é primo, mas não garante que é primo se retornar True. Aumentar o $k$ aumenta a certeza. 
+
+
+```python
+def isPrime(n, k=5): # miller-rabin
+    from random import randint
+    if n < 2: return False
+    for p in [2,3,5,7,11,13,17,19,23,29]:
+       if n % p == 0: return n == p
+    s, d = 0, n-1
+    while d % 2 == 0:
+        s, d = s+1, d//2
+    for _ in range(k):
+        x = pow(randint(2, n-1), d, n)
+        if x == 1 or x == n-1: continue
+        for _ in range(1, s):
+            x = (x * x) % n
+            if x == 1: return False
+            if x == n-1: break
+        else: return False
+    return True
+```
+
+
+
 ## Fatorização de um número
 
 A fatorização de um número é a decomposição de um números pelos seus primos geradores. Por exemplo o número 24 pode ser decomposto em: $2*2*2*3$ ou $2^3*3$. 
@@ -25,6 +52,34 @@ def factorization(number):
     return solution
 ```
 
+## Se tiver um sieve pré-computado (até sqrt(n)) é melhor usar essa versão:
+```python
+import math
+import timeit
+
+def factor(n, primes):
+    "Prime factors of n."
+    # factor(99) --> 3 3 11
+    for prime in primes:
+        while True:
+            quotient, remainder = divmod(n, prime)
+            if remainder:
+                break
+            yield prime
+            n = quotient
+            if n == 1:
+                return
+    if n > 1:
+        yield n
+
+n = 1_000_000
+primes = sieve(math.isqrt(n) + 1) # isqrt é a int(sqrt(n)) ou raiz inteira
+
+print(timeit.timeit(lambda: factorization(n)))
+# 1.0270138000196312
+print(timeit.timeit(lambda: list(factor(n, primes))))
+# 0.207188899978064
+```
 
 
 ## Algoritmo Sieve (Pré-computar primos)
@@ -77,6 +132,56 @@ bool isPrime(int p)
     }
     return true;
 }
+```
+
+## Sieve em Python (comparação)
+
+```python
+import math
+from itertools import compress
+import timeit
+
+def sieve(n):
+    "Primes less than n"
+    # sieve(30) --> 2 3 5 7 11 13 17 19 23 29
+    data = bytearray((0, 1)) * (n // 2)
+    data[:3] = 0, 0, 0
+    limit = math.isqrt(n) + 1
+    for p in compress(range(limit), data):
+        data[p*p : n : p+p] = bytes(len(range(p*p, n, p+p)))
+    data[2] = 1
+    i = -1
+    try:
+        while True:
+            yield (i := data.index(1, i+1))
+    except ValueError:
+        pass
+
+def SieveOfEratosthenes(num):
+    prime = [True for _ in range(num+1)]
+    # boolean array
+    p = 2
+    while (p * p <= num):
+ 
+        # If prime[p] is not
+        # changed, then it is a prime
+        if (prime[p] == True):
+ 
+            # Updating all multiples of p
+            for i in range(p * p, num+1, p):
+                prime[i] = False
+        p += 1
+ 
+    # Print all prime numbers
+    for p in range(2, num+1):
+        if prime[p]:
+            yield p
+
+print(timeit.timeit(lambda: list(sieve(1_000_000)), number=1))
+# 0.013812200020765886
+print(timeit.timeit(lambda: list(SieveOfEratosthenes(1_000_000)), number=1))
+# 0.0916068000078667v
+
 ```
 
 ## Prime Factor
