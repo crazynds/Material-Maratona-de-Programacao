@@ -2,7 +2,7 @@
 
 É uma criação minha que implementa as funcionalidades de uma arvore sem uma árvore.
 
-Isso é util em python que implementar uma árvore pode ser muito demorado além da arvore ser extremamente lenta na execução. Tem também o problema de balanceamento que deve se levar em conta dependendo do problema.
+Isso é util em python que não tem uma implementação nativa, e implementar uma árvore manualmente pode ser muito demorado além dela ser extremamente lenta na execução. Tem também o problema de balanceamento que deve se levar em conta dependendo do problema.
 
 A _BizarreTree_ não é uma árvore de fato, ela utiliza um _dictionary_ e duas _heap_ para simular as funções principais de uma árvore, podendo assim pegar o menor valor, o maior e iterar sobre ela de maneira crescente e decrescente.
 
