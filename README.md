@@ -27,6 +27,7 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
    - Arvores
      - [Binary Tree](./Estrutura%20de%20Dados/BinaryTree.md)
        - [AVLTree](./Estrutura%20de%20Dados/AVLTree.md)
+     - [C++ Trees](./Estrutura%20de%20Dados/cplusplustree.md)
      - [Segment Tree](./Estrutura%20de%20Dados/SegTree.md)
        - [FenwickTree](./Estrutura%20de%20Dados/FenwickTree.md)
  - Problemas Conhecidos

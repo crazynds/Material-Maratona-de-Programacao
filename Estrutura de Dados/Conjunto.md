@@ -2,9 +2,10 @@
 
 Conjutos (set) são container que armazenam elementos únicos em uma ordem especifica.
 
-## C++ - [std::set](https://cplusplus.com/reference/set/set/)
+## C++ - [std::unordered_set](https://cplusplus.com/reference/unordered_set/unordered_set/)
 
-Set containers are generally slower than unordered_set containers to access individual elements by their key, but they allow the direct iteration on subsets based on their order.
+Unordered sets are containers that store unique elements in no particular order, and which allow for fast retrieval of individual elements based on their value.
+
 
 ### Associação 
 Elements in associative containers are referenced by their key and not by their absolute position in the container.
