@@ -39,7 +39,7 @@ from math import gcd, lcm
 print(gcd(12,8)) # maior divisor comum
 # 4
 
-print(lcm(3,4)) # menor divisor comum
+print(lcm(3,4)) # menor multiplo comum
 # 12
 
 # Função feita na mão:
