@@ -6,7 +6,7 @@ Vai procurar vagabundo!
 - [link 1](https://cp-algorithms.com/data_structures/fenwick.html)
 - [link 2](https://www.geeksforgeeks.org/binary-indexed-tree-or-fenwick-tree-2/)
 
-Parecido com [SegTree](./SegTree.md), porém consome menos espaço e é mais fácil de implementar.
+Parecido com [SegTree](./SegTree.md), porém consome menos espaço e é mais fácil de implementar. 
 
 
 Funções importantes

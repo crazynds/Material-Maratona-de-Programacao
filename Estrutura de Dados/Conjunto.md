@@ -1,6 +1,6 @@
 # Conjutos (Set)
 
-Conjutos (set) são container que armazenam elementos únicos em uma ordem especifica.
+Conjutos (set) são container que armazenam valores em uma estrutura de dados, com inserção, remoção e acesso constante. Geralmente usam [HashMap](./HashMap.md).
 
 ## C++ - [std::unordered_set](https://cplusplus.com/reference/unordered_set/unordered_set/)
 
@@ -9,8 +9,7 @@ Unordered sets are containers that store unique elements in no particular order,
 
 ### Associação 
 Elements in associative containers are referenced by their key and not by their absolute position in the container.
-### Ordenado
-The elements in the container follow a strict order at all times. All inserted elements are given a position in this order.
+
 ### Set
 The value of an element is also the key used to identify it.
 

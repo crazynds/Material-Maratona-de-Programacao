@@ -9,6 +9,7 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
  - [Big O Notation](./BigONotation.md)
  - Algoritmos
    - [Entrada e Saida](./Algoritmos/Entrada%20e%20Saida.md)
+     - [Printf/Scanf Avançado](./Algoritmos/c_printf.md)
    - [Matematica](./Algoritmos/Matem%C3%A1tica/README.md)
    - [Busca em estruturas](./Algoritmos/Busca/README.md)
    - [Grafos](./Algoritmos/Grafos/README.md)

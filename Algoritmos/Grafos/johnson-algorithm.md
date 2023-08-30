@@ -2,7 +2,7 @@
 
 Ele tenta adaptar o algoritmo de [Dijkstra](./dijkstra.md) para grafos com pesos negativos. Esse algoritmo aplica um _shift_ (incremento) dos valores das arestas do grafo para que não haja arestas com valores negavitos.
 
-Esse algoritmo usa o algoritmo de [Bellman-Ford] no primeiro passo para calcular o valor $P_v$ para cada vertice. Usando esses valores $P_v$ de cada vertice, é aplicado o seguinte calculo para fazer o incremento de cada aresta:
+Esse algoritmo usa o algoritmo de [Bellman-Ford](./Bellman-Ford.md) no primeiro passo para calcular o valor $P_v$ para cada vertice. Usando esses valores $P_v$ de cada vertice, é aplicado o seguinte calculo para fazer o incremento de cada aresta:
 $$
     Edge=(i,j,w)
 $$
