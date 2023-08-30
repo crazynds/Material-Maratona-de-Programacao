@@ -21,4 +21,5 @@
    6. Graph Clustering 
         - [Maximum Spacing K-Clustering](./spacingClustering.md)
         - [Perfect Match Graph](./perfect-match-graph.md)
+   7. [Remover Ciclos](./removecycles.md) 
 4.  [Experiencia de Grafos com Crazynds](./GrafosCrazynds/README.md)
