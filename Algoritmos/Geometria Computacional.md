@@ -49,7 +49,8 @@ raio = sqrt((2*a)/((double)n*sin((2*PI)/(double)n)));
 
 /*lembrando que a área de um polígono pode ser calculada por:*/
 area = ((l*raio)/2.0) * n;
-/*tendo ‘l’ o comprimento do lado, raio sendo o raio do polígono (ou do círculo haja círculo circunscrito) e ‘n’ o número de lados do polígono:*/
+/*tendo ‘l’ o comprimento do lado, 'raio' sendo o raio do círculo o qual o polígono é circunscrito (apótema) e
+‘n’ o número de lados do polígono:*/
 
 /*Fórmula da apótema do polígono usando o raio encontrado na fórmula acima*/
 apotema = cos(PI/(double)n) * raio;
@@ -133,6 +134,14 @@ float dist2D(Point a, Point b) {
 ```
 
 ## Produto Vetorial
+
+O produto vetorial entre os vetores $a$ e $b$ resulta em um vetor ortogonal (perpendicular) a ambos.
+A norma do vetor resultante é: $|a| * |b| * sin(\alpha)$, sendo $\alpha$ o ângulo entre os vetores.
+
+Se esse resultado for $0$, significa que os vetores são parelelos.
+
+Esse resultado consiste na área do paralelogramo formado pelos vetores (ao dividir por 2, obtém-se a área do triângulo formado pelos vetores)
+
 ```c++
 Point cross(Point a, Point b) {
     Point result;
@@ -145,6 +154,11 @@ Point cross(Point a, Point b) {
 ```
 
 ## Produto Escalar
+
+O produto escalar entre os vetores $a$ e $b$ resulta em: $|a| * |b| * cos(\alpha)$, sendo $\alpha$ o ângulo entre os vetores.
+
+Se o resultado for $0$, significa que os vetores são perpendiculares.
+
 ```c++
 float dot(Point a, Point b) {
     return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
@@ -152,6 +166,9 @@ float dot(Point a, Point b) {
 ```
 
 ## Norma
+
+A norma nada mais é que o tamanho do vetor. Para obtê-la, basta realizar a raiz quadrada da soma dos quadrados dos componentes.
+
 ```c++
 float norma(Point a) {
     return sqrt(dot(a, a));
