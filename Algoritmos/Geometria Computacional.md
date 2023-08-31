@@ -62,23 +62,27 @@ area1 = PI*apotema*apotema;
 area2 = PI*raio*raio;
 
 /* Calcula a area de um poligono irregular */
-const int max = 6; //quantidade de pontos no poligono
 
 struct Point {
 	float x, y;
 };
 
-float area_do_poligono(Point v[]) {
-	float area = ((v[max-1].y + v[0].y) / 2) * (v[max-1].x - v[0].x);
-	for (int i = 0; i < max - 1; i++) {
-		area += ((v[i].y + v[i + 1].y) / 2) * (v[i].x - v[i + 1].x);
+//numP = número de pontos
+float area_do_poligono(Point v[], int numP)
+{
+	float area = (v[numP - 1].y + v[0].y) * (v[numP - 1].x - v[0].x);
+
+	for (int i = 0; i < numP - 1; i++)
+    	{
+		area += (v[i].y + v[i + 1].y) * (v[i].x - v[i + 1].x);
 	}
 
 	if (area < 0)
-		area = -area;
+		area *= -1;
 
-	return area;
+	return area / 2;
 }
+
 ```
 
 
