@@ -36,7 +36,7 @@ def floydwarshall(edges: list, vertices):
     for k in range(vertices):
         for i in range(vertices):
             for j in range(vertices):
-                if current[i][j] < current[i][k] + current[k][j]:
+                if current[i][j] > current[i][k] + current[k][j]:
                     current[i][j] = current[i][k] + current[k][j]
                     
     # check if exists a negative cycle
