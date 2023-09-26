@@ -71,7 +71,7 @@ class BizarreTree:
             it = map(lambda a: -a,self.maxArr)
         cont = 0
         lastI = 0
-        for i in self.minArr:
+        for i in it:
             cont = (cont+1) if i == lastI else 1
             if self.data[i] >= cont:
                 yield i
