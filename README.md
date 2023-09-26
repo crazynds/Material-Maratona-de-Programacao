@@ -21,10 +21,11 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
      - [Lista](./Estrutura%20de%20Dados/Lista.md)
      - [Pilha](./Estrutura%20de%20Dados/Pilha.md)
      - [DoubleEndedQueue](./Estrutura%20de%20Dados/DoubleEndedQueue.md)
+       - [MinimumQueue](./Estrutura%20de%20Dados/MinimumQueue.md)
+     - [Heap/PriorityQueue](./Estrutura%20de%20Dados/Heap.md)
+       - [HeapDictionaried](./Estrutura%20de%20Dados/HeapDictionaried.md)
    - [HashMap (Dicionario)](./Estrutura%20de%20Dados/HashMap.md)
      - [Conjunto](./Estrutura%20de%20Dados/Conjunto.md)
-   - [Heap/PriorityQueue](./Estrutura%20de%20Dados/Heap.md)
-     - [HeapDictionaried](./Estrutura%20de%20Dados/HeapDictionaried.md)
    - [Grafos](./Estrutura%20de%20Dados/Grafos.md)
    - [DisjoinSet](./Estrutura%20de%20Dados/DisjoinSet.md)
    - Árvores
