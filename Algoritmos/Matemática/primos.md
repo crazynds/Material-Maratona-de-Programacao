@@ -7,6 +7,15 @@ Se retornar false então é 100% de certeza que não é primo, mas não garante 
 
 
 ```python
+def checkComposite(n,a,d,s):
+    x = pow(a, d, n)
+    if x == 1 or x == n-1: return False
+    for _ in range(1, s):
+        x = (x * x) % n
+        if x == n-1: 
+            return False
+    return True
+
 def isPrime(n, k=5): # miller-rabin
     from random import randint
     if n < 2: return False
@@ -16,15 +25,32 @@ def isPrime(n, k=5): # miller-rabin
     while d % 2 == 0:
         s, d = s+1, d//2
     for _ in range(k):
-        x = pow(randint(2, n-1), d, n)
-        if x == 1 or x == n-1: continue
-        for _ in range(1, s):
-            x = (x * x) % n
-            if x == 1: return False
-            if x == n-1: break
-        else: return False
+        a = randint(2, n-1)
+        if checkComposite(n,a,d,s)
+            return False
+        
     return True
 ```
+
+De acordo com [esse site](https://cp-algorithms.com/algebra/primality_tests.html#deterministic-version) é possivel ter uma versão do MillerRabin deterministica se for checado todas as bases até $2*ln(n)^2$.
+
+É provado também que para qualquer número inteiro de 64 bits é necessário checar apenas as 12 primeiros primos.
+
+```python
+def isPrime(n, k=5): # miller-rabin deterministico para 64 bits
+    if n < 2: return False
+    s, d = 0, n-1
+    while d % 2 == 0:
+        s, d = s+1, d//2
+    for a in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]: # 12 primeiros primos
+        if n==a:
+            return True
+        if checkComposite(n,a,d,s)
+            return False
+        
+    return True
+```
+
 
 
 

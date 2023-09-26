@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Estruturas de dados</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+:root{
+    --vscode-activityBar-activeBorder: #0078d4;
+    --vscode-activityBar-background: #181818;
+    --vscode-activityBar-border: #ffffff15;
+    --vscode-activityBar-foreground: #d7d7d7;
+    --vscode-activityBar-inactiveForeground: #ffffff80;
+    --vscode-activityBarBadge-background: #0078d4;
+    --vscode-activityBarBadge-foreground: #ffffff;
+    --vscode-badge-background: #0078d4;
+    --vscode-badge-foreground: #ffffff;
+    --vscode-button-background: #0078d4;
+    --vscode-button-border: #ffffff12;
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: #0078d4e6;
+    --vscode-button-secondaryBackground: #ffffff0f;
+    --vscode-button-secondaryForeground: #cccccc;
+    --vscode-button-secondaryHoverBackground: #ffffff15;
+    --vscode-checkbox-background: #313131;
+    --vscode-checkbox-border: #ffffff1f;
+    --vscode-debugToolBar-background: #181818;
+    --vscode-descriptionForeground: #8b949e;
+    --vscode-dropdown-background: #313131;
+    --vscode-dropdown-border: #ffffff1f;
+    --vscode-dropdown-foreground: #cccccc;
+    --vscode-dropdown-listBackground: #1f1f1f;
+    --vscode-editor-background: #1f1f1f;
+    --vscode-editor-findMatchBackground: #9e6a03;
+    --vscode-editor-foreground: #cccccc;
+    --vscode-editor-inactiveSelectionBackground: #3a3d41;
+    --vscode-editor-selectionHighlightBackground: #add6ff26;
+    --vscode-editorGroup-border: #ffffff17;
+    --vscode-editorGroupHeader-tabsBackground: #181818;
+    --vscode-editorGroupHeader-tabsBorder: #ffffff15;
+    --vscode-editorGutter-addedBackground: #2ea043;
+    --vscode-editorGutter-deletedBackground: #f85149;
+    --vscode-editorGutter-modifiedBackground: #0078d4;
+    --vscode-editorIndentGuide-activeBackground: #707070;
+    --vscode-editorIndentGuide-background: #404040;
+    --vscode-editorInlayHint-background: #8b949e1b;
+    --vscode-editorInlayHint-typeBackground: #8b949e1b;
+    --vscode-editorLineNumber-activeForeground: #cccccc;
+    --vscode-editorLineNumber-foreground: #6e7681;
+    --vscode-editorOverviewRuler-border: #010409;
+    --vscode-editorWidget-background: #1f1f1f;
+    --vscode-errorForeground: #f85149;
+    --vscode-focusBorder: #0078d4;
+    --vscode-foreground: #cccccc;
+    --vscode-icon-foreground: #cccccc;
+    --vscode-input-background: #2a2a2a;
+    --vscode-input-border: #ffffff1f;
+    --vscode-input-foreground: #cccccc;
+    --vscode-input-placeholderForeground: #ffffff79;
+    --vscode-inputOption-activeBackground: #2489db82;
+    --vscode-inputOption-activeBorder: #2488db;
+    --vscode-keybindingLabel-foreground: #cccccc;
+    --vscode-list-activeSelectionBackground: #323232;
+    --vscode-list-activeSelectionForeground: #ffffff;
+    --vscode-list-activeSelectionIconForeground: #ffffff;
+    --vscode-list-dropBackground: #383b3d;
+    --vscode-menu-background: #1f1f1f;
+    --vscode-menu-border: #454545;
+    --vscode-menu-foreground: #cccccc;
+    --vscode-menu-separatorBackground: #454545;
+    --vscode-notificationCenterHeader-background: #1f1f1f;
+    --vscode-notificationCenterHeader-foreground: #cccccc;
+    --vscode-notifications-background: #1f1f1f;
+    --vscode-notifications-border: #ffffff15;
+    --vscode-notifications-foreground: #cccccc;
+    --vscode-panel-background: #181818;
+    --vscode-panel-border: #ffffff15;
+    --vscode-panelInput-border: #ffffff15;
+    --vscode-panelTitle-activeBorder: #0078d4;
+    --vscode-panelTitle-activeForeground: #cccccc;
+    --vscode-panelTitle-inactiveForeground: #8b949e;
+    --vscode-peekViewEditor-background: #1f1f1f;
+    --vscode-peekViewEditor-matchHighlightBackground: #bb800966;
+    --vscode-peekViewResult-background: #1f1f1f;
+    --vscode-peekViewResult-matchHighlightBackground: #bb800966;
+    --vscode-pickerGroup-border: #ffffff15;
+    --vscode-pickerGroup-foreground: #8b949e;
+    --vscode-ports-iconRunningProcessForeground: #369432;
+    --vscode-progressBar-background: #0078d4;
+    --vscode-quickInput-background: #1f1f1f;
+    --vscode-quickInput-foreground: #cccccc;
+    --vscode-scrollbar-shadow: #484f5833;
+    --vscode-scrollbarSlider-activeBackground: #6e768187;
+    --vscode-scrollbarSlider-background: #6e768133;
+    --vscode-scrollbarSlider-hoverBackground: #6e768145;
+    --vscode-settings-dropdownBackground: #313131;
+    --vscode-settings-dropdownBorder: #ffffff1f;
+    --vscode-settings-headerForeground: #ffffff;
+    --vscode-settings-modifiedItemIndicator: #bb800966;
+    --vscode-sideBar-background: #181818;
+    --vscode-sideBar-border: #ffffff15;
+    --vscode-sideBar-foreground: #cccccc;
+    --vscode-sideBarSectionHeader-background: #181818;
+    --vscode-sideBarSectionHeader-border: #ffffff15;
+    --vscode-sideBarSectionHeader-foreground: #cccccc;
+    --vscode-sideBarTitle-foreground: #cccccc;
+    --vscode-statusBar-background: #181818;
+    --vscode-statusBar-border: #ffffff15;
+    --vscode-statusBar-debuggingBackground: #0078d4;
+    --vscode-statusBar-debuggingForeground: #ffffff;
+    --vscode-statusBar-focusBorder: #0078d4;
+    --vscode-statusBar-foreground: #cccccc;
+    --vscode-statusBar-noFolderBackground: #1f1f1f;
+    --vscode-statusBarItem-focusBorder: #0078d4;
+    --vscode-statusBarItem-prominentBackground: #6e768166;
+    --vscode-statusBarItem-remoteBackground: #0078d4;
+    --vscode-statusBarItem-remoteForeground: #ffffff;
+    --vscode-tab-activeBackground: #1f1f1f;
+    --vscode-tab-activeBorder: #1f1f1f;
+    --vscode-tab-activeBorderTop: #0078d4;
+    --vscode-tab-activeForeground: #ffffff;
+    --vscode-tab-border: #ffffff15;
+    --vscode-tab-hoverBackground: #1f1f1f;
+    --vscode-tab-inactiveBackground: #181818;
+    --vscode-tab-inactiveForeground: #ffffff80;
+    --vscode-tab-lastPinnedBorder: #cccccc33;
+    --vscode-tab-unfocusedActiveBorder: #1f1f1f;
+    --vscode-tab-unfocusedActiveBorderTop: #ffffff15;
+    --vscode-tab-unfocusedHoverBackground: #6e76811a;
+    --vscode-terminal-foreground: #cccccc;
+    --vscode-terminal-inactiveSelectionBackground: #3a3d41;
+    --vscode-terminal-tab-activeBorder: #0078d4;
+    --vscode-textBlockQuote-background: #010409;
+    --vscode-textBlockQuote-border: #ffffff14;
+    --vscode-textCodeBlock-background: #7e869166;
+    --vscode-textLink-activeForeground: #40a6ff;
+    --vscode-textLink-foreground: #40a6ff;
+    --vscode-textSeparator-foreground: #21262d;
+    --vscode-titleBar-activeBackground: #181818;
+    --vscode-titleBar-activeForeground: #cccccc;
+    --vscode-titleBar-border: #ffffff15;
+    --vscode-titleBar-inactiveBackground: #1f1f1f;
+    --vscode-titleBar-inactiveForeground: #8b949e;
+    --vscode-welcomePage-progress-foreground: #0078d4;
+    --vscode-welcomePage-tileBackground: #ffffff0f;
+    --vscode-widget-border: #ffffff15;
+}
+pre code{
+    color: #010409 !important;
+}
+
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="estruturas-de-dados">Estruturas de dados</h1>
+<h1 id="vetores">Vetores</h1>
+<h2 id="c---stdvector">C++ - <a href="https://cplusplus.com/reference/vector/vector/">std::vector</a></h2>
+<p>As principais funções utilizadas no vetor são as citadas abaixo:</p>
+<h3 id="iteração">Iteração:</h3>
+<ul>
+<li>begin(): retorna um iterador a partir do inicio do vetor;</li>
+<li>end(): retorna um iterador a partir do fim do vetor (não pega a ultima casa);</li>
+<li>rbegin(): retorna um iterador <em>reverso</em> a partir do fim do vetor;</li>
+<li>rend(): retorna um iterador <em>reverso</em> a partir do inicido do vetor (não pega a primeira casa);</li>
+</ul>
+<h3 id="getters">Getters:</h3>
+<ul>
+<li>operator[]: retorna o elemento da casa indicada dentro do operator. Caso seja uma posição maior que a quantidade de itens então causa um <em>comportamento não definido</em>;</li>
+<li>front(): retorna o primeiro elemento;</li>
+<li>back(): retorna o ultimo elemento;</li>
+</ul>
+<h3 id="capacidade">Capacidade:</h3>
+<ul>
+<li>size(): retorna o tamanho do vetor;</li>
+<li>empty(): retorna true se o vetor estiver vazio;</li>
+<li>capacity(): retorna o tamanho alocado atualmente para esse vetor;</li>
+<li>reserve(): reseva o tamanho informado para esse vetor;</li>
+</ul>
+<h3 id="modificadores">Modificadores:</h3>
+<ul>
+<li>push_back(): adiciona um elemento ao final do vetor;</li>
+<li>pop_back(): remove um elemento ao final do vetor;</li>
+<li>insert(): existem algumas versões para o insert, sendo elas:</li>
+<li>insert(iterator pos, val): a partir da posição, insere o item val;</li>
+<li>insert(iterator pos, start, end): a partir da posição, insere o array que começa em start e termina em end;</li>
+<li>erase(): apaga um elemento na posição passada, note que para remover o elemento da posição 4 deve-se chamar a função begin() e somar a 4;</li>
+</ul>
+<pre><code class="language-C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span> </span>
+
+vector&lt;<span class="hljs-type">int</span>&gt; *x = <span class="hljs-keyword">new</span> <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt; (<span class="hljs-number">3</span>, <span class="hljs-number">25</span>); <span class="hljs-comment">//x = (25, 25, 25)</span>
+<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">y</span> <span class="hljs-params">(<span class="hljs-number">5</span>,<span class="hljs-number">0</span>)</span></span>; <span class="hljs-comment">// y = (0, 0, 0, 0, 0)</span>
+*x = y; <span class="hljs-comment">// x = (0, 0, 0, 0, 0)</span>
+
+<span class="hljs-type">int</span> s[<span class="hljs-number">3</span>] = {<span class="hljs-number">100</span>, <span class="hljs-number">231</span>, <span class="hljs-number">213</span>};
+y.<span class="hljs-built_in">assign</span>(s, s+<span class="hljs-number">3</span>); <span class="hljs-comment">// x = (0, 0, 0, 0, 0) e y = (100, 231, 213)</span>
+
+y.<span class="hljs-built_in">insert</span>(y.<span class="hljs-built_in">begin</span>(), s, s+<span class="hljs-number">3</span>); <span class="hljs-comment">// y = (100, 231, 213, 100, 231, 213)</span>
+y.<span class="hljs-built_in">erase</span>(y.<span class="hljs-built_in">begin</span>(), y.<span class="hljs-built_in">begin</span>() + <span class="hljs-number">2</span>); <span class="hljs-comment">// y = (213, 100, 231, 213)</span>
+
+y.<span class="hljs-built_in">at</span>(<span class="hljs-number">1</span>); <span class="hljs-comment">// == y[1] e assim por diante</span>
+
+vector&lt;<span class="hljs-type">int</span>&gt;::iterator it;
+<span class="hljs-keyword">for</span>(it = y.<span class="hljs-built_in">begin</span>(); it != y.<span class="hljs-built_in">end</span>(); it++)
+cout &lt;&lt; *it &lt;&lt; endl;  
+</code></pre>
+<h1 id="lista">Lista</h1>
+<h2 id="c---stdlist">C++ - <a href="https://cplusplus.com/reference/list/list/">std::list</a></h2>
+<p>As principais funções utilizadas nas listas são as citadas abaixo:</p>
+<h3 id="iteração-1">Iteração:</h3>
+<ul>
+<li>begin(): retorna um iterador a partir do inicio da lista;</li>
+<li>end(): retorna um iterador a partir do fim da lista (não pega a ultima casa);</li>
+<li>rbegin(): retorna um iterador <em>reverso</em> a partir do fim da lista;</li>
+<li>rend(): retorna um iterador <em>reverso</em> a partir do inicido da lista (não pega a primeira casa);</li>
+</ul>
+<h3 id="getters-1">Getters:</h3>
+<ul>
+<li>front(): retorna o primeiro elemento;</li>
+<li>back(): retorna o ultimo elemento;</li>
+</ul>
+<h3 id="capacidade-1">Capacidade:</h3>
+<ul>
+<li>size(): retorna o tamanho da lista;</li>
+<li>empty(): retorna true se a lista estiver vazio;</li>
+</ul>
+<h3 id="modificadores-1">Modificadores:</h3>
+<ul>
+<li>push_back(): adiciona um elemento ao final da lista;</li>
+<li>pop_back(): remove um elemento do final da lista;</li>
+<li>push_front(): adiciona um elemento ao inicio da lista;</li>
+<li>pop_front(): remove um elemento do inicio da lista;</li>
+<li>insert(): existem algumas versões para o insert, sendo elas:</li>
+<li>insert(iterator pos, val): a partir da posição, insere o item val;</li>
+<li>insert(iterator pos, start, end): a partir da posição, insere o array que começa em start e termina em end;</li>
+<li>erase(): apaga um elemento na posição passada, note que para remover o elemento da posição 4 deve-se chamar a função begin() e somar a 4;</li>
+</ul>
+<h3 id="operadores">Operadores:</h3>
+<ul>
+<li>sort(): Ordena os elementos da lista, é possivel passar uma função para fazer a comparação;</li>
+<li>merge(): Junta duas listas ordenadas, a lista final vai estar ordenada;</li>
+<li>remove(): Remove todos os elementos que possuem o mesmo valor passado no parametro;</li>
+<li>remove_if(): Remove todos os elementos que passam na condição. O parametro é uma função que é aplicada em todos os elementos, e deve retornar true ou false, sendo true para remover e false para manter na lista;</li>
+</ul>
+<h2 id="python---list">Python - <a href="https://docs.python.org/3/tutorial/datastructures.html">list</a></h2>
+<p>As principais funções utilizadas nas listas são as citadas abaixo:</p>
+<h3 id="modificadores-2">Modificadores:</h3>
+<ul>
+<li>append(x): adiciona o elemento x ao final da lista;</li>
+<li>extend(<em>iterable</em>): adiciona todos os elementos do <em>iterable</em>* a lista;</li>
+<li>insert(i,x): insere o item x a posição i da lista;</li>
+<li>remove(x): remove o primeiro item que seja igual a x;</li>
+<li>clear(): remove todos os elementos da lista;</li>
+</ul>
+<h3 id="operadores-1">Operadores:</h3>
+<ul>
+<li>sort(): ordena a lista;</li>
+<li>key= fn(x) : o parametro key da função sort deve receber uma função que tem 1 parametro e retorna uma chave de comparação. Isso é bom quando se tem uma lista de objeto e para fazer o sort é necessário do item id do objeto, ou outro valor;</li>
+<li>reverse= bool : define se deve ordenar a lista de forma crescente ou decrescente;</li>
+<li>reverse(): reverte a lista;</li>
+<li>copy(): faz uma copia completa da lista;</li>
+</ul>
+<h3 id="getters-2">Getters:</h3>
+<ul>
+<li>list.count(x): retorna a contagem de quantos elementos iguais ao x existem na lista;</li>
+</ul>
+<p>* <em>iterable</em> em python é qualquer extrutura de dados que pode ser acessada de forma iterativa, e implementa a interface <em>iterable</em></p>
+<p>Note que em python, boa parte das função auxiliares não retornam uma lista, e sim um <em>iterable</em>. Caso queira converter um <em>iterable</em> em uma lista para poder utilizar as funções de lista use o seguinte código:</p>
+<pre><code class="language-python">l = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]
+m = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">float</span>,l) <span class="hljs-comment"># a função map não retorna uma lista, e sim um objeto que extende iterable</span>
+l = [* m ] <span class="hljs-comment"># dessa forma o python abre nosso iterable dentro de uma lista</span>
+</code></pre>
+<p>Existem algumas formas de criar um array de maneira fácil em pyton:</p>
+<pre><code class="language-python">fruits = [<span class="hljs-string">&#x27;banana&#x27;</span>,<span class="hljs-string">&#x27;longberry&#x27;</span>,<span class="hljs-string">&#x27;passion fruit&#x27;</span>]
+zeros = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)]
+squares = [x**<span class="hljs-number">2</span> <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)]
+nums = [*<span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)] <span class="hljs-comment">#Note que range também é um iterable logo é possivel abri-lo dentro de uma lista</span>
+
+ofMap = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> x:x/<span class="hljs-number">2</span>,<span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)))   <span class="hljs-comment">#Note que list(...) é uma outra forma de escrever [*...]</span>
+
+val = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]
+a,b,c = val <span class="hljs-comment"># note que é possivel desconstruir uma lista em que cada valor vai para uma variavel, mas é necessário que a lista tenha a mesma quantidade de valores que as variaves que recebem o valor.</span>
+
+</code></pre>
+<p>Outra forma de remover um elemento de uma lista <strong>sem retorna-lo</strong> é utilizando a chamada <em>del</em> do python. Segue um exemplo:</p>
+<pre><code class="language-python">
+a = [-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">66.25</span>, <span class="hljs-number">333</span>, <span class="hljs-number">333</span>, <span class="hljs-number">1234.5</span>]
+<span class="hljs-keyword">del</span> a[<span class="hljs-number">0</span>] <span class="hljs-comment"># remove o elemento na posição 0</span>
+<span class="hljs-keyword">del</span> a[:<span class="hljs-number">2</span>] <span class="hljs-comment"># remove todos os elementos até a posição 2</span>
+<span class="hljs-keyword">del</span> a[<span class="hljs-number">2</span>:] <span class="hljs-comment"># remove todos os elementos a partir da posição 2</span>
+<span class="hljs-keyword">del</span> a[<span class="hljs-number">2</span>:<span class="hljs-number">4</span>] <span class="hljs-comment"># remove todos os elementos a partir da posição 2 até a posição 4</span>
+<span class="hljs-keyword">del</span> a[:] <span class="hljs-comment"># remove todos os elementos do vetor</span>
+</code></pre>
+<h1 id="pilha">Pilha</h1>
+<h2 id="c---stdstack">C++ - <a href="https://cplusplus.com/reference/stack/stack/">std::stack</a></h2>
+<p>As principais funções utilizadas na stack são as citadas abaixo:</p>
+<ul>
+<li>empty(): testa se a stack está vazia;</li>
+<li>size(): retorna o tamanho da stack;</li>
+<li>push(T): insere no topo da pilha o item T;</li>
+<li>pop(): remove o elemento do topo da pilha, destaque que ele <strong>não retorna</strong> esse elemento, ele apenas remove;</li>
+<li>top(): retorna o elemento do topo da pilha, sem remove-lo;</li>
+</ul>
+<p>Abaixo um exemplo de utilização da stack:</p>
+<pre><code class="language-C++"><span class="hljs-comment">// stack::push/pop</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>       <span class="hljs-comment">// std::cout</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stack&gt;</span>          <span class="hljs-comment">// std::stack</span></span>
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+  std::stack&lt;<span class="hljs-type">int</span>&gt; mystack;
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">5</span>; ++i) mystack.<span class="hljs-built_in">push</span>(i);
+  std::cout &lt;&lt; <span class="hljs-string">&quot;Popping out elements...&quot;</span>;
+  <span class="hljs-keyword">while</span> (!mystack.<span class="hljs-built_in">empty</span>())
+  {
+     std::cout &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span> &lt;&lt; mystack.<span class="hljs-built_in">top</span>();
+     mystack.<span class="hljs-built_in">pop</span>();
+  }
+  std::cout &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;
+
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h1 id="double-ended-queue">Double Ended Queue</h1>
+<h2 id="python---deque">Python - <a href="https://docs.python.org/3/tutorial/datastructures.html#using-lists-as-queues">deque</a></h2>
+<p>Em python existe a estrutura de dados <em>deque</em> (Double Ended Queue) que é desenvolvida para ter <em>rápidas</em> inserções e remoções para o início e o fim da lista.</p>
+<p>Um <em>deque</em> pode ser usado da seguinte forma:</p>
+<pre><code class="language-python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> deque
+
+l = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]
+dq = deque(l) <span class="hljs-comment"># cria um deque a partir de uma lista, O(n)</span>
+dq.append(<span class="hljs-number">7</span>) <span class="hljs-comment"># adiciona ao final do deque o item 7, O(1)</span>
+dq.appendleft(<span class="hljs-number">7</span>) <span class="hljs-comment"># adiciona ao inicio do deque o item 7, O(1)</span>
+dq.popleft() <span class="hljs-comment"># retorna e remove o primeiro elemento do deque, O(1)</span>
+dq.pop() <span class="hljs-comment"># retorna e remove o ultimo elemento do deque, O(1)</span>
+dq.rotate(<span class="hljs-number">5</span>) <span class="hljs-comment"># ´rotaciona´ uma deque. rotate(5) fará 5 rotações no sentido normal (esquerda para direita). rotate(-5) faz no oposto (direita para esquerda)</span>
+</code></pre>
+<h1 id="hash-map">Hash Map</h1>
+<h2 id="c---stdunsorted_map">C++ - <a href="https://cplusplus.com/reference/unordered_map/unordered_map/">std::unsorted_map</a></h2>
+<p>Vale destacar que a <code>std::unsortedmap</code> é implementada utilizando um hashmap, o que faz com que sua inserção, busca e remoção seja feito em tempo O(1), enquanto a <code>std::map</code> utiliza a implementação de uma <a href="./BinaryTree.html">árvore binária</a> Red-Black, que já se mantém balanceada, então suas operações tem custo O(log n).</p>
+<h3 id="iteração-2">Iteração:</h3>
+<ul>
+<li>begin(): retorna um iterador a partir do inicio do vetor;</li>
+<li>end(): retorna um iterador a partir do fim do vetor (não pega a ultima casa);</li>
+</ul>
+<h3 id="getters-3">Getters:</h3>
+<ul>
+<li>operator[]: retorna o elemento da <em>chave</em> indicada dentro do operator. Caso seja uma chave que não existe é inserido um novo item com o construtor padrão (para números geralmente é zero) e retornado uma referencia desse item;</li>
+<li>find(): retorna um iterador a partir desse elemento, caso não encontre retorna o map.end();</li>
+</ul>
+<h3 id="capacidade-2">Capacidade:</h3>
+<ul>
+<li>size(): retorna o tamanho do vetor;</li>
+<li>empty(): retorna true se o vetor estiver vazio;</li>
+</ul>
+<h3 id="modificadores-3">Modificadores:</h3>
+<ul>
+<li>insert(): existem algumas versões para o insert, sendo elas:</li>
+<li>insert(std::pair&lt;K,V&gt;): insere um objeto par dentro do map;</li>
+<li>insert(K,V): insere o valor V na posição K;</li>
+<li>erase(): apaga um elemento na posição passada, note que para remover o elemento da posição 4 deve-se chamar a função begin() e somar a 4;</li>
+<li>erase(iterator): remove o item dessa posição do iterador;</li>
+<li>erase(start,end): remove os items desde a posição start até end;</li>
+</ul>
+<h2 id="python---dictionaries">Python - <a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">dictionaries</a></h2>
+<p>Os <em>dictionaries</em> não possuem nenhuma função importante, e todos as manipulações deles são exemplificadas abaixo:</p>
+<pre><code class="language-python">
+d1 = {} <span class="hljs-comment"># forma de criar um dicionário vazio</span>
+d2 = {
+  <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;S1&#x27;</span>, 
+  <span class="hljs-number">2</span>:<span class="hljs-string">&#x27;s2&#x27;</span>
+} <span class="hljs-comment"># forma de criar um dicionário com elementos já</span>
+d3 = {x: x**<span class="hljs-number">2</span> <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)} <span class="hljs-comment"># declarar um dicionario com elementos dinamicos</span>
+
+bool1 = <span class="hljs-number">1</span> <span class="hljs-keyword">in</span> d1 <span class="hljs-comment"># forma de verificar se a chave existe no dicionario</span>
+bool2 = <span class="hljs-number">2</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> d1 <span class="hljs-comment"># forma de verificar se a chave não existe no dicionario</span>
+
+d1[<span class="hljs-number">1</span>] = <span class="hljs-string">&#x27;ola mundo&#x27;</span> <span class="hljs-comment"># forma de adicionar item no dicionario</span>
+d1[<span class="hljs-number">1</span>] += <span class="hljs-string">&#x27;!&#x27;</span> <span class="hljs-comment"># é possivel manipular os itens do dicionaro também</span>
+
+<span class="hljs-keyword">del</span> d1[<span class="hljs-number">1</span>] <span class="hljs-comment"># deleta o item com a chave 1 do dicionário</span>
+
+
+<span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> d1:  <span class="hljs-comment"># essa é a forma de iterar sobre o dicionário, porém o valor que é iterado é sobre as chaves, e não sobre os valores</span>
+    <span class="hljs-built_in">print</span>(key,d1[key])
+
+<span class="hljs-keyword">for</span> key,val <span class="hljs-keyword">in</span> d1.items():  <span class="hljs-comment"># essa é a forma de iterar sobre o dicionário incluindo os valores</span>
+    <span class="hljs-built_in">print</span>(key,val)
+
+l = <span class="hljs-built_in">list</span>(d1)  <span class="hljs-comment"># cria uma lista com todas as chaves do dicionário</span>
+l = <span class="hljs-built_in">list</span>(d1.items())  <span class="hljs-comment"># cria uma lista com tuplas contendo a relação entre chave e valor</span>
+
+</code></pre>
+<h1 id="conjutos-set">Conjutos (Set)</h1>
+<h2 id="c---stdunordered_set">C++ - <a href="https://cplusplus.com/reference/unordered_set/unordered_set/">std::unordered_set</a></h2>
+<p>As principais funções utilizadas em sets são as citadas abaixo:</p>
+<h3 id="iteração-3">Iteração:</h3>
+<ul>
+<li>begin(): retorna um iterador a partir do inicio da lista;</li>
+<li>end(): retorna um iterador a partir do fim da lista (não pega a ultima casa);</li>
+<li>rbegin(): retorna um iterador <em>reverso</em> a partir do fim da lista;</li>
+<li>rend(): retorna um iterador <em>reverso</em> a partir do inicido da lista (não pega a primeira casa);</li>
+</ul>
+<h3 id="capacidade-3">Capacidade:</h3>
+<ul>
+<li>size(): retorna o tamanho da lista;</li>
+<li>empty(): retorna true se a lista estiver vazio;</li>
+</ul>
+<h3 id="modificadores-4">Modificadores:</h3>
+<ul>
+<li>insert(): existem algumas versões para o insert, sendo elas:</li>
+<li>insert(val): insere o item val;</li>
+<li>insert(iterator pos, val): a partir da posição passada insere o item val, ainda vai manter a ordem, porém pode adicionar eficiencia se a posição do iterator passada estiver próxima do local onde o item deve ser inserido;</li>
+<li>erase(): apaga um elemento na posição passada, a posição passada sempre é um iterator na posição que deseja remover;</li>
+<li>clear(): limpa todos os dados do set;</li>
+</ul>
+<h3 id="getters-4">Getters:</h3>
+<ul>
+<li>find(): retorna um iterator se existir aquele dado no set, se não existir ele retorna um iterator end()</li>
+</ul>
+<h2 id="python---set">Python - <a href="https://docs.python.org/3/tutorial/datastructures.html#sets">set</a></h2>
+<p>As principais funções de set em python são exemplificadas abaixo:</p>
+<pre><code class="language-python">
+v = {<span class="hljs-string">&#x27;banana&#x27;</span>, <span class="hljs-string">&#x27;tomate&#x27;</span>, <span class="hljs-string">&#x27;arroz&#x27;</span>} <span class="hljs-comment"># create a set</span>
+
+<span class="hljs-string">&#x27;banana&#x27;</span> <span class="hljs-keyword">in</span> v <span class="hljs-comment"># True</span>
+
+<span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> v: <span class="hljs-comment"># for each item in set</span>
+    <span class="hljs-keyword">pass</span>
+
+v.add(<span class="hljs-string">&#x27;laranja&#x27;</span>) <span class="hljs-comment"># add item to set</span>
+v.remove(<span class="hljs-string">&#x27;banana&#x27;</span>) <span class="hljs-comment"># remove item from set</span>
+
+d = {<span class="hljs-string">&#x27;banana&#x27;</span>, <span class="hljs-string">&#x27;tomate&#x27;</span>, <span class="hljs-string">&#x27;feijão&#x27;</span>}
+
+d | v <span class="hljs-comment"># in set d or v</span>
+d - v <span class="hljs-comment"># in d but not in v (order matters)</span>
+d &amp; v <span class="hljs-comment"># in both sets (d and v)</span>
+d ^ v <span class="hljs-comment"># in set d or in set v but not in both</span>
+
+</code></pre>
+<h1 id="heap-arvore-binaria-em-array">Heap (Arvore binaria em array)</h1>
+<h2 id="c---stdpriority_queue">C++ - <a href="https://cplusplus.com/reference/queue/priority_queue/">std::priority_queue</a></h2>
+<h3 id="default-behavior">Default behavior</h3>
+<p>Note the prioriry_queue by default leave the <strong>biggest</strong> value at the top, unless you use custom compare function.</p>
+<h3 id="custom-compare-function">Custom compare function</h3>
+<p>A binary predicate that takes two elements (of type T) as arguments and returns a bool.
+The expression comp(a,b), where comp is an object of this type and a and b are elements in the container, shall return true if a is considered to go before b in the strict weak ordering the function defines.</p>
+<p>The priority_queue uses this function to maintain the elements sorted in a way that preserves heap properties (i.e., that the element popped is the last according to this strict weak ordering). This can be a function pointer or a function object, and defaults to less<T>, which returns the same as applying the less-than operator (a&lt;b).</p>
+<p>The use of compare function pointer is examplified as follow.</p>
+<pre><code class="language-c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>       <span class="hljs-comment">// std::cout</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span>          <span class="hljs-comment">// std::priority_queue</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span>         <span class="hljs-comment">// std::vector</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;functional&gt;</span>     <span class="hljs-comment">// std::greater</span></span>
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">mycomparison</span>
+{
+  <span class="hljs-type">bool</span> reverse;
+<span class="hljs-keyword">public</span>:
+  <span class="hljs-built_in">mycomparison</span>(<span class="hljs-type">const</span> <span class="hljs-type">bool</span>&amp; revparam=<span class="hljs-literal">false</span>)
+    {reverse=revparam;}
+  <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span> <span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; lhs, <span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp;rhs)</span> <span class="hljs-type">const</span>
+  </span>{
+    <span class="hljs-keyword">if</span> (reverse) <span class="hljs-keyword">return</span> (lhs&gt;rhs);
+    <span class="hljs-keyword">else</span> <span class="hljs-built_in">return</span> (lhs&lt;rhs);
+  }
+};
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-type">int</span> myints[]= {<span class="hljs-number">10</span>,<span class="hljs-number">60</span>,<span class="hljs-number">50</span>,<span class="hljs-number">20</span>};
+
+  std::priority_queue&lt;<span class="hljs-type">int</span>&gt; first;
+  <span class="hljs-function">std::priority_queue&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">second</span> <span class="hljs-params">(myints,myints+<span class="hljs-number">4</span>)</span></span>;
+  std::priority_queue&lt;<span class="hljs-type">int</span>, std::vector&lt;<span class="hljs-type">int</span>&gt;, std::greater&lt;<span class="hljs-type">int</span>&gt; &gt;
+                            <span class="hljs-built_in">third</span> (myints,myints+<span class="hljs-number">4</span>);
+  <span class="hljs-comment">// using mycomparison:</span>
+  <span class="hljs-keyword">typedef</span> std::priority_queue&lt;<span class="hljs-type">int</span>,std::vector&lt;<span class="hljs-type">int</span>&gt;,mycomparison&gt; mypq_type;
+
+  mypq_type fourth;                       <span class="hljs-comment">// less-than comparison</span>
+  <span class="hljs-function">mypq_type <span class="hljs-title">fifth</span> <span class="hljs-params">(mycomparison(<span class="hljs-literal">true</span>))</span></span>;   <span class="hljs-comment">// greater-than comparison</span>
+
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>As principais funções utilizadas nas listas são as citadas abaixo:</p>
+<h3 id="getters-5">Getters:</h3>
+<ul>
+<li>top(): retorna o elemento no topo da queue, é o próximo que vai ser removido no pop;</li>
+</ul>
+<h3 id="capacidade-4">Capacidade:</h3>
+<ul>
+<li>size(): retorna o tamanho da lista;</li>
+<li>empty(): retorna true se a lista estiver vazio;</li>
+</ul>
+<h3 id="modificadores-5">Modificadores:</h3>
+<ul>
+<li>push(): adiciona um elemento a fila de prioridade;</li>
+<li>pop(): remove o elemento no topo da fila de prioridade;</li>
+</ul>
+<h2 id="python---heap">Python - <a href="https://docs.python.org/3/library/heapq.html">Heap</a></h2>
+<p>O python tem filas utilizando a biblioteca <em>heapq</em> que já vem por padrão com o python nas versões mais recentes. (&gt;=3.7)</p>
+<p>As funções utilizados no heap são citadas abaixo:</p>
+<h3 id="modificadores-6">Modificadores:</h3>
+<ul>
+<li>heappush(): adiciona um elemento ao array heap;</li>
+<li>heappop(): remove o menor elemento do array heap;</li>
+<li>heappushpop(): adiciona um elemento ao array heap e remove o menor elemento, é mais eficiente que executar as duas funções em separado;</li>
+<li>heapify(): transforma um array em um array heap;</li>
+</ul>
+<p>Exemplo:</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> heapq
+
+arr = [<span class="hljs-number">5</span>,<span class="hljs-number">17</span>,<span class="hljs-number">0</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>,<span class="hljs-number">9</span>]
+
+arr = heapq.heapify(arr)  <span class="hljs-comment"># transform unsorted array in heapified array</span>
+
+heapq.heappush(arr,<span class="hljs-number">6</span>) <span class="hljs-comment"># add 6 to heap array</span>
+heapq.heappush(arr,<span class="hljs-number">17</span>) <span class="hljs-comment"># add 17 to heap array</span>
+v1 = heapq.heappop(arr) <span class="hljs-comment"># return the smallest element from heap array</span>
+
+v2 = heapq.heappushpop(arr,<span class="hljs-number">4</span>) <span class="hljs-comment"># return the smallest elemento and push 4 to heap array</span>
+
+</code></pre>
+<h1 id="heap--dictionary">Heap + Dictionary</h1>
+<h1 id="python---heapdictionary">Python - HeapDictionary</h1>
+<p>Implementação do HeapDictionary feita por <a href="https://github.com/crazynds">Crazynds</a></p>
+<p>Ja vou mandar a dica também, em python a biblioteca <em>heapq</em> é otimizada para rodar de forma nativa, já uma implementação manual como a abaixo, a estrutura heap acaba perdendo um pouco de performance. As vezes o desempenho que tu ganha na utilização de um <em>HeapDictionary</em> não compensa por conta da biblioteca <em>heapq</em> rodar de forma nativa.</p>
+<p>Mas para linguagens compiladas como <strong>C++</strong> pode tacar-lhe o pau na implementação, que o boost vai ser imenso. Use como referencia o código em python para fazer a sua implementação.</p>
+<pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">HeapDictionary</span>:
+
+    <span class="hljs-comment"># Execution time: O(N)</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, iterable, key: <span class="hljs-built_in">callable</span></span>):
+        <span class="hljs-string">&#x27;&#x27;&#x27;
+            Iterable is the content you want initialize
+            key is the function to extract the key value from the itens
+        &#x27;&#x27;&#x27;</span>
+        self.heap = <span class="hljs-built_in">list</span>(iterable)
+        heapq.heapify(self.heap)
+        self.<span class="hljs-built_in">dict</span> = {}
+        self.extractor = key
+        <span class="hljs-keyword">for</span> i,v <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(self.heap):
+            key = self.extractor(v)
+            <span class="hljs-keyword">if</span> key <span class="hljs-keyword">in</span> self.<span class="hljs-built_in">dict</span>:
+                <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">&#x27;No duplicate keys allowed during class initialization!&#x27;</span>)
+            self.<span class="hljs-built_in">dict</span>[key] = i
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">len</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(self.heap)
+
+    <span class="hljs-comment"># Execution time: O(log N)</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">push</span>(<span class="hljs-params">self,item</span>):
+        key = self.extractor(item)
+        <span class="hljs-comment"># If item already in the heap and is bigger than the current value, so ignore</span>
+        <span class="hljs-keyword">if</span> key <span class="hljs-keyword">in</span> self.<span class="hljs-built_in">dict</span>:
+            position = self.<span class="hljs-built_in">dict</span>[key]
+            <span class="hljs-keyword">if</span> self.heap[position] &lt;= item:
+                <span class="hljs-keyword">return</span>
+            self.heap[position] = item
+            self.__siftdown(<span class="hljs-number">0</span>,position)
+        <span class="hljs-keyword">else</span>:
+            self.heap.append(item)
+            self.__siftdown(<span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(self.heap)-<span class="hljs-number">1</span>)
+
+    <span class="hljs-comment"># Execution time: O(log N)</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">pop</span>(<span class="hljs-params">self</span>):
+        lastelt = self.heap.pop()
+        <span class="hljs-keyword">if</span> self.heap:
+            returnitem,self.heap[<span class="hljs-number">0</span>] = self.heap[<span class="hljs-number">0</span>],lastelt
+            self.__update_dict(returnitem,<span class="hljs-literal">None</span>)
+            self.__siftup(<span class="hljs-number">0</span>)
+            <span class="hljs-keyword">return</span> returnitem
+        <span class="hljs-keyword">return</span> lastelt
+
+    <span class="hljs-comment"># Optional function, faster than push and pop separately</span>
+    <span class="hljs-comment"># Execution time: O(log N)</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">pushpop</span>(<span class="hljs-params">self,item</span>):
+        key = self.extractor(item)
+        <span class="hljs-comment"># If item already in the heap and is bigger than the current value, so ignore</span>
+        <span class="hljs-keyword">if</span> key <span class="hljs-keyword">in</span> self.<span class="hljs-built_in">dict</span>:
+            position = self.<span class="hljs-built_in">dict</span>[key]
+            <span class="hljs-keyword">if</span> self.heap[position] &lt;= item:
+                <span class="hljs-keyword">return</span>
+            self.push(item)
+            item = self.pop()
+        <span class="hljs-keyword">elif</span> self.heap <span class="hljs-keyword">and</span> self.heap[<span class="hljs-number">0</span>] &lt; item:
+            item, self.heap[<span class="hljs-number">0</span>] = self.heap[<span class="hljs-number">0</span>], item
+            self.__update_dict(item,<span class="hljs-literal">None</span>)
+            self.__siftup(<span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> item
+    
+    <span class="hljs-comment"># Optional function</span>
+    <span class="hljs-comment"># Execution time: O(log N)</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">removebykey</span>(<span class="hljs-params">self,key</span>):
+        <span class="hljs-keyword">if</span> key <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> self.<span class="hljs-built_in">dict</span>:
+            <span class="hljs-keyword">return</span>
+        position = self.<span class="hljs-built_in">dict</span>[key]
+        lastlt = self.heap.pop()
+        <span class="hljs-keyword">if</span> self.heap <span class="hljs-keyword">and</span> <span class="hljs-built_in">len</span>(self.heap)!=position:
+            self.heap[position] = lastlt
+            self.__siftup(position)
+
+        <span class="hljs-keyword">del</span> self.<span class="hljs-built_in">dict</span>[key]
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__update_dict</span>(<span class="hljs-params">self,item,pos</span>):
+        item = self.extractor(item)
+        <span class="hljs-keyword">if</span> pos == <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">del</span> self.<span class="hljs-built_in">dict</span>[item]
+        <span class="hljs-keyword">else</span>:
+            self.<span class="hljs-built_in">dict</span>[item] = pos
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__siftdown</span>(<span class="hljs-params">self,start,position</span>):
+        newitem = self.heap[position]
+        <span class="hljs-comment"># Follow the path to the root, moving parents down until finding a place</span>
+        <span class="hljs-comment"># newitem fits.</span>
+        <span class="hljs-keyword">while</span> position &gt; start:
+            parentpos = (position - <span class="hljs-number">1</span>) &gt;&gt; <span class="hljs-number">1</span>
+            parent = self.heap[parentpos]
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> newitem &lt; parent:
+                <span class="hljs-keyword">break</span>
+            self.heap[position] = parent
+            self.__update_dict(parent,position)
+            position = parentpos
+
+        self.heap[position] = newitem
+        self.__update_dict(newitem,position)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__siftup</span>(<span class="hljs-params">self,position</span>):
+        endpos = <span class="hljs-built_in">len</span>(self.heap)
+        startpos = position
+        newitem = self.heap[position]
+        <span class="hljs-comment"># Bubble up the smaller child until hitting a leaf.</span>
+        childpos = <span class="hljs-number">2</span>*position + <span class="hljs-number">1</span>    <span class="hljs-comment"># leftmost child position</span>
+        <span class="hljs-keyword">while</span> childpos &lt; endpos:
+            <span class="hljs-comment"># Set childpos to index of smaller child.</span>
+            rightpos = childpos + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> rightpos &lt; endpos <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> self.heap[childpos] &lt; self.heap[rightpos]:
+                childpos = rightpos
+            <span class="hljs-comment"># Move the smaller child up.</span>
+            self.heap[position] = self.heap[childpos]        
+            self.__update_dict(self.heap[position],position)
+
+            position = childpos
+            childpos = <span class="hljs-number">2</span>*position + <span class="hljs-number">1</span>
+        <span class="hljs-comment"># The leaf at position is empty now.  Put newitem there, and bubble it up</span>
+        <span class="hljs-comment"># to its final resting place (by sifting its parents down).</span>
+        self.heap[position] = newitem
+        self.__update_dict(newitem,position)
+        self.__siftdown(startpos, position)
+</code></pre>
+<h1 id="disjoin">Disjoin</h1>
+<p>Possue no mínimo duas funções:</p>
+<ul>
+<li>Find(x): qual o conjunto no qual <em>x</em> faz parte?</li>
+<li>Union(x,y): unir o conjunto de <em>x</em> e de <em>y</em> e torna-los um só.</li>
+</ul>
+<h2 id="c---disjoin">C++ - <a href="https://www.geeksforgeeks.org/disjoint-set-union-randomized-algorithm/">Disjoin</a></h2>
+<p>O algoritmo abaixo é extremamente eficiente, sendo a busca e a união em O(alpha(n))</p>
+<pre><code class="language-c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;random&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">DisjointSetUnion</span> {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// Constructor that initializes the parent and size arrays</span>
+    <span class="hljs-built_in">DisjointSetUnion</span>(<span class="hljs-type">int</span> n) {
+        parent = <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n);
+        <span class="hljs-comment">// this is the size of height of current three node</span>
+        size = <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title">Find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span>
+    </span>{
+       <span class="hljs-keyword">if</span> (parent[x] != x) {
+           parent[x] = <span class="hljs-built_in">Find</span>(parent[x]);
+       }
+       <span class="hljs-keyword">return</span> parent[x];
+    }
+     
+     
+    <span class="hljs-comment">// Merge the sets containing elements x and y</span>
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">unite</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span> </span>{
+        <span class="hljs-type">int</span> root_x = <span class="hljs-built_in">find</span>(x);
+        <span class="hljs-type">int</span> root_y = <span class="hljs-built_in">find</span>(y);
+        <span class="hljs-keyword">if</span> (root_x == root_y) {
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-comment">// Chose the bigger three to be the root</span>
+        cout &lt;&lt; size[root_y] &lt;&lt; <span class="hljs-string">&quot; | &quot;</span> &lt;&lt; size[root_x] &lt;&lt; endl;
+        <span class="hljs-keyword">if</span>(size[root_y] &gt; size[root_x])
+            <span class="hljs-built_in">swap</span>(root_x,root_y);
+        <span class="hljs-comment">// increase the three size</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(size[root_x] == size[root_y])
+            size[root_x]++;
+
+        parent[root_y] = root_x;
+
+    }
+     
+<span class="hljs-keyword">private</span>:
+    vector&lt;<span class="hljs-type">int</span>&gt; parent;
+    vector&lt;<span class="hljs-type">int</span>&gt; size;
+};
+</code></pre>
+<h2 id="python---disjoin">Python - <a href="https://www.geeksforgeeks.org/disjoint-set-union-randomized-algorithm/">Disjoin</a></h2>
+<p>O algoritmo abaixo é extremamente eficiente, sendo a busca e a união em O(alpha(n))</p>
+<pre><code class="language-python"> 
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">DisjointSetUnion</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, n</span>):
+        self.parent = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)]
+        self.size = [<span class="hljs-number">1</span>] * n
+ 
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">find</span>(<span class="hljs-params">self, x</span>):
+       <span class="hljs-keyword">if</span> self.parent[x] != x:
+           self.parent[x] = self.find(self.parent[x])
+       <span class="hljs-keyword">return</span> self.parent[x] 
+
+    <span class="hljs-comment"># This function depends of the find method</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">union</span>(<span class="hljs-params">self, x, y</span>):
+        root_x = self.find(x)
+        root_y = self.find(y)
+        <span class="hljs-keyword">if</span> root_x == root_y:
+            <span class="hljs-keyword">return</span>
+
+        <span class="hljs-keyword">if</span> self.size[root_y] &gt; self.size[root_x]:
+            root_x, root_y = root_y, root_x
+        <span class="hljs-keyword">elif</span> self.size[root_y] == self.size[root_x]:
+            self.size[root_x] += <span class="hljs-number">1</span>
+ 
+        self.parent[root_y] = root_x
+</code></pre>
+<h1 id="avl-tree">AVL Tree</h1>
+<p>A arvore AVL é uma arvore binária que implementa um algoritmo que mantém a arvore balanceada. Como a arvore se mantém balanceada é ótimo para executar consultas em tempo <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">log N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>.</p>
+<p>Inserção: O(log N)<br>
+Remoção: O(log N)<br>
+Espaço: O(N)</p>
+<p>Esse tipo de arvore de acordo com o algoritmo as chaves podem ser únicas, ou podem repetir. Nas arvores binárias podem otimizar consultas (min, max, search, etc...) em tempo <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">log N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> com caches em cada nó.</p>
+<h1 id="python---avl-tree">Python - AVL Tree</h1>
+<p>Implementação que permite chaves duplicas.</p>
+<pre><code class="language-python"><span class="hljs-comment"># Create a tree node</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">TreeNode</span>():
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, key</span>):
+        self.key = key
+        self.left = <span class="hljs-literal">None</span>
+        self.right = <span class="hljs-literal">None</span>
+        self.height = <span class="hljs-number">1</span>
+
+    <span class="hljs-comment"># Get the height of the node</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getHeight</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> self.height
+
+    <span class="hljs-comment"># Get balance factore of the node</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getBalance</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> (self.left.getHeight() <span class="hljs-keyword">if</span> self.left <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>) - (self.right.getHeight() <span class="hljs-keyword">if</span> self.right <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">getMinNode</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.left:
+            <span class="hljs-keyword">return</span> self
+        <span class="hljs-keyword">return</span> self.left.getMinNode()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">find</span>(<span class="hljs-params">self,key</span>):
+        <span class="hljs-keyword">if</span> self.key == key:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">elif</span> self.key &gt; key <span class="hljs-keyword">and</span> self.left:
+            <span class="hljs-keyword">return</span> self.left.find(key)
+        <span class="hljs-keyword">elif</span> self.key &gt; key <span class="hljs-keyword">and</span> self.right:
+            <span class="hljs-keyword">return</span> self.right.find(key)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+        <span class="hljs-comment"># Function to perform left rotation</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">leftRotate</span>(<span class="hljs-params">self</span>):
+        y = self.right
+        temp = y.left
+        y.left = self
+        self.right = temp
+        self.height = <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(self.left.getHeight() <span class="hljs-keyword">if</span> self.left <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>,
+                           self.right.getHeight() <span class="hljs-keyword">if</span> self.right <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+        y.height = <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(y.left.getHeight() <span class="hljs-keyword">if</span> y.left <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>,
+                           y.right.getHeight() <span class="hljs-keyword">if</span> y.right <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> y
+
+    <span class="hljs-comment"># Function to perform right rotation</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">rightRotate</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.left:
+            <span class="hljs-keyword">return</span> self
+        y = self.left
+        temp = y.right
+        y.right = self
+        self.left = temp
+        self.height = <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(self.left.getHeight() <span class="hljs-keyword">if</span> self.left <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>,
+                           self.right.getHeight() <span class="hljs-keyword">if</span> self.right <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+        y.height = <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(y.left.getHeight() <span class="hljs-keyword">if</span> y.left <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>,
+                           y.right.getHeight() <span class="hljs-keyword">if</span> y.right <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> y
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">insert_node</span>(<span class="hljs-params">self, key</span>):
+
+        <span class="hljs-comment"># Find the correct location and insert the node</span>
+        <span class="hljs-keyword">if</span> key &lt; self.key:
+            self.left = self.left.insert_node(key) <span class="hljs-keyword">if</span> self.left <span class="hljs-keyword">else</span> TreeNode(key)
+        <span class="hljs-keyword">else</span>:
+            self.right = self.right.insert_node(key) <span class="hljs-keyword">if</span> self.right <span class="hljs-keyword">else</span> TreeNode(key)
+
+        self.height = <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(self.left.getHeight() <span class="hljs-keyword">if</span> self.left <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>,
+                              self.right.getHeight() <span class="hljs-keyword">if</span> self.right <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+
+        <span class="hljs-comment"># Update the balance factor and balance the tree</span>
+        balanceFactor = self.getBalance()
+        <span class="hljs-keyword">if</span> balanceFactor &gt; <span class="hljs-number">1</span>:
+            <span class="hljs-keyword">if</span> key &lt; self.left.key:
+                <span class="hljs-keyword">return</span> self.rightRotate()
+            <span class="hljs-keyword">else</span>:
+                self.left = self.left.leftRotate()
+                <span class="hljs-keyword">return</span> self.rightRotate()
+
+        <span class="hljs-keyword">if</span> balanceFactor &lt; -<span class="hljs-number">1</span>:
+            <span class="hljs-keyword">if</span> key &gt; self.right.key:
+                <span class="hljs-keyword">return</span> self.leftRotate()
+            <span class="hljs-keyword">else</span>:
+                self.right = self.right.rightRotate()
+                <span class="hljs-keyword">return</span> self.leftRotate()
+
+        <span class="hljs-keyword">return</span> self
+
+    <span class="hljs-comment"># Function to delete a node</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">delete_node</span>(<span class="hljs-params">self, key</span>):
+
+        <span class="hljs-keyword">if</span> key &lt; self.key:
+            self.left = self.left.delete_node(key) <span class="hljs-keyword">if</span> self.left <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>
+        <span class="hljs-keyword">elif</span> key &gt; self.key:
+            self.right = self.right.delete_node(key) <span class="hljs-keyword">if</span> self.right <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">if</span> self.left <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+                temp = self.right
+                self = <span class="hljs-literal">None</span>
+                <span class="hljs-keyword">return</span> temp
+            <span class="hljs-keyword">elif</span> self.right <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+                temp = self.left
+                self = <span class="hljs-literal">None</span>
+                <span class="hljs-keyword">return</span> temp
+            temp = self.right.getMinNode()
+            self.key = temp.key
+            self.right = self.right.delete_node(temp.key) <span class="hljs-keyword">if</span> self.right <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>
+        <span class="hljs-keyword">if</span> self <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">return</span> self
+
+        <span class="hljs-comment"># Update the balance factor of nodes</span>
+        self.height = <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(self.left.getHeight() <span class="hljs-keyword">if</span> self.left <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>,
+                              self.right.getHeight() <span class="hljs-keyword">if</span> self.right <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+
+        balanceFactor = self.getBalance()
+
+        <span class="hljs-comment"># Balance the tree</span>
+        <span class="hljs-keyword">if</span> balanceFactor &gt; <span class="hljs-number">1</span>:
+            <span class="hljs-keyword">if</span> self.left.getBalance() &gt;= <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">return</span> self.rightRotate()
+            <span class="hljs-keyword">else</span>:
+                self.left = self.left.leftRotate() <span class="hljs-keyword">if</span> self.left <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>
+                <span class="hljs-keyword">return</span> self.rightRotate()
+        <span class="hljs-keyword">if</span> balanceFactor &lt; -<span class="hljs-number">1</span>:
+            <span class="hljs-keyword">if</span> self.right.getBalance() &lt;= <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">return</span> self.leftRotate()
+            <span class="hljs-keyword">else</span>:
+                self.right = self.right.rightRotate() <span class="hljs-keyword">if</span> self.right <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>
+                <span class="hljs-keyword">return</span> self.leftRotate()
+        <span class="hljs-keyword">return</span> self        
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">iterate</span>(<span class="hljs-params">self,reverse= <span class="hljs-literal">False</span></span>):
+        <span class="hljs-keyword">if</span> reverse:
+            <span class="hljs-keyword">if</span> self.right:
+                <span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> self.right.iterate(reverse):
+                    <span class="hljs-keyword">yield</span> key
+            <span class="hljs-keyword">yield</span> self.key
+            <span class="hljs-keyword">if</span> self.left:
+                <span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> self.left.iterate(reverse):
+                    <span class="hljs-keyword">yield</span> key
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">if</span> self.left:
+                <span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> self.left.iterate(reverse):
+                    <span class="hljs-keyword">yield</span> key
+            <span class="hljs-keyword">yield</span> self.key
+            <span class="hljs-keyword">if</span> self.right:
+                <span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> self.right.iterate(reverse):
+                    <span class="hljs-keyword">yield</span> key
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(self.key)
+
+
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">AVLTree</span>(<span class="hljs-title class_ inherited__">object</span>):
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:
+        self.root = <span class="hljs-literal">None</span>
+        self.size = <span class="hljs-number">0</span>
+        self.<span class="hljs-built_in">min</span> = <span class="hljs-literal">None</span>
+        self.<span class="hljs-built_in">max</span> = <span class="hljs-literal">None</span>
+        <span class="hljs-keyword">pass</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">insert</span>(<span class="hljs-params">self,value</span>):
+        self.size += <span class="hljs-number">1</span>
+        self.<span class="hljs-built_in">min</span> = <span class="hljs-built_in">min</span>(self.<span class="hljs-built_in">min</span> <span class="hljs-keyword">if</span> self.<span class="hljs-built_in">min</span> <span class="hljs-keyword">else</span> <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;inf&#x27;</span>),value)
+        self.<span class="hljs-built_in">max</span> = <span class="hljs-built_in">max</span>(self.<span class="hljs-built_in">max</span> <span class="hljs-keyword">if</span> self.<span class="hljs-built_in">max</span> <span class="hljs-keyword">else</span> <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;-inf&#x27;</span>),value)
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.root:
+            self.root = TreeNode(value)
+        <span class="hljs-keyword">else</span>:
+            self.root = self.root.insert_node(value)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">find</span>(<span class="hljs-params">self,value</span>):
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.root:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> self.root.find(value)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">delete</span>(<span class="hljs-params">self,value</span>):
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.root:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+        <span class="hljs-keyword">if</span> self.root.find(value):
+            self.root = self.root.delete_node(value)
+            self.size-=<span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> value == self.<span class="hljs-built_in">min</span>:
+                self.<span class="hljs-built_in">min</span> = <span class="hljs-built_in">next</span>(self.root.iterate()) <span class="hljs-keyword">if</span> self.root <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>
+            <span class="hljs-keyword">if</span> value == self.<span class="hljs-built_in">max</span>:
+                self.<span class="hljs-built_in">max</span> = <span class="hljs-built_in">next</span>(self.root.iterate(reverse=<span class="hljs-literal">True</span>)) <span class="hljs-keyword">if</span> self.root <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">empty</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> self.size==<span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">iterate</span>(<span class="hljs-params">self,reverse= <span class="hljs-literal">False</span></span>):
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.root:
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> self.root.iterate(reverse)
+
+</code></pre>
+<h1 id="arvore-segmentada">Arvore Segmentada</h1>
+<p>2 Funções importantes</p>
+<ul>
+<li>Query: realiza a consulta (Operação, calculo, etc...) a partir de um range de valor dado (inicial e final);</li>
+<li>Update: faz a troca de um valor de uma posição;</li>
+</ul>
+<p>Build: O(N)
+Atualização: O(log N)
+Consulta: O(log N)
+Espaço: O(4N)</p>
+<h1 id="c---segtree">C - <a href="https://cp-algorithms.com/data_structures/segment_tree.html">SegTree</a></h1>
+<p>Versão mais simples de segtree.
+Resolve atualização de valores e consultas da soma de um range de valores.</p>
+<pre><code class="language-C"><span class="hljs-type">int</span> t[<span class="hljs-number">4</span>*MAXN];
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">build</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> v, <span class="hljs-type">int</span> tl, <span class="hljs-type">int</span> tr)</span> {
+    <span class="hljs-keyword">if</span> (tl == tr) {
+        t[v] = a[tl];
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-type">int</span> tm = (tl + tr) / <span class="hljs-number">2</span>;
+        build(a, v*<span class="hljs-number">2</span>, tl, tm);
+        build(a, v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>, tm+<span class="hljs-number">1</span>, tr);
+        <span class="hljs-comment">// the line above you execute your process</span>
+        t[v] = t[v*<span class="hljs-number">2</span>] + t[v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>];
+    }
+}
+<span class="hljs-type">int</span> <span class="hljs-title function_">sum</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> tl, <span class="hljs-type">int</span> tr, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> {
+    <span class="hljs-keyword">if</span> (l &gt; r) <span class="hljs-comment">// the default value for empty </span>
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (l == tl &amp;&amp; r == tr) {
+        <span class="hljs-keyword">return</span> t[v];
+    }
+    <span class="hljs-type">int</span> tm = (tl + tr) / <span class="hljs-number">2</span>;
+    <span class="hljs-comment">// the line above you execute your process</span>
+    <span class="hljs-keyword">return</span> sum(v*<span class="hljs-number">2</span>, tl, tm, l, min(r, tm))
+           + sum(v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>, tm+<span class="hljs-number">1</span>, tr, max(l, tm+<span class="hljs-number">1</span>), r);
+}
+<span class="hljs-type">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> tl, <span class="hljs-type">int</span> tr, <span class="hljs-type">int</span> pos, <span class="hljs-type">int</span> new_val)</span> {
+    <span class="hljs-keyword">if</span> (tl == tr) {
+        t[v] = new_val;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-type">int</span> tm = (tl + tr) / <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">if</span> (pos &lt;= tm)
+            update(v*<span class="hljs-number">2</span>, tl, tm, pos, new_val);
+        <span class="hljs-keyword">else</span>
+            update(v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>, tm+<span class="hljs-number">1</span>, tr, pos, new_val);
+        <span class="hljs-comment">// the line above you execute your process</span>
+        t[v] = t[v*<span class="hljs-number">2</span>] + t[v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>];
+    }
+}
+
+</code></pre>
+<h1 id="c---segtree-1">C++ - SegTree</h1>
+<p>Variação da SegTree de C usando classes e feita por <a href="https://github.com/crazynds">Crazynds</a></p>
+<pre><code class="language-C++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">SegTree</span>{
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-type">int</span> size;
+
+    T *t;
+
+    <span class="hljs-type">void</span> __build(T a[], <span class="hljs-type">int</span> v, <span class="hljs-type">int</span> tl, <span class="hljs-type">int</span> tr) {
+        <span class="hljs-keyword">if</span> (tl == tr) {
+            t[v] = a[tl];
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-type">int</span> tm = (tl + tr) / <span class="hljs-number">2</span>;
+            __build(a, v*<span class="hljs-number">2</span>, tl, tm);
+            __build(a, v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>, tm+<span class="hljs-number">1</span>, tr);
+            <span class="hljs-comment">// the line above you execute your process</span>
+            t[v] = t[v*<span class="hljs-number">2</span>] + t[v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>];
+        }
+    }
+    T __query(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> tl, <span class="hljs-type">int</span> tr, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r) {
+        <span class="hljs-keyword">if</span> (l &gt; r) <span class="hljs-comment">// Change here the default value for empty</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (l == tl &amp;&amp; r == tr) {
+            <span class="hljs-keyword">return</span> t[v];
+        }
+        <span class="hljs-type">int</span> tm = (tl + tr) / <span class="hljs-number">2</span>;
+        <span class="hljs-type">int</span> v1 = __query(v*<span class="hljs-number">2</span>, tl, tm, l, std::<span class="hljs-built_in">min</span>(r, tm));
+        <span class="hljs-type">int</span> v2 = __query(v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>, tm+<span class="hljs-number">1</span>, tr, std::<span class="hljs-built_in">max</span>(l, tm+<span class="hljs-number">1</span>), r);
+        <span class="hljs-comment">// the line above you execute your process</span>
+        <span class="hljs-keyword">return</span> v1+v2;
+    }
+    <span class="hljs-type">void</span> __update(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> tl, <span class="hljs-type">int</span> tr, <span class="hljs-type">int</span> pos, T new_val) {
+        <span class="hljs-keyword">if</span> (tl == tr) {
+            t[v] = new_val;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-type">int</span> tm = (tl + tr) / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (pos &lt;= tm)
+                __update(v*<span class="hljs-number">2</span>, tl, tm, pos, new_val);
+            <span class="hljs-keyword">else</span>
+                __update(v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>, tm+<span class="hljs-number">1</span>, tr, pos, new_val);
+            <span class="hljs-comment">// the line above you execute your process</span>
+            t[v] = t[v*<span class="hljs-number">2</span>] + t[v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>];
+        }
+    }
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">SegTree</span>(T a[], <span class="hljs-type">int</span> size){
+        <span class="hljs-keyword">this</span>-&gt;t = <span class="hljs-keyword">new</span> T[size*<span class="hljs-number">4</span>+<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">this</span>-&gt;size = size;
+        __build(a,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,size<span class="hljs-number">-1</span>);
+    }
+    ~<span class="hljs-built_in">SegTree</span>(){
+        <span class="hljs-keyword">delete</span>[] <span class="hljs-keyword">this</span>-&gt;t;
+    }
+    
+    <span class="hljs-function">T <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;__query(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-keyword">this</span>-&gt;size<span class="hljs-number">-1</span>,l,r);
+    }
+        
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-type">int</span> pos, <span class="hljs-type">int</span> new_val)</span> </span>{
+        <span class="hljs-keyword">this</span>-&gt;__update(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-keyword">this</span>-&gt;size<span class="hljs-number">-1</span>,pos,new_val);
+    }
+};
+</code></pre>
+<h1 id="python---segtree">Python - SegTree</h1>
+<p>Variação da SegTree de C usando classes e feita por <a href="https://github.com/crazynds">Crazynds</a></p>
+<p>Em python usualmente é mais bem mais lento que C++, se der timelimit, tente usar o código de C++ que pode ser que passe.</p>
+<pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SegTree</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,arr,start,end</span>) -&gt; <span class="hljs-literal">None</span>:
+        self.t = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(arr)*<span class="hljs-number">4</span>+<span class="hljs-number">1</span>)]
+        self.left = <span class="hljs-number">0</span>
+        self.right = <span class="hljs-built_in">len</span>(arr)-<span class="hljs-number">1</span>
+        self.vertex_start = <span class="hljs-number">1</span>
+        self.__build(arr,self.vertex_start,self.left,self.right)
+        <span class="hljs-keyword">pass</span>
+            
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__build</span>(<span class="hljs-params">self,arr,vertex,left,right</span>):
+        <span class="hljs-keyword">if</span> left == right:
+            self.t[vertex] = arr[left]
+        <span class="hljs-keyword">else</span>:
+            middle = (left+right) // <span class="hljs-number">2</span>
+            self.__build(arr,vertex*<span class="hljs-number">2</span>,left,middle)
+            self.__build(arr,vertex*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>,middle+<span class="hljs-number">1</span>,right)
+            <span class="hljs-comment"># the line above you execute your process</span>
+            self.t[vertex] = self.t[vertex*<span class="hljs-number">2</span>] + self.t[vertex*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>]
+        
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">query</span>(<span class="hljs-params">self,left_query,right_query</span>):
+        <span class="hljs-keyword">return</span> self.__query(self.vertex_start,self.left,self.right,left_query,right_query)
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__query</span>(<span class="hljs-params">self,vertex,left,right,left_query,right_query</span>):
+        <span class="hljs-keyword">if</span> left_query&gt;right_query: <span class="hljs-comment"># Change here the default value for empty</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> left_query==left <span class="hljs-keyword">and</span> right_query == right:
+            <span class="hljs-keyword">return</span> self.t[vertex]
+        
+        middle = (left+right)//<span class="hljs-number">2</span>
+        l_val = self.__query(vertex*<span class="hljs-number">2</span>,left,middle,left_query,<span class="hljs-built_in">min</span>(right_query,middle))
+        r_val = self.__query(vertex*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>,middle+<span class="hljs-number">1</span>,right,<span class="hljs-built_in">max</span>(middle+<span class="hljs-number">1</span>,left_query),right_query)
+        <span class="hljs-comment"># the line above you execute your process</span>
+        <span class="hljs-keyword">return</span>  l_val + r_val
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">update</span>(<span class="hljs-params">self, pos, val</span>):
+        <span class="hljs-keyword">return</span> self.__update(self.vertex_start,self.left,self.right,pos,val)
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__update</span>(<span class="hljs-params">self,vertex,left, right, pos, val</span>):
+        <span class="hljs-keyword">if</span> left == right:
+            self.t[vertex] = val
+        <span class="hljs-keyword">else</span>:
+            middle = (left+right)//<span class="hljs-number">2</span>
+            <span class="hljs-keyword">if</span> pos &lt;= middle:
+                self.__update(vertex*<span class="hljs-number">2</span>,left,middle,pos,val)
+            <span class="hljs-keyword">else</span>:
+                self.__update(vertex*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>,middle+<span class="hljs-number">1</span>,right,pos,val)
+            <span class="hljs-comment"># the line above you execute your process</span>
+            self.t[vertex] = self.t[vertex*<span class="hljs-number">2</span>] + self.t[vertex*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>]
+</code></pre>
+<h1 id="bizarretree">BizarreTree</h1>
+<p>É uma criação minha que implementa as funcionalidades de uma arvore sem uma árvore.</p>
+<p>Isso é util em python que não tem uma implementação nativa, e implementar uma árvore manualmente pode ser muito demorado além dela ser extremamente lenta na execução. Tem também o problema de balanceamento que deve se levar em conta dependendo do problema.</p>
+<p>A <em>BizarreTree</em> não é uma árvore de fato, ela utiliza um <em>dictionary</em> e duas <em>heap</em> para simular as funções principais de uma árvore, podendo assim pegar o menor valor, o maior e iterar sobre ela de maneira crescente e decrescente.</p>
+<p>Os custos das operações seguem abaixo:</p>
+<ul>
+<li>Inserção: O(log n) <em>heap push</em></li>
+<li>Remoção: O(1) <em>dictionary acess</em></li>
+<li>Find: O(1) <em>dictionary acess</em></li>
+<li>Min: O(k log n) k* <em>heap pop</em></li>
+<li>Max: O(k log n) k* <em>heap pop</em></li>
+<li>Iterate: O(n log n + (n + k)) <em>sort</em> + (<em>valid values</em> + <em>deleted value</em>)</li>
+</ul>
+<p>Para k sendo a quantidade de elementos que foram removidos da árvore entre as chamadas de <em>min</em> e <em>max</em>.</p>
+<ul>
+<li><a href="https://github.com/crazynds">Crazynds</a></li>
+</ul>
+<h2 id="python">Python</h2>
+<p>Como eu fiz ela especialmente para resolver as funções de árvores em python, só faz sentido a implementação em python. Mas é possivel adaptar em qualquer outra linguagem.</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> heapq
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> defaultdict
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">BizarreTree</span>:
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-literal">None</span>:
+        self.minArr = []
+        self.maxArr = []
+        self.size = <span class="hljs-number">0</span>
+        self.data = defaultdict(<span class="hljs-built_in">int</span>)
+        <span class="hljs-keyword">pass</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">find</span>(<span class="hljs-params">self,val</span>):
+        <span class="hljs-keyword">return</span> self.data[val] &gt; <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">insert</span>(<span class="hljs-params">self,val</span>):
+        self.data[val] += <span class="hljs-number">1</span>
+        self.size += <span class="hljs-number">1</span>
+        heapq.heappush(self.minArr,val)
+        heapq.heappush(self.maxArr,-val)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">delete</span>(<span class="hljs-params">self,val</span>):
+        <span class="hljs-keyword">if</span> self.data[val] &gt; <span class="hljs-number">0</span>:
+            self.size -= <span class="hljs-number">1</span>
+            self.data[val] -= <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">min</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">while</span> self.data[self.minArr[<span class="hljs-number">0</span>]] == <span class="hljs-number">0</span>:
+            heapq.heappop(self.minArr)
+        <span class="hljs-keyword">return</span> self.minArr[<span class="hljs-number">0</span>]
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">max</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">while</span> self.data[-self.maxArr[<span class="hljs-number">0</span>]] == <span class="hljs-number">0</span>:
+            heapq.heappop(self.maxArr)
+        <span class="hljs-keyword">return</span> -self.maxArr[<span class="hljs-number">0</span>]
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">iterate</span>(<span class="hljs-params">self,reverse = <span class="hljs-literal">False</span></span>):
+        <span class="hljs-comment"># https://stackoverflow.com/questions/59903948/how-to-iterate-heapq-without-losing-data</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> reverse:
+            self.minArr.sort()  <span class="hljs-comment"># using heap structure makes sort faster</span>
+            <span class="hljs-comment"># sorted array is also a valid heap</span>
+            it = self.minArr
+        <span class="hljs-keyword">else</span>:
+            self.maxArr.sort()
+            it = <span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> a: -a,self.maxArr)
+        cont = <span class="hljs-number">0</span>
+        lastI = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> self.minArr:
+            cont = (cont+<span class="hljs-number">1</span>) <span class="hljs-keyword">if</span> i == lastI <span class="hljs-keyword">else</span> <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> self.data[i] &gt;= cont:
+                <span class="hljs-keyword">yield</span> i
+
+</code></pre>
+<h1 id="fenwick-tree">Fenwick Tree</h1>
+<p>Parecido com <a href="./SegTree.html">SegTree</a>, porém consome menos espaço e é mais fácil de implementar.</p>
+<p>Funções importantes</p>
+<ul>
+<li>
+<p>Query: realiza a consulta (Operação, calculo, etc...) a partir de um range de valor dado (inicial e final);</p>
+</li>
+<li>
+<p>Update: faz a troca de um valor de uma posição;</p>
+<p>Build: O(N)<br>
+Atualização: O(log N)<br>
+Consulta: O(log N)<br>
+Espaço: O(N)</p>
+</li>
+</ul>
+<h1 id="c---fenwick-tree">C++ - <a href="https://cp-algorithms.com/data_structures/fenwick.html#finding-sum-in-one-dimensional-array">Fenwick Tree</a></h1>
+<p>Versão mais simples de Fenwick Tree.
+Resolve atualização de valores e consultas da soma dos valores de range de valores.</p>
+<pre><code class="language-C++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">FenwickTree</span> {
+    vector&lt;<span class="hljs-type">int</span>&gt; bit;  <span class="hljs-comment">// binary indexed tree</span>
+    vector&lt;<span class="hljs-type">int</span>&gt; currentArray;  <span class="hljs-comment">// array</span>
+    <span class="hljs-type">int</span> n;
+
+    <span class="hljs-built_in">FenwickTree</span>(vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-type">const</span> &amp;a){
+        <span class="hljs-keyword">this</span>-&gt;n = a.<span class="hljs-built_in">size</span>();
+        currentArray.<span class="hljs-built_in">assign</span>(<span class="hljs-keyword">this</span>-&gt;n, <span class="hljs-number">0</span>);
+        bit.<span class="hljs-built_in">assign</span>(<span class="hljs-keyword">this</span>-&gt;n, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>-&gt;n; i++)
+            <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">update</span>(i, a[i]);
+    }
+
+    
+    <span class="hljs-comment">// make f(a[l..r]) = f(a[0..r]) - f(a[0..l-1])</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">query</span>(r) - <span class="hljs-built_in">v</span>(l - <span class="hljs-number">1</span>);
+    }
+
+    <span class="hljs-comment">// make f(a[0..r])</span>
+    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> r)</span> </span>{
+        <span class="hljs-type">int</span> ret = <span class="hljs-number">0</span>;
+        <span class="hljs-comment">// OMG - ULTRA FAST WTF?</span>
+        <span class="hljs-keyword">for</span> (; r &gt;= <span class="hljs-number">0</span>; r = (r &amp; (r + <span class="hljs-number">1</span>)) - <span class="hljs-number">1</span>)
+            ret += bit[r];
+        <span class="hljs-keyword">return</span> ret;
+    }
+
+    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-type">int</span> idx, <span class="hljs-type">int</span> newVal)</span> </span>{
+        <span class="hljs-type">int</span> delta = newVal - <span class="hljs-keyword">this</span>-&gt;currentArray[idx];
+        <span class="hljs-keyword">this</span>-&gt;currentArray[idx] = newVal;
+        <span class="hljs-comment">// OMG - ULTRA FAST WTF?</span>
+        <span class="hljs-keyword">for</span> (; idx &lt; n; idx = idx | (idx + <span class="hljs-number">1</span>))
+            bit[idx] += delta;
+    }
+};
+
+</code></pre>
+<h1 id="python---fenwicktree">Python - <a href="#">FenwickTree</a></h1>
+<p>Adaptação feita por <a href="https://github.com/crazynds">Crazynds</a></p>
+<pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">FenwickTree</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,arr: <span class="hljs-built_in">list</span></span>) -&gt; <span class="hljs-literal">None</span>:
+        self.n = <span class="hljs-built_in">len</span>(arr)
+        self.original_arr = [<span class="hljs-number">0</span>]*self.n
+        self.bit = [<span class="hljs-number">0</span>]*self.n
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n):
+            self.update(i,arr[i])
+        <span class="hljs-keyword">pass</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">update</span>(<span class="hljs-params">self,idx, newVal</span>):
+        delta = newVal - self.original_arr[idx]
+        self.original_arr[idx] = newVal
+        <span class="hljs-comment"># OMG - ULTRA FAST WTF?</span>
+        <span class="hljs-keyword">while</span> idx &lt; self.n:
+            self.bit[idx] += delta
+            idx |= (idx + <span class="hljs-number">1</span>)
+    
+    <span class="hljs-comment"># make f(a[0..r])</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">query_zero</span>(<span class="hljs-params">self,r</span>):
+        ret = <span class="hljs-number">0</span>
+        <span class="hljs-comment"># OMG - ULTRA FAST WTF?</span>
+        <span class="hljs-keyword">while</span> r&gt;=<span class="hljs-number">0</span>:
+            ret += self.bit[r]
+            r = (r &amp; (r + <span class="hljs-number">1</span>)) - <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> ret
+    
+    <span class="hljs-comment"># make f(a[l..r]) = f(a[0..r]) - f(a[0..l-1])</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">query</span>(<span class="hljs-params">self,l, r</span>):
+        <span class="hljs-keyword">return</span> self.query_zero(r) - self.query_zero(l - <span class="hljs-number">1</span>)
+</code></pre>
+<h1 id="arvores-em-c">Arvores em C++</h1>
+<h1 id="c---stdset-stdmultiset">C++ - <a href="https://cplusplus.com/reference/set/set/">std::set</a> <a href="https://cplusplus.com/reference/set/multiset/">std::multiset</a></h1>
+<p>A única diferença entre o set e o multiset é que no caso do multiset ele permite a inserção de valores duplicados, que no caso do set se um valor já existir ele não cria uma nova entrada.
+Para o multiset, deve-se incluir a mesma biblioteca <code>#include &lt;set&gt;</code>.</p>
+<h1 id="c---stdmap">C++ - <a href="https://cplusplus.com/reference/map/map/">std::map</a></h1>
+<p>Em C++ existe a implementação de árvore binária na biblioteca padrão. A estrutura de dados <code>std::map</code> por padrão implementa uma árvore binária Red-Black, que já traz uma estrutura de balanceamento da árvore. Geralmente a <code>std::map</code> já implementa a versão mais omitizada de uma árvore binária.</p>
+<h3 id="associativo">Associativo</h3>
+<p>Elementos em contêineres associativos são referenciados por sua chave e não por sua posição absoluta no contêiner.</p>
+<h3 id="ordenado">Ordenado</h3>
+<p>Os elementos no contêiner seguem uma ordem estrita o tempo todo. Todos os elementos inseridos recebem uma posição nesta ordem.</p>
+<h3 id="tuplas">Tuplas</h3>
+<p>Cada elemento associa uma chave a um valor mapeado: As chaves servem para identificar os elementos cujo conteúdo principal é o valor mapeado.</p>
+<h3 id="chaves-únicas">Chaves únicas</h3>
+<p>Dois elementos no contêiner não podem ter chaves equivalentes.</p>
+<h3 id="memória-auto-gerenciada">Memória auto gerenciada</h3>
+<p>O contêiner usa um objeto alocador para lidar dinamicamente com suas necessidades de armazenamento.</p>
+<p>As principais funções utilizadas no map são as citadas abaixo:</p>
+<h3 id="iteração-4">Iteração:</h3>
+<ul>
+<li>begin(): retorna um iterador a partir do inicio do vetor;</li>
+<li>end(): retorna um iterador a partir do fim do vetor (não pega a ultima casa);</li>
+<li>rbegin(): retorna um iterador <em>reverso</em> a partir do fim do vetor;</li>
+<li>rend(): retorna um iterador <em>reverso</em> a partir do inicido do vetor (não pega a primeira casa);</li>
+</ul>
+<h3 id="getters-6">Getters:</h3>
+<ul>
+<li>operator[]: retorna o elemento da <em>chave</em> indicada dentro do operator. Caso seja uma chave que não existe é inserido um novo item com o construtor padrão (para números geralmente é zero) e retornado uma referencia desse item;</li>
+<li>find(): retorna um iterador a partir desse elemento, caso não encontre retorna o map.end();</li>
+<li>lower_bound(K): retorna um iterator para o maior elemento que é menor que K;</li>
+<li>upper_bound(K): retorna um iterator para o menor elemento que é maior que K;</li>
+</ul>
+<h3 id="capacidade-5">Capacidade:</h3>
+<ul>
+<li>size(): retorna o tamanho do vetor;</li>
+<li>empty(): retorna true se o vetor estiver vazio;</li>
+</ul>
+<h3 id="modificadores-7">Modificadores:</h3>
+<ul>
+<li>insert(): existem algumas versões para o insert, sendo elas:</li>
+<li>insert(std::pair&lt;K,V&gt;): insere um objeto par dentro do map;</li>
+<li>insert(K,V): insere o valor V na posição K;</li>
+<li>erase(): apaga um elemento na posição passada, note que para remover o elemento da posição 4 deve-se chamar a função begin() e somar a 4;</li>
+<li>erase(iterator): remove o item dessa posição do iterador;</li>
+<li>erase(start,end): remove os items desde a posição start até end;</li>
+</ul>
+<p>Exemplo de uso do std::map</p>
+<pre><code class="language-C++"><span class="hljs-comment">// map::lower_bound/upper_bound</span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;map&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+  std::map&lt;<span class="hljs-type">char</span>,<span class="hljs-type">int</span>&gt; mymap;
+  std::map&lt;<span class="hljs-type">char</span>,<span class="hljs-type">int</span>&gt;::iterator itlow,itup;
+
+  mymap[<span class="hljs-string">&#x27;a&#x27;</span>]=<span class="hljs-number">20</span>;
+  mymap[<span class="hljs-string">&#x27;b&#x27;</span>]=<span class="hljs-number">40</span>;
+  mymap[<span class="hljs-string">&#x27;c&#x27;</span>]=<span class="hljs-number">60</span>;
+  mymap[<span class="hljs-string">&#x27;d&#x27;</span>]=<span class="hljs-number">80</span>;
+  mymap[<span class="hljs-string">&#x27;e&#x27;</span>]=<span class="hljs-number">100</span>;
+
+  itlow=mymap.<span class="hljs-built_in">lower_bound</span> (<span class="hljs-string">&#x27;b&#x27;</span>);  <span class="hljs-comment">// itlow points to b</span>
+  itup=mymap.<span class="hljs-built_in">upper_bound</span> (<span class="hljs-string">&#x27;d&#x27;</span>);   <span class="hljs-comment">// itup points to e (not d!)</span>
+
+  mymap.<span class="hljs-built_in">erase</span>(itlow,itup);        <span class="hljs-comment">// erases [itlow,itup)</span>
+
+  <span class="hljs-comment">// print content:</span>
+  <span class="hljs-keyword">for</span> (std::map&lt;<span class="hljs-type">char</span>,<span class="hljs-type">int</span>&gt;::iterator it=mymap.<span class="hljs-built_in">begin</span>(); it!=mymap.<span class="hljs-built_in">end</span>(); ++it)
+    std::cout &lt;&lt; it-&gt;first &lt;&lt; <span class="hljs-string">&quot; =&gt; &quot;</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;
+
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </body>
+    </html>
