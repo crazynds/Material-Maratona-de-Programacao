@@ -32,6 +32,46 @@ def isPrime(n, k=5): # miller-rabin
     return True
 ```
 
+```C++
+#define ll unsigned long long
+
+ll powmod(ll base, ll e, ll mod);
+
+ll mulpow(ll base, ll e, ll mod);// Multiplicação com módulo
+// Só é importante se a*b pode dar overflow, senão usar (a*b)%mod
+
+bool check_composite(ll n, ll a, ll d, int s) {
+    ll x = powmod(a, d, n);
+    if (x == 1 || x == n - 1)
+        return false;
+    for (int r = 1; r < s; r++) {
+        x = mulpow(x,x,n);
+        if (x == n - 1)
+            return false;
+    }
+    return true;
+};
+bool isPrime(ll n) { // miller rabin returns true if n is prime, else returns false.
+    if (n < 2)
+        return false;
+
+    int r = 0;
+    ll d = n - 1;
+    while ((d & 1) == 0) {
+        d >>= 1;
+        r++;
+    }
+
+    for (int a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
+        if (n == a)
+            return true;
+        if (check_composite(n, a, d, r))
+            return false;
+    }
+    return true;
+}
+```
+
 De acordo com [esse site](https://cp-algorithms.com/algebra/primality_tests.html#deterministic-version) é possivel ter uma versão do MillerRabin deterministica se for checado todas as bases até $2*ln(n)^2$.
 
 É provado também que para qualquer número inteiro de 64 bits é necessário checar apenas as 12 primeiros primos.
@@ -51,61 +91,6 @@ def isPrime(n, k=5): # miller-rabin deterministico para 64 bits
     return True
 ```
 
-
-
-
-## Fatorização de um número
-
-A fatorização de um número é a decomposição de um números pelos seus primos geradores. Por exemplo o número 24 pode ser decomposto em: $2*2*2*3$ ou $2^3*3$. 
-
-A função abaixo faz a fatorização de um número pelos seus primos. Ela pode ser otimizada se já houver uma lista de primos pré computados. Para primos muito grandes essa função pode levar um tempo para fatorizar.
-
-
-```python
-def factorization(number):
-    solution = []
-    while number&1==0:
-        number//=2
-        solution.append(2)
-    i = 3
-    while math.sqrt(number) > i:
-        while number % i == 0:
-            number //= i 
-            solution.append(i)
-        i += 2
-    if number!=1:
-        solution.append(number)
-    return solution
-```
-
-## Se tiver um sieve pré-computado (até sqrt(n)) é melhor usar essa versão:
-```python
-import math
-import timeit
-
-def factor(n, primes):
-    "Prime factors of n."
-    # factor(99) --> 3 3 11
-    for prime in primes:
-        while True:
-            quotient, remainder = divmod(n, prime)
-            if remainder:
-                break
-            yield prime
-            n = quotient
-            if n == 1:
-                return
-    if n > 1:
-        yield n
-
-n = 1_000_000
-primes = sieve(math.isqrt(n) + 1) # isqrt é a int(sqrt(n)) ou raiz inteira
-
-print(timeit.timeit(lambda: factorization(n)))
-# 1.0270138000196312
-print(timeit.timeit(lambda: list(factor(n, primes))))
-# 0.207188899978064
-```
 
 
 ## Algoritmo Sieve (Pré-computar primos)

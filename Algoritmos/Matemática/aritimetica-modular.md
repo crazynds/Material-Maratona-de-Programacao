@@ -77,9 +77,9 @@ Se $a\equiv b (\mathrm{mod}\ n)$, é geralmente falsto que $k^a \equiv k^b (\mat
 Para potencia com módulo, em C temos o seguinte código:
 ```c
 // Fast pow and mod
-long long modpow(long long base, long long exp, long long modulus) {
+long long powmod(long long base, long long exp, long long modulus) {
     base %= modulus;
-    T result = 1;
+    long long result = 1;
     while (exp > 0) {
         if (exp & 1) result = (result * base) % modulus;
         base = (base * base) % modulus;
@@ -89,7 +89,24 @@ long long modpow(long long base, long long exp, long long modulus) {
 }
 ```
 
-Em python temos a função modpow implementada nativamente na função ```pow```. O primeiro parametro é a base, o segundo o expoente e o terceiro é o módulo.
+Em python temos a função powmod implementada nativamente na função ```pow```. O primeiro parametro é a base, o segundo o expoente e o terceiro é o módulo.
+
+## Multiplicação com módulo
+
+Para linguagens como C/C++ que um inteiro pode overflow, existem casos que queremos multiplicar 2 números e o resultado pode não caber em um inteiro de 64 bits. O algoritmo abaixo faz a multiplicação em O(log n) com módulo evitando o overflow.
+
+```C
+long long mulpow(long long a, long long b, long long mod) {
+    long long res = 0;
+    while (b > 0) {
+        if (b & 1)
+            res = (res + a) % mod;
+        a = (a + a) % mod;
+        b >>= 1;
+    }
+    return res;
+}
+```
 
 
 ## Inverso Modular
