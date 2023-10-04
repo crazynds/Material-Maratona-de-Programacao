@@ -36,4 +36,7 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
        - [Fenwick Tree](./Estrutura%20de%20Dados/FenwickTree.md)
      - [Bizarre Tree](./Estrutura%20de%20Dados/BizarreTree.md)
  - Problemas Conhecidos
-   - [Problema da mochila/Knapsack (Pesos e valores)](./Algoritmos/KnownProblems/Knapsackproblem.md)
+   - Array
+     - [Maior soma de sub arrays](./Algoritmos/KnownProblems/maior%20soma%20de%20array.md)
+   - Programação Dinamica
+     - [Problema da mochila/Knapsack (Pesos e valores)](./Algoritmos/KnownProblems/Knapsackproblem.md)
