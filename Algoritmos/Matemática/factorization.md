@@ -122,3 +122,42 @@ vector<long long> fast_factorization(long long num){
     return vec;
 }
 ```
+
+
+## Quebrando o RSA
+
+Uma maneira de encontrar os 2 primos multiplos que formam uma chave é usando o algoritmo abaixo. Ainda é lento para quando os números são muito grandes, porém consegue ser viavel para chaves de até 256 bits.
+
+```python
+def find2FactorsOfNumber(n):
+    a = math.isqrt(n) + 1
+    # diff between two consecutives squares
+    diff = (a+1)**2 - a**2
+    a2 = a**2
+    # If N is prime this will loop forever
+    while True:
+        # this line can be omitted if you use 
+        # the diff between two consecutives squares
+        #a2 = a**2
+        b2 = a2 - n
+
+        # this is the slowest part of the code
+        # if you can check if b2 is a perfect square
+        # faster this code can be optimized.
+        if math.isqrt(b2)**2 == b2:
+            b = math.isqrt(b2)
+            print(a,b)
+            print(a2-b2 == n,(a+b)*(a-b) == n)
+            break
+
+        a2 += diff
+        # update diff
+        diff += 2
+
+        a += 1
+    # Return p and q that p*q == n
+    return (int(a-b),int(a+b))
+```
+
+Se passado um número para a função ela irá retornar 2 números inteiros tal que se multiplicados resulta no número passado. Se não houver 2 números tal que gere um resultado válido, vai ficar em loop infinito.
+
