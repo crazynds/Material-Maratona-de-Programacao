@@ -77,7 +77,15 @@ De acordo com [esse site](https://cp-algorithms.com/algebra/primality_tests.html
 É provado também que para qualquer número inteiro de 64 bits é necessário checar apenas as 12 primeiros primos.
 
 ```python
-def isPrime(n, k=5): # miller-rabin deterministico para 64 bits
+def checkComposite(n,a,d,s):
+    x = pow(a, d, n)
+    if x == 1 or x == n-1: return False
+    for _ in range(1, s):
+        x = (x * x) % n
+        if x == n-1: 
+            return False
+    return True
+def isPrime(n): # miller-rabin deterministico para 64 bits
     if n < 2: return False
     s, d = 0, n-1
     while d % 2 == 0:
@@ -85,7 +93,7 @@ def isPrime(n, k=5): # miller-rabin deterministico para 64 bits
     for a in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]: # 12 primeiros primos
         if n==a:
             return True
-        if checkComposite(n,a,d,s)
+        if checkComposite(n,a,d,s):
             return False
         
     return True
