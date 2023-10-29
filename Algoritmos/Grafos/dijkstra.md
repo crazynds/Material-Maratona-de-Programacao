@@ -3,6 +3,8 @@
 Esse algoritmo serve para determinar o menor caminho entre dois vértices de um grafo, desde que o peso das arestas
 não seja negativo.
 
+
+### Python
 ```python
 def dijkstra(nodes,src):
     """
@@ -12,7 +14,7 @@ def dijkstra(nodes,src):
 
         this function return a list of distances from src
 
-        can be faster if you implement heapDictionary (maybe?, in C++ using heapDictionary is faster, but in python i dont think...)
+        can be faster if you implement heapDictionary (maybe?, in C++ using heapDictionary is faster, but in python i dont think so...)
     """
     inf = float('inf')
     queue = []
@@ -55,6 +57,41 @@ def dijkstra(nodes,src):
                 dist[child] = newDist
                 queue.push((newDist,child))
     return dist
+```
+
+
+### C++
+
+Obs: acredito que está funcionando. Confia! 😉 
+```C++
+#define INF_INT (((unsigned int)-1) >> 1)
+ 
+// List of adj 
+vector<int> dijkstra(vector<vector<pair<int,int>>> &nodes,int src){
+    vector<int> resp(nodes.size());
+    for(int x=0;x<n;x++){
+        resp[x] = (x!=src) ? INF_INT : 0;
+    }
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> heap;
+    heap.push(make_pair(0,src));
+    while(!heap.empty()){
+        auto current = heap.top();
+        int dist = current.first, node = current.second;
+        heap.pop();
+        if(current.first > resp[node])
+            continue;
+        
+        for(auto child: nodes[node]){
+            int novaDist = child.second + resp[node];
+            int childNode = child.first;
+            if(resp[childNode] > novaDist){
+                resp[childNode] = novaDist;
+                heap.push(make_pair(novaDist,childNode));
+            }
+        }
+    }
+    return resp;
+}
 ```
 
 
