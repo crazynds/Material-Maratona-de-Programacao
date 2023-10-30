@@ -17,6 +17,8 @@ Os custos das operações seguem abaixo:
 
 Para k sendo a quantidade de elementos que foram removidos da árvore entre as chamadas de _min_ e _max_.
 
+De forma geral o custo da bizarre tree amortizado é O(log(n)).
+
 - [Crazynds](https://github.com/crazynds)
 
 ## Python
@@ -77,3 +79,12 @@ class BizarreTree:
                 yield i
 
 ```
+
+
+### Problemas 
+
+Problemas que em python é mais fácil usar a bizarre tree do que fazer a implementação de uma arvore.
+
+- [Codeforces - In Love](https://codeforces.com/contest/1883/problem/D)
+- [Beecrowd - Números Virados](https://www.beecrowd.com.br/judge/pt/problems/view/3437)
+
