@@ -71,33 +71,15 @@ Se $a\equiv b (\mathrm{mod}\ n)$, é geralmente falsto que $k^a \equiv k^b (\mat
 
 * Se $c\equiv d (\mathrm{mod}\ φ(n))$, onde $φ$ é a [função tociente de Euler](https://en.wikipedia.org/wiki/Euler%27s_totient_function), então $a^c \equiv a^d (\mathrm{mod}\ n)$ desde que $a$ seja [coprimo](https://en.wikipedia.org/wiki/Coprime_integers) de $n$.
 
-
-## Potencia com Módulo
-
-Para potencia com módulo, em C temos o seguinte código:
-```c
-// Fast pow and mod
-long long powmod(long long base, long long exp, long long modulus) {
-    base %= modulus;
-    long long result = 1;
-    while (exp > 0) {
-        if (exp & 1) result = (result * base) % modulus;
-        base = (base * base) % modulus;
-        exp >>= 1;
-    }
-    return result;
-}
-```
-
-Em python temos a função powmod implementada nativamente na função ```pow```. O primeiro parametro é a base, o segundo o expoente e o terceiro é o módulo.
-
 ## Multiplicação com módulo
 
 Para linguagens como C/C++ que um inteiro pode overflow, existem casos que queremos multiplicar 2 números e o resultado pode não caber em um inteiro de 64 bits. O algoritmo abaixo faz a multiplicação em O(log n) com módulo evitando o overflow.
 
 ```C
-long long mulpow(long long a, long long b, long long mod) {
-    long long res = 0;
+#define ll long long int
+
+ll mulpow(ll a, ll b, ll mod) {
+    ll res = 0;
     while (b > 0) {
         if (b & 1)
             res = (res + a) % mod;
@@ -108,6 +90,27 @@ long long mulpow(long long a, long long b, long long mod) {
 }
 ```
 
+## Potencia com Módulo
+
+Para potencia com módulo, em C temos o seguinte código:
+```c
+#define ll long long int
+
+// Fast pow and mod
+ll powmod(ll base, ll exp, ll modulus) {
+    base %= modulus;
+    ll result = 1;
+    while (exp > 0) {
+        if (exp & 1) result = mulpow(result, base, modulus);
+        base = mulpow(base ,base , modulus);
+        exp >>= 1;
+    }
+    return result;
+}
+```
+Caso a $base^2$ não de overflow, é possivel substituir a função mulpow apenas por $(result.base)\mathrm{mod}\ modulus$ e $(base.base)\mathrm{mod}\ modulus$ nos dois casos em que ela é usada.
+
+Em python temos a função powmod implementada nativamente na função ```pow```. O primeiro parametro é a base, o segundo o expoente e o terceiro é o módulo.
 
 ## Inverso Modular
 
