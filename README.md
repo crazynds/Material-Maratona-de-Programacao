@@ -36,6 +36,8 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
      - [Segment Tree](./Estrutura%20de%20Dados/SegTree.md)
        - [Fenwick Tree](./Estrutura%20de%20Dados/FenwickTree.md)
      - [Bizarre Tree](./Estrutura%20de%20Dados/BizarreTree.md)
+     - [Trie](./Estrutura%20de%20Dados/Trie.md)
+       - [Binary Trie](./Estrutura%20de%20Dados/BinaryTrie.md)
  - Problemas Conhecidos
    - Array
      - [Maior soma de sub arrays](./Algoritmos/KnownProblems/maior%20soma%20de%20array.md)
