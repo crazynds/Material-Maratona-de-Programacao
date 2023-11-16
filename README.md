@@ -24,6 +24,7 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
        - [MinimumQueue](./Estrutura%20de%20Dados/MinimumQueue.md)
      - [Heap/PriorityQueue](./Estrutura%20de%20Dados/Heap.md)
        - [HeapDictionaried](./Estrutura%20de%20Dados/HeapDictionaried.md)
+       - [RandomizedHeap](./Estrutura%20de%20Dados/RandomizedHeap.md)
    - [HashMap (Dicionario)](./Estrutura%20de%20Dados/HashMap.md)
      - [Conjunto](./Estrutura%20de%20Dados/Conjunto.md)
    - [Grafos](./Estrutura%20de%20Dados/Grafos.md)
@@ -35,6 +36,8 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
      - [Segment Tree](./Estrutura%20de%20Dados/SegTree.md)
        - [Fenwick Tree](./Estrutura%20de%20Dados/FenwickTree.md)
      - [Bizarre Tree](./Estrutura%20de%20Dados/BizarreTree.md)
+     - [Trie](./Estrutura%20de%20Dados/Trie.md)
+       - [Binary Trie](./Estrutura%20de%20Dados/BinaryTrie.md)
  - Problemas Conhecidos
    - Array
      - [Maior soma de sub arrays](./Algoritmos/KnownProblems/maior%20soma%20de%20array.md)

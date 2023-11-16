@@ -26,7 +26,7 @@ def isPrime(n, k=5): # miller-rabin
         s, d = s+1, d//2
     for _ in range(k):
         a = randint(2, n-1)
-        if checkComposite(n,a,d,s)
+        if checkComposite(n,a,d,s):
             return False
         
     return True
