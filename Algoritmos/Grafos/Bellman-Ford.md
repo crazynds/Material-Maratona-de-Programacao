@@ -41,12 +41,12 @@ def bellmanford(edges: list,vertices,src):
         # the path between 2 vertices has at max n-1 edges without negative loops, 
         # if the path has more than n-1 edges, so it has a negative loop in the graph 
         for s,d,w in edges:
-            if last[s] + w < last[d]:
+            if current[s] + w < current[d]:
                 ## 2nd return value is optional, only for backtrace
                 return [float('-inf')]*vertices,trace
 
     ## 2nd return value is optional, only for backtrace
-    return last,trace
+    return current,trace
 
 ```
 
