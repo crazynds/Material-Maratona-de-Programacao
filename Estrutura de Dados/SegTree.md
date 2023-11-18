@@ -64,6 +64,45 @@ void update(int v, int tl, int tr, int pos, int new_val) {
 
 ```
 
+Versão do brizi para um problema usando seg tree.
+
+```c
+void update_tree(bool *tree, int requested_left_range, int requested_right_range, int min_node, int max_node, int current_node, int winner)
+{
+    if (tree[current_node])
+    {
+        return;
+    }
+
+
+    if (min_node == max_node)
+    {       
+        if (min_node != winner)
+        {
+            tree[current_node] = true;
+            all_fighters[min_node] = winner;
+        }
+        return;
+    }
+
+    int middle = (min_node+max_node)/2;
+
+    if (requested_left_range <= middle)
+    {
+        update_tree(tree, requested_left_range, requested_right_range, min_node, middle, current_node*2, winner);
+    }
+
+    if (requested_right_range > middle)
+    {
+        update_tree(tree, requested_left_range, requested_right_range, middle+1, max_node, current_node*2+1, winner);
+    }
+
+    tree[current_node] = tree[current_node*2] && tree[current_node*2+1];
+
+}
+```
+
+
 
 # C++ - SegTree
 
