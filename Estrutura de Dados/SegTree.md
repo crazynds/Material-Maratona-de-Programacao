@@ -145,7 +145,7 @@ Em python usualmente é mais bem mais lento que C++, se der timelimit, tente usa
 ```python
 class SegTree:
 
-    def __init__(self,arr,start,end) -> None:
+    def __init__(self,arr) -> None:
         self.t = [0 for _ in range(len(arr)*4+1)]
         self.left = 0
         self.right = len(arr)-1
