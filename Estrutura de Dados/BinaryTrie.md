@@ -6,7 +6,115 @@ Até o momento atual, é documentado que a binary trie consegue fazer as seguint
 - $Max(valor {\oplus}arr[] )$ - Maior xor de _valor_ com qualquer os items do array (apenas positivos);
 - $Min(valor {\oplus}arr[] )$ - Menor xor de _valor_ com qualquer os items do array (apenas positivos);
 
-# Python - Binary Trie
+## C++ - Binary Trie
+
+Nesse código estou usando bitset pois precisei de uma binary trie com mais de 64 de altura. Mas é possivel adapta-la para usar inteiros que executam mais rapidamente e não precisa do bitset.
+
+```c++
+
+#DEFINE SIZE 256
+
+class BinarieTrie
+{
+private:
+    vector<pair<ll, ll>> arr;
+    unordered_map<bitset<SIZE>, ll> dict;
+    ll maxHeight;
+
+public:
+    BinarieTrie(int maxN)
+    {
+        arr.push_back({-1, -1});
+        maxHeight = maxN;
+    }
+
+    void add(bitset<SIZE> value)
+    {
+        ll v = 0;
+        for (int i = maxHeight - 1; i >= 0; i--)
+        {
+            ll val = (value.test(i)) ? arr[v].second : arr[v].first;
+
+            if (val == -1)
+            {
+                val = arr.size();
+                if (value.test(i))
+                {
+                    arr[v].second = val;
+                }
+                else
+                {
+                    arr[v].first = val;
+                }
+                arr.push_back({-1, -1});
+            }
+            v = val;
+        }
+        dict[value] += 1;
+    }
+
+    void remove(bitset<SIZE> value)
+    {
+        if (dict[value] == 0)
+            return;
+        dict[value] -= 1;
+        if (dict[value] > 0)
+            return;
+
+        ll v = 0;
+        vector<ll> stack;
+        stack.push_back(v);
+        for (int i = maxHeight - 1; i >= 0; i--)
+        {
+            v = (value.test(i)) ? arr[v].second : arr[v].first;
+            stack.push_back(v);
+        }
+        stack.pop_back();
+
+        for (int i = 0; stack.size() > 0; i++)
+        {
+            v = stack.back();
+            stack.pop_back();
+            // get oposite bit
+            if (value.test(i))
+                arr[v].second = -1;
+            else
+                arr[v].first = -1;
+            ll oposite = (value.test(i)) ? arr[v].first : arr[v].second;
+            if (oposite != -1)
+            {
+                break;
+            }
+        }
+    }
+
+    bitset<SIZE> getMaxXor(bitset<SIZE> value)
+    {
+        ll v = 0;
+        for (int i = maxHeight - 1; i >= 0; i--)
+        {
+            auto idx = value.test(i);
+            auto val = (idx) ? arr[v].second : arr[v].first;
+            auto oposite = (idx) ? arr[v].first : arr[v].second;
+
+            if (oposite != -1)
+            {
+                // invert bit;
+                val = oposite;
+                idx ^= 1;
+            }
+            if (idx)
+                value.flip(i);
+
+            v = val;
+        }
+        return value;
+    }
+};
+
+```
+
+## Python - Binary Trie
 
 Essa implementação de Trie, ele utiliza um array de nós para criar a árvore, sendo o item 0 o nó raiz.
 
