@@ -1,7 +1,10 @@
 # Algoritmo de Dijkstra
 
 Esse algoritmo serve para determinar o menor caminho entre dois vértices de um grafo, desde que o peso das arestas
-não seja negativo.
+não seja negativo por conta que o Dijkstra não é capaz de detectar ciclos negativos. Caso o grafo em questão não 
+contenha ciclos negativos, do algoritmo Dijkstra pode ser usado.
+
+Nota:É possivel detectar ciclos negativos em O(N).
 
 
 ### Python
@@ -62,31 +65,59 @@ def dijkstra(nodes,src):
 
 ### C++
 
-Obs: acredito que está funcionando. Confia! 😉 
 ```C++
 #define INF_INT (((unsigned int)-1) >> 1)
  
-// List of adj 
-vector<int> dijkstra(vector<vector<pair<int,int>>> &nodes,int src){
-    vector<int> resp(nodes.size());
-    for(int x=0;x<n;x++){
-        resp[x] = (x!=src) ? INF_INT : 0;
+// List of adj Obs: acredito que está funcionando. Confia! 😉 
+vector<ll> dijkstra(vector<vector<pair<ll, ll>>> &graph, int src)
+{
+    priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>> pq;
+    vector<ll> resp(graph.size());
+    for (int x = 0; x < n; x++)
+    {
+        resp[x] = (x != src) ? INF : 0;
     }
-    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> heap;
-    heap.push(make_pair(0,src));
-    while(!heap.empty()){
-        auto current = heap.top();
-        int dist = current.first, node = current.second;
-        heap.pop();
-        if(current.first > resp[node])
+    pq.emplace(0, 0);
+    while (!pq.empty())
+    {
+        auto [du, u] = pq.top();
+        pq.pop();
+        if (du > dist[u])
             continue;
-        
-        for(auto child: nodes[node]){
-            int novaDist = child.second + resp[node];
-            int childNode = child.first;
-            if(resp[childNode] > novaDist){
-                resp[childNode] = novaDist;
-                heap.push(make_pair(novaDist,childNode));
+        for (auto &[v, dv] : graph[u])
+        {
+            if (dist[v] > dist[u] + dv)
+            {
+                pq.emplace(dist[u] + dv, v);
+                dist[v] = dist[u] + dv;
+            }
+        }
+    }
+    return resp;
+}
+
+// Outra implementação que roubei de: João Henrique Alves dos Santos hehehe!
+vector<ll> dijkstra(vector<vector<pair<ll, ll>>> graph, int src)
+{
+    priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>> pq;
+    vector<ll> resp(graph.size());
+    for (int x = 0; x < n; x++)
+    {
+        resp[x] = (x != src) ? INF : 0;
+    }
+    pq.emplace(0, 0);
+    while (!pq.empty())
+    {
+        auto [du, u] = pq.top();
+        pq.pop();
+        if (du > dist[u])
+            continue;
+        for (auto &[v, dv] : graph[u])
+        {
+            if (dist[v] > dist[u] + dv)
+            {
+                pq.emplace(dist[u] + dv, v);
+                dist[v] = dist[u] + dv;
             }
         }
     }
