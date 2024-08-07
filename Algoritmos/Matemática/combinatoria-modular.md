@@ -21,27 +21,46 @@ $$
 Código em python: (Precisa testar, não acredito que esteja dando a resposta certa)
 
 ```python
-def ncr(n, r, p):
+def comb_mod(n, p, MOD):
     # initialize numerator and denominator
     num = den = 1
-    for i in range(r):
-        num = (num * (n - i)) % p
-        den = (den * (i + 1)) % p
-    return (num * pow(den, p - 2, p)) % p
+    for i in range(p):
+        num = (num * (n - i)) % MOD
+        den = (den * (i + 1)) % MOD
+    return (num * pow(den, MOD - 2, MOD)) % MOD 
 ```
 Dicas de otimização:
 
- - Se o $p$ é constante, é possivel pre-computalo no inicio do programa. 
- - Se o $n$ é constante, é possivel pré-computar.
+ - Se o $MOD$ é constante, é possivel pre-computar o fatorial no inicio do programa. 
+ - Se o $n$ é constante, é possivel pré-computar tudo e acessar como um array.
  
 
-Exemplo do programa em c++:
+```python
+MOD = 10**9 + 7
+# Precomputamos o fatorial
+factorials = [1] * (10**6 + 1)
+for i in range(2, 10**6 + 1):
+    factorials[i] = (factorials[i - 1] * i) % MOD
+
+# Poderiamos pre computar o inverso do fatorial
+# Mas vamos usar o pow(den, MOD - 2, MOD) para calcular o invFatorial
+def combination_mod(n, k, MOD):
+    if k > n:
+        return 0
+    num = factorials[n]
+    den = (factorials[k] * factorials[n- k]) % MOD
+    return (num * pow(den, MOD - 2, MOD)) % MOD   
+```
+
+### Não faz sentido esse código em c++!
+Exemplo do programa em c++ (Provavelmente errado!):
  ```c++
 // fatorial já ta pre computado FAT[]
-// invFatorial também INV[]
 
 const long long MOD = XXXXXX    // Funciona apenas para primos entre si, ou seja, se o MOD for primo vai funcionar
-invFatoria[0] = 1
+
+// Computar inv fatorial
+invFatorial[0] = 1
 
 for(int x=1;x<LIMIT;x++){
     invFatorial[x] = pow(i,MOD-2);
