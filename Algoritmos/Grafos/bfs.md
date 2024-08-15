@@ -39,11 +39,12 @@ void bfs(vector<unordered_set<int>> &graph, int node){
     vector<bool> visited(graph.size());
     stack.push_back(node);
     while (!stack.empty()) {
-        int currentNode = stack.top();
+        node = stack.front();
         stack.pop_front();
         // You need this check
-        if (visited[current]) continue;
-        visited[current] = true;
+        if (visited[node])
+            continue;
+        visited[node] = true;
         for (auto child : graph[node])
         {
             // You need this check too
