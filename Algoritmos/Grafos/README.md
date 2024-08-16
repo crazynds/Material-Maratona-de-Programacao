@@ -9,9 +9,8 @@
         - [Fluid Fill](./fluidfill.md)
    2. Buscas em grafo
         - [Depth-first search](./dfs.md)
-        - [Breadth-first search](./bfs.md#nós-mais-distantes)
-   3. Nós mais distantes
-        - [BFS](./bfs.md#)
+        - [Breadth-first search](./bfs.md)
+           - [Nós mais distantes](./bfs.md#nós-mais-distantes)
    4. Menor Distância entre dois vértices (SP)
         - [Dijkstra](./dijkstra.md)
         - [Bellman-Ford](./Bellman-Ford.md)
