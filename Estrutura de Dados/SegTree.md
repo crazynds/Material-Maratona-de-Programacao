@@ -173,6 +173,91 @@ public:
 };
 ```
 
+Outra variação de SegTree que possibilita incrementar um range de valores:
+```c++
+
+class SegmentTree
+{
+private:
+    int n;
+    int *t;
+
+    void build(int v, int tl, int tr)
+    {   
+        // Note que aqui estou inicializando com zero
+        // É uma variação para a construção da segtree
+        t[v] = 0;
+        if (tl != tr)
+        {
+            int tm = (tl + tr) / 2;
+            build(v * 2, tl, tm);
+            build(v * 2 + 1, tm + 1, tr);
+        }
+    }
+
+    void update(int v, int tl, int tr, int l, int r, int add)
+    {
+        if (tl > tr)
+            return;
+        if (l > r)
+            return;
+        // No update, como estou incrementando um range l,r se o nó
+        // contempla o range inteiro, eu incremento o nó
+        if (l == tl && r == tr)
+        {
+            t[v] += add;
+        }
+        else
+        {
+            int tm = (tl + tr) / 2;
+            update(v * 2, tl, tm, l, min(r, tm), add);
+            update(v * 2 + 1, tm + 1, tr, max(l, tm + 1), r, add);
+        }
+    }
+
+    // A query que eu tenho é para verificar quantos casas o valor é maior que zero
+    int count(int v, int tl, int tr)
+    {
+        
+        if (tl > tr)
+            return 0;
+        int resp;
+        if (t[v] > 0)
+            resp = tr - tl + 1;
+        else
+        {
+            if (tl == tr)
+                resp = 0;
+            else
+            {
+                int tm = (tl + tr) / 2;
+                resp = count(v * 2, tl, tm) + count(v * 2 + 1, tm + 1, tr);
+            }
+        }
+        return resp;
+    }
+
+public:
+    SegmentTree(int n)
+    {
+        t = new int[4 * n];
+        this->n = n;
+        build(1, 0, n - 1);
+        memset(t, 0, sizeof(t) * 4 * n);
+    }
+
+    ~SegmentTree()
+    {
+        delete[] t;
+    }
+};
+
+
+```
+
+Essa SegTree passada é muito boa para incrementar e decrementar ranges de valores dentro de um array, e contar quantos valores são maiores que zero. Isso pode ser usado para após vários ranges saber quantos espaços vazios ou ocupados existem, mesmo que esse problema seja resolvivel em O(n), mas com a segtree te possibilita realizar alterações nesses ranges, como inserir novos ranges para computar as contagens ou remover novos ranges.
+
+
 
 # Python - SegTree
 
