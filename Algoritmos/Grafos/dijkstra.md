@@ -40,29 +40,6 @@ def dijkstra(nodes,src):
     return dist
 ```
 
-
-## Implementação usando [HeapDictionary](./../../Estrutura%20de%20Dados/HeapDictionaried.md)
-
-Abaixo a implementação usando a biblioteca de Heap + Dictionary. Recomendo em python usar a versão normal do dijkstra, mas se for traduzir para C++ acredito que tenha um ganho.
-
-```python
-def dijkstra(nodes,src):
-    inf = float('inf')
-    queue = HeapDictionary([(0,src)],key= lambda a:a[1])
-    dist = [inf] * len(nodes)
-    dist[src] = 0
-    while queue.len()>0:
-        d,node = queue.pop()
-        
-        for child in nodes[node]:
-            newDist = dist[node] + nodes[node][child]
-            if dist[child] > newDist:
-                dist[child] = newDist
-                queue.push((newDist,child))
-    return dist
-```
-
-
 ### C++
 
 ```C++
@@ -95,35 +72,29 @@ vector<ll> dijkstra(vector<vector<pair<ll, ll>>> &graph, int src)
     }
     return resp;
 }
-
-// Outra implementação que roubei de: João Henrique Alves dos Santos hehehe!
-vector<ll> dijkstra(vector<vector<pair<ll, ll>>> graph, int src)
-{
-    priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>> pq;
-    vector<ll> resp(graph.size());
-    for (int x = 0; x < n; x++)
-    {
-        resp[x] = (x != src) ? INF : 0;
-    }
-    pq.emplace(0, 0);
-    while (!pq.empty())
-    {
-        auto [du, u] = pq.top();
-        pq.pop();
-        if (du > dist[u])
-            continue;
-        for (auto &[v, dv] : graph[u])
-        {
-            if (dist[v] > dist[u] + dv)
-            {
-                pq.emplace(dist[u] + dv, v);
-                dist[v] = dist[u] + dv;
-            }
-        }
-    }
-    return resp;
-}
 ```
+
+## Implementação usando [HeapDictionary](./../../Estrutura%20de%20Dados/HeapDictionaried.md)
+
+Abaixo a implementação usando a biblioteca de Heap + Dictionary. Recomendo em python usar a versão normal do dijkstra, mas se for traduzir para C++ acredito que tenha um ganho.
+
+```python
+def dijkstra(nodes,src):
+    inf = float('inf')
+    queue = HeapDictionary([(0,src)],key= lambda a:a[1])
+    dist = [inf] * len(nodes)
+    dist[src] = 0
+    while queue.len()>0:
+        d,node = queue.pop()
+        
+        for child in nodes[node]:
+            newDist = dist[node] + nodes[node][child]
+            if dist[child] > newDist:
+                dist[child] = newDist
+                queue.push((newDist,child))
+    return dist
+```
+
 
 
 ## APSP
