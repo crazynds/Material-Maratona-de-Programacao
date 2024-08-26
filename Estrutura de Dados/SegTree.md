@@ -24,7 +24,26 @@ Versão mais simples de segtree.
 Resolve atualização de valores e consultas da soma de um range de valores.
 
 ```C
-int t[4*MAXN];
+struct info
+{
+    int sum;
+}
+
+info t[4*MAXN];
+
+info create(int sum)
+{
+    info nova;
+    nova.sum = sum;
+    return nova;
+}
+
+info combine(info left, info right)
+{
+    info result;
+    result.sum = left.sum + right.sum;
+    return result;
+}
 
 void build(int a[], int v, int tl, int tr) {
     if (tl == tr) {
@@ -34,23 +53,22 @@ void build(int a[], int v, int tl, int tr) {
         build(a, v*2, tl, tm);
         build(a, v*2+1, tm+1, tr);
         // the line above you execute your process
-        t[v] = t[v*2] + t[v*2+1];
+        t[v] = combine(t[v*2] + t[v*2+1]);
     }
 }
-int sum(int v, int tl, int tr, int l, int r) {
+info query(int v, int tl, int tr, int l, int r) {
     if (l > r) // the default value for empty 
-        return 0;
+        return create(0);
     if (l == tl && r == tr) {
         return t[v];
     }
     int tm = (tl + tr) / 2;
     // the line above you execute your process
-    return sum(v*2, tl, tm, l, min(r, tm))
-           + sum(v*2+1, tm+1, tr, max(l, tm+1), r);
+    return combine(query(v*2, tl, tm, l, min(r, tm)), query(v*2+1, tm+1, tr, max(l, tm+1), r));
 }
 void update(int v, int tl, int tr, int pos, int new_val) {
     if (tl == tr) {
-        t[v] = new_val;
+        t[v] = create(new_val);
     } else {
         int tm = (tl + tr) / 2;
         if (pos <= tm)
@@ -58,7 +76,7 @@ void update(int v, int tl, int tr, int pos, int new_val) {
         else
             update(v*2+1, tm+1, tr, pos, new_val);
         // the line above you execute your process
-        t[v] = t[v*2] + t[v*2+1];
+        t[v] = combine(t[v*2] + t[v*2+1]);
     }
 }
 
