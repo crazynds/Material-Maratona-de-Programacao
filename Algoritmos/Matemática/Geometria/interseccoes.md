@@ -78,7 +78,7 @@ bool pointInConvexPolygon(pt point) {
 
 ## Sweep Line 2d
 
-Ele verifica somente quando as linhas comecam ou terminam
+Ele verifica somente quando as linhas comecam ou terminam. Verifica se dois segmentos de reta se interceptam, e caso sim, retorna eles.
 
 ```cpp
 const double EPS = 1E-9;
