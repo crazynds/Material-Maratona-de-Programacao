@@ -7,4 +7,6 @@
     * [Combinatória modular](./combinatoria-modular.md)
 4. [MDC/MMC](./gdc-mmc.md)
 5. Geometria
-    * [Area de formas](./areas-formas.md)
+    * [Area de poligono](./Geometria/area-poligonos.md)
+    * [Convex Hull](./Geometria/Convex%20Hull/Graham%20Scan.md)
+    * [Intersecções](./Geometria/interseccoes.md)
