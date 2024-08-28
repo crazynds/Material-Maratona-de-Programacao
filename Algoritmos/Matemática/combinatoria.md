@@ -133,3 +133,58 @@ print(comb(3,2))
 print(perm(3,2))
 # 6
 ```
+
+## Algoritmo para calcular a quantidade de combinações
+
+No algoritmo abaixo, $n$ é o total de elementos e $k$ o tamanho dos conjuntos a serem formados.
+
+```cpp
+int comb(int n, int k)
+{
+    int resp = 1;
+
+    for (int i = n - k + 1; i <= n; i++)
+    {
+        resp *= i;
+    }
+
+    for (int i = 2; i <= k; i++)
+    {
+        resp /= i;
+    }
+
+    return resp;
+}
+```
+
+## Triângulo de Pascal
+
+Pode-se pré-computar os coeficientes binomiais com o Triângulo de Pascal.
+
+No algoritmo abaixo, `maxn` é o maior valor possível para $n$.
+
+```cpp
+const int maxn = 100;
+int pascal[maxn + 1][maxn + 1];
+
+void makePascal()
+{
+    pascal[0][0] = 1;
+    for (int n = 1; n <= maxn; n++)
+    {
+        pascal[n][0] = pascal[n][n] = 1;
+        for (int k = 1; k < n; k++)
+        {
+            pascal[n][k] = pascal[n - 1][k - 1] + pascal[n - 1][k];
+        }
+    }
+}
+```
+
+Para acessar a combinatória de $n$ em $k$, basta utilizar `pascal[n][k]`.
+
+## Algumas Propriedades
+
+ - C_{n, k} = C_{n, n - k}
+ - C_{n, k} = (n / k) * C_{n-1, k-1}
+ - C_{n, 0} + C_{n, 1} + ... + C_{n, n} = 2 ^ n
