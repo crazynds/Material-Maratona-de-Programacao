@@ -4,7 +4,8 @@
 2. Problemas
    1. [Passeio Euleriano](./konisgsberg.md)
    2. [Ciclos Hamiltonianos](./hamiltonianos.md)
-   3. [Strongly connected components](./stronglyconnectedcomponents.md)
+   3. [Min K-Cut](./minkcut.md)
+   4. [Strongly connected components](./stronglyconnectedcomponents.md)
 3. Algoritmos
    1. Preenchimento/Contagem em matrizes
         - [Fluid Fill](./fluidfill.md)
@@ -24,8 +25,9 @@
    5. Minimum Spanning Tree
         - [Prim's Algorithm](./prims-algorithm.md)
         - [Kruskal's MST](./kruskalsmst.md)
-   6. Graph Clustering 
+   6. [Maximum Flow](./)
+   7. Graph Clustering
         - [Maximum Spacing K-Clustering](./spacingClustering.md)
         - [Perfect Match Graph](./perfect-match-graph.md)
-   7. [Remover Ciclos](./removecycles.md) 
+   8. [Remover Ciclos](./removecycles.md) 
 4.  [Experiencia de Grafos com Crazynds](./GrafosCrazynds/README.md)

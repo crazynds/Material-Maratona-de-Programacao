@@ -12,6 +12,29 @@ Para um $K$ fixo, esse problema pode ser resolvido em tempo polinimial, porém s
 
 Para grafos com pesos não negativos, e $K=2$, esse problema pode ser resolvido em tempo polinomial usando o algoritmo abaixo.
 
+```c++
+int globalMinCut(vector<vector<int>> &mat) {
+    int best = INT_MAX;
+    int n = mat.size();
+
+    for (int ph = 1; ph < n; ph++) {
+        vector<int> w = mat[0];
+        size_t s = 0, t = 0;
+        for (int it = 0; it < n - ph; it++) {
+            w[t] = INT_MIN;
+            s = t, t = max_element(w.begin(), w.end()) - w.begin();
+            for (int i = 0; i < n; i++) w[i] += mat[t][i];
+        }
+        best = min(best, w[t] - mat[t][t]);
+        for (int i = 0; i < n; i++) mat[s][i] += mat[t][i];
+        for (int i = 0; i < n; i++) mat[i][s] = mat[s][i];
+        mat[0][t] = INT_MIN;
+    }
+
+    return best;
+}
+```
+
 ```python
 import heapq
 def globalMinCut(nodes: list[dict]):
