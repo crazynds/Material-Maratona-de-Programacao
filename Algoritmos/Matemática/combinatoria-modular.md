@@ -77,3 +77,48 @@ long long comb_mob(long long n, long long p)
     return resp;
 }
 ```
+
+## Algoritmos TESTADOS
+
+Para calcular uma combinatória mod `mod` é preciso pré-computar os fatoriais mod `mod` de $1$ até o maior $n$.
+
+$n$ é o total de elementos e `maxn` é o maior valor possível para $n$.
+
+### Pré-computar fatoriais
+
+```cpp
+ll fatMod[maxn + 1];
+
+void precomputeFatMod()
+{
+    fatMod[0] = 1;
+    for (int i = 1; i <= maxn; i++)
+    {
+        fatMod[i] = fatMod[i - 1] * i % mod;
+    }
+}
+```
+
+### Inverso Modular
+
+```cpp
+ll inv(ll a)
+{
+    return a <= 1 ? a : mod - (long long)(mod / a) * inv(mod % a) % mod;
+}
+```
+
+### Pré-computar o inverso Modular?
+
+Para pré-computar o inverso modular, pode-se usar programação dinânmica partindo da solução recursiva acima. Porém, acredito que não seja
+recomendado, pois, o vetor teria que ter tamanho `mod`, ou seja, teria que guardar todos os valores entre 1 e `mod - 1`. Geralmente,
+`mod = 10^9 + 7`, que é muito grande.
+
+### Combinatória Módulo `mod`
+
+```cpp
+int combMod(int n, int k)
+{
+    return fatMod[n] * inv(fatMod[k]) % mod * inv(fatMod[n - k]) % mod;
+}
+```
