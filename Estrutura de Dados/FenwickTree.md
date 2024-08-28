@@ -15,8 +15,8 @@ Funções importantes
 - Update: faz a troca de um valor de uma posição;
 
   Build: O(N)  
-Atualização: O(log N)  
-Consulta: O(log N)  
+Atualização: O(log N)
+Consulta: O(log N)
 Espaço: O(N)  
 
 

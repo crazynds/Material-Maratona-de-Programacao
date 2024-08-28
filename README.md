@@ -29,6 +29,8 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
      - [Conjunto](./Estrutura%20de%20Dados/Conjunto.md)
    - [Grafos](./Estrutura%20de%20Dados/Grafos.md)
    - [DisjoinSet](./Estrutura%20de%20Dados/DisjoinSet.md)
+   - Sparse Table
+     - [Disjoint Sparse Table](./Estrutura%20de%20Dados/disjoint-sparse-table.md)
    - Árvores
      - [Binary Tree](./Estrutura%20de%20Dados/BinaryTree.md)
        - [AVLTree](./Estrutura%20de%20Dados/AVLTree.md)
@@ -43,3 +45,4 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
      - [Maior soma de sub arrays](./Algoritmos/KnownProblems/maior%20soma%20de%20array.md)
    - Programação Dinamica
      - [Problema da mochila/Knapsack (Pesos e valores)](./Algoritmos/KnownProblems/Knapsackproblem.md)
+     - [Job Scheduling](./Algoritmos/KnownProblems/Job%20Scheduling.md)
