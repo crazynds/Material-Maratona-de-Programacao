@@ -4,12 +4,13 @@
 2. Problemas
    1. [Passeio Euleriano](./konisgsberg.md)
    2. [Ciclos Hamiltonianos](./hamiltonianos.md)
+   3. [Strongly connected components](./stronglyconnectedcomponents.md)
 3. Algoritmos
    1. Preenchimento/Contagem em matrizes
         - [Fluid Fill](./fluidfill.md)
    2. Buscas em grafo
         - [Depth-first search](./dfs.md)
-          - [Topological Sorting](./dfs.md#topological-sorting)
+           - [Topological Sorting](./dfs.md#topological-sorting)
         - [Breadth-first search](./bfs.md)
            - [Nós mais distantes](./bfs.md#nós-mais-distantes)
    3. Menor Distância entre dois vértices (SP)
