@@ -10,9 +10,9 @@ Se a função for exponencial, basta ordenar por (1 - e^a*tempo) / custo
 
 ## Agendamento em dois computadores O(n log n)
 
-Esse problema a ser resolvido se resume em que ordem os os trabalhos devem ser ordenados para finalizar no menor tempo possível. Um trabalho só pode ser agendado no secundo computador depois de ser finalizado na primeira.
+Esse problema a ser resolvido se resume em que ordem os os trabalhos devem ser ordenados para finalizar no menor tempo possível. Um trabalho só pode ser agendado no segundo computador depois de ser finalizado na primeira.
 
-Esse algoritmo surge a partir da tentativa de minimizar o tempo ocioso do secundo computador. Assim como o problema anterior, a solução para esse é um ordenamento dos trabalhos.
+Esse algoritmo surge a partir da tentativa de minimizar o tempo ocioso do segundo computador. Assim como o problema anterior, a solução para esse é um ordenamento dos trabalhos.
 
 ## C++
 ```cpp
