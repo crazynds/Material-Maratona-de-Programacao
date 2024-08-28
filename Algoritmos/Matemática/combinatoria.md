@@ -185,6 +185,6 @@ Para acessar a combinatória de $n$ em $k$, basta utilizar `pascal[n][k]`.
 
 ## Algumas Propriedades
 
- - C_{n, k} = C_{n, n - k}
- - C_{n, k} = (n / k) * C_{n-1, k-1}
- - C_{n, 0} + C_{n, 1} + ... + C_{n, n} = 2 ^ n
+ - $C_{n, k} = C_{n, n - k}$
+ - $C_{n, k} = (n / k) * C_{n-1, k-1}$
+ - $C_{n, 0} + C_{n, 1} + ... + C_{n, n} = 2 ^ n$
