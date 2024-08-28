@@ -9,21 +9,22 @@
         - [Fluid Fill](./fluidfill.md)
    2. Buscas em grafo
         - [Depth-first search](./dfs.md)
+          - [Topological Sorting](./dfs.md#topological-sorting)
         - [Breadth-first search](./bfs.md)
            - [Nós mais distantes](./bfs.md#nós-mais-distantes)
-   4. Menor Distância entre dois vértices (SP)
+   3. Menor Distância entre dois vértices (SP)
         - [Dijkstra](./dijkstra.md)
         - [Bellman-Ford](./Bellman-Ford.md)
-   5. Menor Distância entre todos os pares de vértices (APSP)
+   4. Menor Distância entre todos os pares de vértices (APSP)
         - [Bellman-Ford (Adaptado)](./Bellman-Ford.md#APSP)
         - [Floyd-warshall](./floyd-warshall.md)
         - [Johnson Algorithm](./johnson-algorithm.md)
         - [Dijkstra](./dijkstra.md#APSP)
-   6. Minimum Spanning Tree
+   5. Minimum Spanning Tree
         - [Prim's Algorithm](./prims-algorithm.md)
         - [Kruskal's MST](./kruskalsmst.md)
-   7. Graph Clustering 
+   6. Graph Clustering 
         - [Maximum Spacing K-Clustering](./spacingClustering.md)
         - [Perfect Match Graph](./perfect-match-graph.md)
-   8. [Remover Ciclos](./removecycles.md) 
+   7. [Remover Ciclos](./removecycles.md) 
 4.  [Experiencia de Grafos com Crazynds](./GrafosCrazynds/README.md)
