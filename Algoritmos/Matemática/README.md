@@ -14,4 +14,5 @@
     * [Area de poligono](./Geometria/area-poligonos.md)
     * [Convex Hull](./Geometria/Convex%20Hull/Graham%20Scan.md)
     * [Intersecções](./Geometria/interseccoes.md)
+    * [Volumes de Poliedros](./Geometria/volume-poliedros.md)
     
