@@ -40,6 +40,60 @@ public:
 };
 ```
 
+## Outra Implementação para Minimum Queue
+
+```cpp
+struct MinQueue
+{
+    deque<pair<int, int>> minQueue;
+    int contPush = 0;
+
+    void add(int num)
+    {
+        // se (minQueue.back().first < num), vira maxQueue
+        while(!minQueue.empty() && minQueue.back().first > num)
+        {
+            minQueue.pop_back();
+        }
+
+        minQueue.push_back({num, contPush});
+        contPush++;
+    }
+
+    int getMin(int start = 0)
+    {
+        while(start > minQueue.front().second)
+        {
+            minQueue.pop_front();
+        }
+
+        return minQueue.front().first;
+    }
+};
+```
+
+Para utilizar, considere que `m` seja o tamanho dos subvetores e `n` o tamanho total do vetor.
+
+```cpp
+MinQueue minq;
+
+for(int i = 0; i < m; i++)
+{
+    minq.add(v[i]);
+}
+
+// start = 0
+cout << minq.getMin() << endl;
+
+for(int i = 1; i <= v.size() - m; i++)
+{
+    minq.add(v[i + m - 1]);
+       
+    // start = i  
+    cout << minq.getMin(i) << endl;
+}
+```
+
 ## Exercícios
 
 - [Queries with Fixed Length](https://www.hackerrank.com/challenges/queries-with-fixed-length/problem)
