@@ -75,23 +75,23 @@ struct MinQueue
 Para utilizar, considere que `m` seja o tamanho dos subvetores e `n` o tamanho total do vetor.
 
 ```cpp
-    MinQueue minq;
+MinQueue minq;
 
-    for(int i = 0; i < m; i++)
-    {
-        minq.add(v[i]);
-    }
+for(int i = 0; i < m; i++)
+{
+    minq.add(v[i]);
+}
 
-    // start = 0
-    cout << minq.getMin() << endl;
+// start = 0
+cout << minq.getMin() << endl;
 
-    for(int i = 1; i <= v.size() - m; i++)
-    {
-        minq.add(v[i + m - 1]);
+for(int i = 1; i <= v.size() - m; i++)
+{
+    minq.add(v[i + m - 1]);
        
-        // start = i  
-        cout << minq.getMin(i) << endl;
-    }
+    // start = i  
+    cout << minq.getMin(i) << endl;
+}
 ```
 
 ## Exercícios
