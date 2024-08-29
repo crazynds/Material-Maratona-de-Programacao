@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Material de agendamento de tarefas</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="material-de-agendamento-de-tarefas">Material de agendamento de tarefas</h1>
+<h2 id="agendamento-em-um-único-computador-on-log-n">Agendamento em um único computador O(n log n)</h2>
+<p>O primeiro problema a ser resolvido é em que ordem agendar N trabalhos de forma que o custo da função de penalidade final seja mínimo.</p>
+<p>Para casos em que a função é linear, basta ordenar os trabalhos pela razão custo/tempo.</p>
+<p>Se a função for exponencial, basta ordenar por (1 - e^a*tempo) / custo</p>
+<h2 id="agendamento-em-dois-computadores-on-log-n">Agendamento em dois computadores O(n log n)</h2>
+<p>Esse problema a ser resolvido se resume em que ordem os os trabalhos devem ser ordenados para finalizar no menor tempo possível. Um trabalho só pode ser agendado no segundo computador depois de ser finalizado na primeira.</p>
+<p>Esse algoritmo surge a partir da tentativa de minimizar o tempo ocioso do segundo computador. Assim como o problema anterior, a solução para esse é um ordenamento dos trabalhos.</p>
+<h2 id="c">C++</h2>
+<pre><code class="language-cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Job</span> {
+    <span class="hljs-type">int</span> a, b, idx;
+
+    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>&lt;(Job o) <span class="hljs-type">const</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">min</span>(a, b) &lt; <span class="hljs-built_in">min</span>(o.a, o.b);
+    }
+};
+
+<span class="hljs-function">vector&lt;Job&gt; <span class="hljs-title">johnsons_rule</span><span class="hljs-params">(vector&lt;Job&gt; jobs)</span> </span>{
+    <span class="hljs-built_in">sort</span>(jobs.<span class="hljs-built_in">begin</span>(), jobs.<span class="hljs-built_in">end</span>());
+    vector&lt;Job&gt; a, b;
+    <span class="hljs-keyword">for</span> (Job j : jobs) {
+        <span class="hljs-keyword">if</span> (j.a &lt; j.b)
+            a.<span class="hljs-built_in">push_back</span>(j);
+        <span class="hljs-keyword">else</span>
+            b.<span class="hljs-built_in">push_back</span>(j);
+    }
+    a.<span class="hljs-built_in">insert</span>(a.<span class="hljs-built_in">end</span>(), b.<span class="hljs-built_in">rbegin</span>(), b.<span class="hljs-built_in">rend</span>());
+    <span class="hljs-keyword">return</span> a;
+}
+
+<span class="hljs-function">pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; <span class="hljs-title">finish_times</span><span class="hljs-params">(vector&lt;Job&gt; <span class="hljs-type">const</span>&amp; jobs)</span> </span>{
+    <span class="hljs-type">int</span> t1 = <span class="hljs-number">0</span>, t2 = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (Job j : jobs) {
+        t1 += j.a;
+        t2 = <span class="hljs-built_in">max</span>(t2, t1) + j.b;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">make_pair</span>(t1, t2);
+}
+</code></pre>
+<h2 id="agendamento-de-tarefas-com-deadline">Agendamento de tarefas com deadline</h2>
+<p>Problema para agendar o máximo de tarefas em um espaço de tempo.</p>
+<h2 id="c-1">C++</h2>
+<pre><code class="language-cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Job</span> {
+    <span class="hljs-type">int</span> deadline, duration, idx;
+
+    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>&lt;(Job o) <span class="hljs-type">const</span> {
+        <span class="hljs-keyword">return</span> deadline &lt; o.deadline;
+    }
+};
+
+<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">compute_schedule</span><span class="hljs-params">(vector&lt;Job&gt; jobs)</span> </span>{
+    <span class="hljs-built_in">sort</span>(jobs.<span class="hljs-built_in">begin</span>(), jobs.<span class="hljs-built_in">end</span>());
+
+    set&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt; s;
+    vector&lt;<span class="hljs-type">int</span>&gt; schedule;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = jobs.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-type">int</span> t = jobs[i].deadline - (i ? jobs[i<span class="hljs-number">-1</span>].deadline : <span class="hljs-number">0</span>);
+        s.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">make_pair</span>(jobs[i].duration, jobs[i].idx));
+        <span class="hljs-keyword">while</span> (t &amp;&amp; !s.<span class="hljs-built_in">empty</span>()) {
+            <span class="hljs-keyword">auto</span> it = s.<span class="hljs-built_in">begin</span>();
+            <span class="hljs-keyword">if</span> (it-&gt;first &lt;= t) {
+                t -= it-&gt;first;
+                schedule.<span class="hljs-built_in">push_back</span>(it-&gt;second);
+            } <span class="hljs-keyword">else</span> {
+                s.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">make_pair</span>(it-&gt;first - t, it-&gt;second));
+                t = <span class="hljs-number">0</span>;
+            }
+            s.<span class="hljs-built_in">erase</span>(it);
+        }
+    }
+    <span class="hljs-keyword">return</span> schedule;
+}
+</code></pre>
+<h1 id="problema-da-mochila--knapsack">Problema da mochila / Knapsack</h1>
+<p>Dada um mochileiro que pode carregar até <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span> de peso, e <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> itens com um peso <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>W</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">W_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> e um valor <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">V_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, qual é o máximo de valor que o mochileiro consegue carregar.</p>
+<p>Algumas regras:</p>
+<ul>
+<li>Um item não pode ser dividido em pedaços</li>
+<li>O mochileiro não pode carregar mais que <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span> de peso. Seja <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span> o conjunto de itens solução e <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>W</mi><mi>i</mi></msub><mo>∈</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">W_i\in S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span> então <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∑</mo><msub><mi>W</mi><mi>i</mi></msub><mo>&lt;</mo><mo>=</mo><mi>W</mi></mrow><annotation encoding="application/x-tex">\sum{W_i}&lt;=W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span></li>
+</ul>
+<h1 id="solução-para-inteiros">Solução para INTEIROS</h1>
+<p>Abaixo a solução para o problema quando todos os pesos inteiros. Todas as soluções apresentam o peso da mochila como multiplicador do custo de memória (Ex: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo>∗</mo><mi>W</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N*W)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mclose">)</span></span></span></span>), então essas soluções podem não ser ideais para quando se tem um peso máximo muito alto.</p>
+<h2 id="ideia-base">Ideia base</h2>
+<p>Solução baseada em programação dinamica. O objetivo é tentar cobrir todas as soluções disponiveis, dessa forma existem duas hipoteses, de o item estar no conjunto solução, e do item não estar no conjunto solução. As duas ramificações são calculadas e a partir de um algoritmo usando recursão podemos encontrar o seguinte código:</p>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">encontraSolucao</span>(<span class="hljs-params">itens,pesoDisponivel,i</span>)
+    <span class="hljs-keyword">if</span> i &gt;= <span class="hljs-built_in">len</span>(itens):
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    valor, peso = itens[i]
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(
+        encontraSolucao(itens,pesoDisponivel,i+<span class="hljs-number">1</span>),
+        encontraSolucao(itens,pesoDisponivel-peso,i+<span class="hljs-number">1</span>)+valor <span class="hljs-keyword">if</span> pesoDisponivel-peso &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>
+    )
+</code></pre>
+<p>Claro que o algoritmo acima apresenta muitos problemas de eficiencia, mas é um bom código para exemplificar como resolver esse problema, agora abaixo um algoritmo que já implementa algum nivel de otimização na execução mas que o principio de resolução é o mesmo do anterior.</p>
+<pre><code class="language-python">weight, n = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">input</span>().split())
+itens  = []
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+    val,weightItem = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">input</span>().split())
+    itens.append((val,weightItem))
+
+<span class="hljs-comment">#Compute matrix of max choises</span>
+mat = [[<span class="hljs-number">0</span>]*(weight+<span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n+<span class="hljs-number">1</span>)]
+<span class="hljs-keyword">for</span> i, (val,weightItem) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(itens,<span class="hljs-number">1</span>):
+    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(weight+<span class="hljs-number">1</span>):
+        mat[i][x] = <span class="hljs-built_in">max</span>(mat[i-<span class="hljs-number">1</span>][x],(mat[i-<span class="hljs-number">1</span>][x-weightItem] + val) <span class="hljs-keyword">if</span> x &gt;= weightItem <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Maximo peso:&#x27;</span>,mat[-<span class="hljs-number">1</span>][weight])
+</code></pre>
+<p>Complexidade: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo>∗</mo><mi>W</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N*W)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mclose">)</span></span></span></span> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">N=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span></span></span></span> Número de itens <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">W=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span></span></span></span> Peso máximo carregado</p>
+<p>Na matriz declarada os valores são calculados apenas na primeira passada por aquela coluna. O resultado da casa <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo stretchy="false">[</mo><mi>X</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>Y</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">M[X][Y]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="mclose">]</span></span></span></span> pode ser lido como o valor máximo que é possivel carregar considerando até o <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span> item com peso máximo <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span>.</p>
+<h2 id="backtrace">Backtrace</h2>
+<p>Algumas vezes queremos saber quais são os itens que vão ser levados na mochila se escolhermos a solução que maximize o valor, então temos o seguinte techo de código que resolve esse problema para nós:</p>
+<pre><code class="language-python"><span class="hljs-comment">#Backpropagate to get the itens of max choise</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">backtrackItensMaxChoise</span>(<span class="hljs-params">mat,itens,weight</span>):
+    itensSelected = []
+    currentWeight = weight
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(itens)-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>):
+        <span class="hljs-keyword">if</span> mat[i+<span class="hljs-number">1</span>][currentWeight] != mat[i][currentWeight]:
+            val,peso = itens[i]
+            itensSelected.append((val,peso))
+            currentWeight -= peso
+    <span class="hljs-keyword">return</span> itensSelected
+
+<span class="hljs-built_in">print</span>(backtrackItensMaxChoise(mat,itens,weight))
+</code></pre>
+<p>Complexidade: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">N=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span></span></span></span> Número de itens</p>
+<p>Esse algoritmo obviamente depende do código anterior para gerar a matriz de valores, porém executa em tempo ótimo e retorna uma lista de itens para a solução maximizada.</p>
+<h2 id="otimização-de-espaço">Otimização de espaço</h2>
+<p>Como pode ser percebido, o código apresenta custo de memória de <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>M</mi><mo>∗</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(M*N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> o que pode crescer extremamente rápido, para isso existe uma versão do algoritmo que consegue fazer a implementação do mesmo código com custo de memoria <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>M</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(M)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span>.</p>
+<p>Obs: Nessa versão de algoritmo o sistema de backtrace <strong>não funciona</strong>.</p>
+<p>A ideia por traz dessa solução é que ao invez de precisar manter uma matriz das soluções de todos os itens anteriores calculada, é necessário apenas manter a ultima coluna calculada em memória, e o resto dos dados podem ser descartados. Segue um exemplo de código:</p>
+<pre><code class="language-python">weight, n = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">input</span>().split())
+itens  = []
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+    val,peso = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">input</span>().split())
+    itens.append((val,peso))
+
+<span class="hljs-comment">#Compute matrix of max choises</span>
+
+lastColumn = [<span class="hljs-number">0</span>] * (weight+<span class="hljs-number">1</span>)
+currentColumn = [<span class="hljs-number">0</span>] * (weight+<span class="hljs-number">1</span>)
+
+<span class="hljs-keyword">for</span> i, (val,peso) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(itens,<span class="hljs-number">1</span>):
+    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(weight+<span class="hljs-number">1</span>):
+        currentColumn[x] = <span class="hljs-built_in">max</span>(lastColumn[x],(lastColumn[x-peso] <span class="hljs-keyword">if</span> x-peso &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>) + val <span class="hljs-keyword">if</span> x &gt;= peso <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)
+    lastColumn,currentColumn = currentColumn,lastColumn
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Maximo peso:&#x27;</span>,lastColumn[weight])
+</code></pre>
+<h1 id="solução-ótima">Solução ótima</h1>
+<p>Melhor solução para o problema independente de tudo o que foi dito.</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> sys
+<span class="hljs-comment"># If some recursion error apear, increase this number</span>
+sys.setrecursionlimit(<span class="hljs-number">2500</span>)
+
+weight, n = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">input</span>().split())
+itens  = []
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+    val,peso = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">input</span>().split())
+    itens.append((val,peso))
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">knapsack_optimal</span>(<span class="hljs-params">itens,cache,currentWeight,i</span>):
+    <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    key = (i,currentWeight)
+    <span class="hljs-keyword">if</span> key <span class="hljs-keyword">in</span> cache:
+        <span class="hljs-keyword">return</span> cache[key]
+    val,weight = itens[i]
+
+    cache[key] = <span class="hljs-built_in">max</span>(
+        (knapsack_optimal(itens,cache,currentWeight-weight,i-<span class="hljs-number">1</span>)+val) <span class="hljs-keyword">if</span> currentWeight &gt;= weight <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>,
+        knapsack_optimal(itens,cache,currentWeight,i-<span class="hljs-number">1</span>)
+    )
+    <span class="hljs-keyword">return</span> cache[key]
+
+cache = {}
+solve = knapsack_optimal(itens,cache,weight,<span class="hljs-built_in">len</span>(itens)-<span class="hljs-number">1</span>)
+</code></pre>
+<h2 id="backtrace-da-solução-otima">BackTrace da solução otima</h2>
+<p>Vou te entregar de bandeja o backtrace, então vc deve aprender como usar e fazer o resto. Essa função utiliza a solução ótima para o Knapsack problem, então deve ser usado com as duas funçoes.</p>
+<pre><code class="language-python">
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">knapsack_optimal_with_backtrace</span>(<span class="hljs-params">itens,maxWeight</span>):
+    currentWeight = maxWeight
+    solution = []
+    cache = {}
+    totalValue = knapsack_optimal(itens,cache,maxWeight,<span class="hljs-built_in">len</span>(itens)-<span class="hljs-number">1</span>)
+    currentValue = totalValue
+    
+    <span class="hljs-comment"># Executa todos menos o item na casa 0</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(itens)-<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,-<span class="hljs-number">1</span>):
+        <span class="hljs-comment"># se o valor do passo anterior for diferente do valor atual, então foi adicionado o item ao valor atual</span>
+        <span class="hljs-keyword">if</span> cache[(i-<span class="hljs-number">1</span>,currentWeight)] != cache[(i,currentWeight)]:
+            <span class="hljs-comment"># inclui o iten no conjunto solução</span>
+            val,weight = itens[i]
+            currentWeight -= weight
+            currentValue -= val
+            solution.append(itens[i])
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-comment"># Depois que executou tudo</span>
+        <span class="hljs-comment"># Se ainda tem valor sobrando, então inclui o ultimo</span>
+        <span class="hljs-keyword">if</span> currentValue &gt; <span class="hljs-number">0</span>:
+            solution.append(itens[<span class="hljs-number">0</span>])
+    
+    <span class="hljs-keyword">return</span> solution,totalValue
+
+</code></pre>
+<p>Teste o que aprendeu com o problema abaixo.</p>
+<ul>
+<li><a href="https://www.beecrowd.com.br/judge/pt/problems/view/1767">Beecrowd 1767</a></li>
+</ul>
+<h1 id="variações-do-problema">Variações do problema</h1>
+<h2 id="dois-sacos">Dois sacos</h2>
+<p>Agora imaginando que no problema existam dois recimentes que carreguem itens, quero preencher o máximo deles que no final eu tenha o maior valor possivel. Essa é uma variação bem ardilosa pensando inicialmente, mas quando se pega o algoritmo base inicial e pensa numa adpatação é possivel chega ao seguinte código:</p>
+<pre><code class="language-python"><span class="hljs-comment"># mudança nos parametros</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">encontraSolucao</span>(<span class="hljs-params">itens,pesoDispA,pesoDispB,i</span>)
+    <span class="hljs-keyword">if</span> i &gt;= <span class="hljs-built_in">len</span>(itens):
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    valor, peso = itens[i]
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(
+        encontraSolucao(itens,pesoDispA,i+<span class="hljs-number">1</span>),
+        encontraSolucao(itens,pesoDispA-peso,i+<span class="hljs-number">1</span>)+valor <span class="hljs-keyword">if</span> pesoDispA-peso &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>
+        <span class="hljs-comment"># nova linha</span>
+        encontraSolucao(itens,pesoDispA,pesoDispB-peso,i+<span class="hljs-number">1</span>)+valor <span class="hljs-keyword">if</span> pesoDispB-peso &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>
+    )
+</code></pre>
+<p>Todas as técnicas de otmizações são aplicaveis, então a partir daqui deixo com você o código perfeito.</p>
+<h2 id="n-sacos">N sacos</h2>
+<p>Esse é um caso realmente mais complicado, porém se você conseguiu entender as mudanças que acontecem quando vamos de 1 saco para 2 sacos, da para ter uma ideia da estrutura que vamos aplicar para calcular com numero <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> de sacos. Deixo esse para você também.</p>
+<h1 id="algoritmo-de-kadane">Algoritmo de Kadane</h1>
+<p>Nesse algoritmo O(n), retornará o valor da maior soma de um subarray contíguo que está contido no array original.</p>
+<p>Ou seja: <code>subarray_sum([1,-2,3,-1,4]) -&gt; 6</code> pois a maior soma está em [3, -1, 4].</p>
+<p>Este algoritmo utiliza técnicas de programação dinâmica para resolução do problema.</p>
+<h2 id="python">Python</h2>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">subarray_sum</span>(<span class="hljs-params">arr</span>):
+    <span class="hljs-comment"># valores iniciais</span>
+    max_ = arr[<span class="hljs-number">0</span>]
+    max_end = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(arr)):
+        max_end = max_end + arr[i]
+        <span class="hljs-keyword">if</span> max_end &lt; <span class="hljs-number">0</span>: <span class="hljs-comment"># resetar contador</span>
+            max_end = <span class="hljs-number">0</span>
+        
+        <span class="hljs-keyword">elif</span> max_ &lt; max_end: <span class="hljs-comment"># atualizar máximo</span>
+            max_ = max_end
+
+    <span class="hljs-keyword">return</span> max_
+</code></pre>
+<p><a href="https://www.beecrowd.com.br/judge/pt/problems/view/1310">1310 - Lucro</a></p>
+<h1 id="variações-do-problema-1">Variações do problema</h1>
+<h2 id="maior-somatorio-de-sub-array-que-a-soma-seja-menor-que-k">Maior somatorio de sub array que a soma seja menor que K</h2>
+<p>Queremos saber qual o maior somatório de um sub array do array original que o valor seja menor que K. O problema é bem simples de resolver usando a solução que temos anteriormente.</p>
+<p>Adicionamos no algoritmo apenas uma verificação se o novo máximo é menor que K, então ele seta e retornamos ele depois.</p>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">subarray_sum_less_or_equal_than</span>(<span class="hljs-params">arr,k</span>):
+    <span class="hljs-comment"># valores iniciais</span>
+    max_ = <span class="hljs-number">0</span>
+    max_end = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(arr)):
+        max_end = max_end + arr[i]
+        <span class="hljs-keyword">if</span> max_end &lt; <span class="hljs-number">0</span>: <span class="hljs-comment"># resetar contador</span>
+            max_end = <span class="hljs-number">0</span>
+        
+        <span class="hljs-keyword">elif</span> max_ &lt; max_end <span class="hljs-keyword">and</span> max_end &lt;= k: <span class="hljs-comment"># atualizar máximo</span>
+            max_ = max_end
+
+    <span class="hljs-keyword">return</span> max_
+</code></pre>
+<p>Outra forma pode ser vista <a href="https://www.geeksforgeeks.org/maximum-sum-subarray-having-sum-less-than-or-equal-to-given-sum-using-set/">aqui</a>.</p>
+<h2 id="maior-sub-array-que-a-soma-seja-menor-que-k">Maior sub array que a soma seja menor que K</h2>
+<p>Diferente da questão acima, queremos o maior array que a soma seja menor que K, independente do somatorio.</p>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">length_subarrays_more_than_k</span>(<span class="hljs-params">array, K</span>):
+    head, tail = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    current_sum = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span>(tail&lt;<span class="hljs-built_in">len</span>(array)):
+        <span class="hljs-keyword">if</span> current_sum + array[tail]&lt;=K:
+            current_sum += array[tail]
+            tail += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">yield</span> tail - head
+        <span class="hljs-keyword">else</span>:
+            current_sum -= array[head]
+            head += <span class="hljs-number">1</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">max_subarray_more_than_k</span>(<span class="hljs-params">array, k</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(length_subarrays_more_than_k(array, K))
+
+</code></pre>
+<p>Graças a nossos <a href="https://codereview.stackexchange.com/questions/146524/find-the-longest-subarray-with-sum-less-than-k">colegas de carreira (fonte)</a>, temos uma solução elegante que roda O(N).</p>
+<p>Devemos notar que funciona somente para arrays com valores positivos apenas, quando incluido valores negativos, temos diversos problemas que surgem no algoritmo acima. Você que é inteligente vai descobrir um algoritmo que funciona para qualquer número em O(N) e vai mandar um commit para esse repositório. 😉</p>
+<h1 id="manacher">Manacher</h1>
+<p>O algoritmo de Manacher é utilizado para encontrar todos os palíndromos de uma palavra em tempo O(n).</p>
+<p>O Manacher funciona somente com strings de tamanho ímpar, portanto, caso o a string tenha tamanho par, é necessário adicionar '.' entre cada caracter, para que dessa forma ela tenha um tamanho ímpar.</p>
+<p>O Manacher utilizar propriedades dos palíndromos para descobrí-los todos em O(n). Ele funciona verificando qual o maior palíndromo que tenha centro em i. A propriedade principal que ele utiliza é que palíndromos dentro de palíndromos são espelhados. Ou seja, no caso 'abacaba', há um palíndromo maior com centro em 'c'. O algoritmo ao verificar qual o maior palíndromo em todos os caracteres que estão a direita de 'c', sabe que eles tem pelo menos o tamanho dos palíndromos que estão a esquerda de 'c', e assim evitam cálculos repetidos.</p>
+<p>O retorno do algoritmo é uma lista que representa: para a posição i, o maior palíndromo é LPS[i]. A partir disso, todos os palíndromos podem ser recuperados da string.</p>
+<h2 id="python-1">Python</h2>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">PreProcessWord</span>(<span class="hljs-params">word</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;.&quot;</span> + <span class="hljs-string">&quot;&quot;</span>.join([c + <span class="hljs-string">&quot;.&quot;</span> <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> word])
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">Manacher</span>(<span class="hljs-params">string</span>):
+    string = PreProcessWord(string)
+    LPS = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(string))]
+    C = <span class="hljs-number">0</span>
+    R = <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(string)):
+        iMirror = <span class="hljs-number">2</span>*C - i
+        <span class="hljs-keyword">if</span> R &gt; i:
+            LPS[i] = <span class="hljs-built_in">min</span>(R-i, LPS[iMirror])
+        <span class="hljs-keyword">else</span>:
+            LPS[i] = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">try</span>:
+            <span class="hljs-keyword">while</span> string[i + <span class="hljs-number">1</span> + LPS[i]] == string[i - <span class="hljs-number">1</span> - LPS[i]]:
+                LPS[i] += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">except</span>:
+            <span class="hljs-keyword">pass</span>
+        
+        <span class="hljs-keyword">if</span> i + LPS[i] &gt; R:
+            C = i
+            R = i + LPS[i]
+    
+    <span class="hljs-keyword">return</span> LPS
+    r, c = <span class="hljs-built_in">max</span>(LPS), LPS.index(<span class="hljs-built_in">max</span>(LPS))
+    result = string[c - r : c + r].replace(<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;&quot;</span>)
+
+</code></pre>
+<h1 id="longest-common-substring">Longest Common Substring</h1>
+<p>Esse algoritmo encontra a maior subsequência comum entre duas strings em O(n*m). Uma subsequência não exige que os caracteres sejam sequenciais.</p>
+<h2 id="top-down">Top-Down</h2>
+<p>Essa primeira versão utiliza uma abordagem Top-Down através de recursão.</p>
+<h2 id="python-2">Python</h2>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">lcs</span>(<span class="hljs-params">X, Y, m, n, dp</span>):
+    <span class="hljs-keyword">if</span> (m == <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> n == <span class="hljs-number">0</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">if</span> (dp[m][n] != -<span class="hljs-number">1</span>):
+        <span class="hljs-keyword">return</span> dp[m][n]
+
+    <span class="hljs-keyword">if</span> X[m - <span class="hljs-number">1</span>] == Y[n - <span class="hljs-number">1</span>]:
+        dp[m][n] = <span class="hljs-number">1</span> + lcs(X, Y, m - <span class="hljs-number">1</span>, n - <span class="hljs-number">1</span>, dp)
+        <span class="hljs-keyword">return</span> dp[m][n]
+
+    dp[m][n] = <span class="hljs-built_in">max</span>(lcs(X, Y, m, n - <span class="hljs-number">1</span>, dp), lcs(X, Y, m - <span class="hljs-number">1</span>, n, dp))
+    <span class="hljs-keyword">return</span> dp[m][n]
+</code></pre>
+<h2 id="c-2">C++</h2>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lcs</span><span class="hljs-params">(<span class="hljs-type">char</span>* X, <span class="hljs-type">char</span>* Y, <span class="hljs-type">int</span> m, <span class="hljs-type">int</span> n, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt; &gt;&amp; dp)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (m == <span class="hljs-number">0</span> || n == <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (X[m - <span class="hljs-number">1</span>] == Y[n - <span class="hljs-number">1</span>])
+        <span class="hljs-keyword">return</span> dp[m][n] = <span class="hljs-number">1</span> + <span class="hljs-built_in">lcs</span>(X, Y, m - <span class="hljs-number">1</span>, n - <span class="hljs-number">1</span>, dp);
+
+    <span class="hljs-keyword">if</span> (dp[m][n] != <span class="hljs-number">-1</span>)
+        <span class="hljs-keyword">return</span> dp[m][n];
+
+    <span class="hljs-keyword">return</span> dp[m][n] = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">lcs</span>(X, Y, m, n - <span class="hljs-number">1</span>, dp), <span class="hljs-built_in">lcs</span>(X, Y, m - <span class="hljs-number">1</span>, n, dp));
+}
+</code></pre>
+<h2 id="bottom-up">Bottom-Up</h2>
+<p>Já essa segunda implementação utiliza uma abordagem Bottom-Up, já com otimização de espaço.</p>
+<h2 id="python-3">Python</h2>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">longestCommonSubsequence</span>(<span class="hljs-params">text1, text2</span>):
+    n = <span class="hljs-built_in">len</span>(text1)
+    m = <span class="hljs-built_in">len</span>(text2)
+
+    prev = [<span class="hljs-number">0</span>] * (m + <span class="hljs-number">1</span>)
+    cur = [<span class="hljs-number">0</span>] * (m + <span class="hljs-number">1</span>)
+
+    <span class="hljs-keyword">for</span> idx1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> idx2 <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> text1[idx1 - <span class="hljs-number">1</span>] == text2[idx2 - <span class="hljs-number">1</span>]:
+                cur[idx2] = <span class="hljs-number">1</span> + prev[idx2 - <span class="hljs-number">1</span>]
+            <span class="hljs-keyword">else</span>:
+                cur[idx2] = <span class="hljs-built_in">max</span>(cur[idx2 - <span class="hljs-number">1</span>], prev[idx2])
+
+        prev = cur.copy()
+
+    <span class="hljs-keyword">return</span> cur[m]
+</code></pre>
+<h2 id="c-3">C++</h2>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestCommonSubsequence</span><span class="hljs-params">(string&amp; text1, string&amp; text2)</span>
+</span>{
+    <span class="hljs-type">int</span> n = text1.<span class="hljs-built_in">size</span>();
+    <span class="hljs-type">int</span> m = text2.<span class="hljs-built_in">size</span>();
+
+    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">prev</span><span class="hljs-params">(m + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span>, <span class="hljs-title">cur</span><span class="hljs-params">(m + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span></span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> idx2 = <span class="hljs-number">0</span>; idx2 &lt; m + <span class="hljs-number">1</span>; idx2++)
+        cur[idx2] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> idx1 = <span class="hljs-number">1</span>; idx1 &lt; n + <span class="hljs-number">1</span>; idx1++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> idx2 = <span class="hljs-number">1</span>; idx2 &lt; m + <span class="hljs-number">1</span>; idx2++) {
+            <span class="hljs-keyword">if</span> (text1[idx1 - <span class="hljs-number">1</span>] == text2[idx2 - <span class="hljs-number">1</span>])
+                cur[idx2] = <span class="hljs-number">1</span> + prev[idx2 - <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">else</span>
+                cur[idx2] = <span class="hljs-number">0</span> + <span class="hljs-built_in">max</span>(cur[idx2 - <span class="hljs-number">1</span>], prev[idx2]);
+        }
+        prev = cur;
+    }
+
+    <span class="hljs-keyword">return</span> cur[m];
+}
+</code></pre>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>

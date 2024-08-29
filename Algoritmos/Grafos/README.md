@@ -25,7 +25,7 @@
    5. Minimum Spanning Tree
         - [Prim's Algorithm](./prims-algorithm.md)
         - [Kruskal's MST](./kruskalsmst.md)
-   6. [Maximum Flow](./)
+   6. [Maximum Flow](./max-flow.md)
    7. Graph Clustering
         - [Maximum Spacing K-Clustering](./spacingClustering.md)
         - [Perfect Match Graph](./perfect-match-graph.md)

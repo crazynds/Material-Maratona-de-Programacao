@@ -1,8 +1,18 @@
-# Estruturas de dados
-
 # Vetores
 
+Vetores são estruturas de dados muito legais em qualquer linguagem. Basicamente permite armazenar uma quantidade prédeterminada, ou indeterminada, de elementos e é possivel organiza-los dentro do vetor da forma que quiser.
+
+Cada casa de um vetor geralmente é referenciada por um inteiro, indentificando a posição que determinado valor foi salvo. Dependendo da linguagem é possivel também possuir um vetor não continuo, ou seja, pode possuir a casa N mas não necessáriamente possue todas as casas de 0 a N, ou vetores no qual a chave da casa pode ser uma string ou até outro referenciador, sendo mais comum nesses casos serem chamados de _dictionary_.
+
+
 ## C++ - [std::vector](https://cplusplus.com/reference/vector/vector/)
+
+### Sequência
+Os elementos em contêineres de sequência são ordenados em uma sequência linear estrita. Elementos individuais são acessados por sua posição nesta sequência.
+### Vetor dinâmico
+Permite acesso direto a qualquer elemento na sequência, mesmo por meio de aritmética de ponteiro, e fornece adição/remoção relativamente rápida de elementos no final da sequência.
+### Dinamicamente Alocado
+O contêiner usa um objeto alocador para lidar dinamicamente com suas necessidades de armazenamento.
 
 As principais funções utilizadas no vetor são as citadas abaixo:
 
@@ -51,9 +61,26 @@ for(it = y.begin(); it != y.end(); it++)
 cout << *it << endl;  
 ```
 
+
+## Python - [list](https://docs.python.org/3/tutorial/datastructures.html)
+
+Em python não existem vetores, ao invéz disso todos as estruturas de array que são trabalhadas na linguagem se utiliza a estrutura de [listas](./Lista.md#python-list).
+
 # Lista
 
+Listas são contêineres de sequência que permitem operações de inserção e apagamento de tempo constante em qualquer lugar dentro da sequência e iteração em ambas as direções.
+
+Os contêineres de lista são implementados como listas duplamente vinculadas; As listas duplamente vinculadas podem armazenar cada um dos elementos que contêm em locais de armazenamento diferentes e não relacionados. A ordenação é mantida internamente pela associação a cada elemento de um link para o elemento que o precede e um link para o elemento que o segue.
+
+
 ## C++ - [std::list](https://cplusplus.com/reference/list/list/) 
+
+### Sequência
+Os elementos em contêineres de sequência são ordenados em uma sequência linear estrita. Elementos individuais são acessados por sua posição nesta sequência.
+### Lista duplamente ligada
+Cada elemento guarda informações sobre como localizar o próximo e os anteriores, permitindo operações de inserção e apagamento em tempo constante antes ou depois de um elemento específico (mesmo de faixas inteiras), mas sem acesso aleatório direto.
+### Dinamicamente Alocado
+O contêiner usa um objeto alocador para lidar dinamicamente com suas necessidades de armazenamento
 
 
 As principais funções utilizadas nas listas são as citadas abaixo:
@@ -151,6 +178,10 @@ del a[:] # remove todos os elementos do vetor
 
 # Pilha
 
+Pilha, ou também chamada de stack, é uma estrutura de dados que se baseaia no príncipio LIFO (_LAST IN FIRST OUT_).
+
+Pilhas são fundamentalmente compostas por duas operações: push (empilhar) que adiciona um elemento no topo da pilha e pop (desempilhar) que remove o último elemento adicionado.
+
 
 ## C++ - [std::stack](https://cplusplus.com/reference/stack/stack/) 
 
@@ -186,7 +217,21 @@ int main ()
 }
 ```
 
+
+
+## Python - [deque](https://docs.python.org/3/tutorial/datastructures.html#using-lists-as-queues)
+
+Em python não existe pilha, mas ao mesmo tempo existe a estrutura _deque_ que é possivel utilizar as mesmas operações de uma stack, então [acesse aqui](./DoubleEndedQueue.md) para saber mais.
+
+
+
 # Double Ended Queue
+
+É um array no qual é possivel adicionar valores no inico e no final e também remover valores de ambos os lados.
+Não necessáriamente o acesso a uma posição especifica do array vai garantir um acesso constante O(1), mas a inserção e remoção no inicio e final é sempre constante O(1)
+
+
+
 
 ## Python - [deque](https://docs.python.org/3/tutorial/datastructures.html#using-lists-as-queues)
 
@@ -206,124 +251,171 @@ dq.pop() # retorna e remove o ultimo elemento do deque, O(1)
 dq.rotate(5) # ´rotaciona´ uma deque. rotate(5) fará 5 rotações no sentido normal (esquerda para direita). rotate(-5) faz no oposto (direita para esquerda)
 ```
 
-# Hash Map
+
+## C++ - [deque](https://cplusplus.com/reference/deque/deque/)
 
 
-## C++ - [std::unsorted_map](https://cplusplus.com/reference/unordered_map/unordered_map/)
+Specific libraries may implement deques in different ways, generally as some form of dynamic array. But in any case, they allow for the individual elements to be accessed directly through random access iterators, with storage handled automatically by expanding and contracting the container as needed.
 
-Vale destacar que a ```std::unsortedmap``` é implementada utilizando um hashmap, o que faz com que sua inserção, busca e remoção seja feito em tempo O(1), enquanto a ```std::map``` utiliza a implementação de uma [árvore binária](./BinaryTree.md) Red-Black, que já se mantém balanceada, então suas operações tem custo O(log n).
-
-### Iteração:
-- begin(): retorna um iterador a partir do inicio do vetor; 
-- end(): retorna um iterador a partir do fim do vetor (não pega a ultima casa);
-
-### Getters:
-- operator[]: retorna o elemento da _chave_ indicada dentro do operator. Caso seja uma chave que não existe é inserido um novo item com o construtor padrão (para números geralmente é zero) e retornado uma referencia desse item;
-- find(): retorna um iterador a partir desse elemento, caso não encontre retorna o map.end();
-
-### Capacidade:
-- size(): retorna o tamanho do vetor;
-- empty(): retorna true se o vetor estiver vazio;
-
-### Modificadores:
-- insert(): existem algumas versões para o insert, sendo elas:
- - insert(std::pair<K,V>): insere um objeto par dentro do map;
- - insert(K,V): insere o valor V na posição K;
-- erase(): apaga um elemento na posição passada, note que para remover o elemento da posição 4 deve-se chamar a função begin() e somar a 4;
- - erase(iterator): remove o item dessa posição do iterador;
- - erase(start,end): remove os items desde a posição start até end;
+Therefore, they provide a functionality similar to vectors, but with efficient insertion and deletion of elements also at the beginning of the sequence, and not only at its end. But, unlike vectors, deques are not guaranteed to store all its elements in contiguous storage locations: accessing elements in a deque by offsetting a pointer to another element causes undefined behavior.
 
 
-## Python - [dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries)
-
-Os _dictionaries_ não possuem nenhuma função importante, e todos as manipulações deles são exemplificadas abaixo:
-
-```python
-
-d1 = {} # forma de criar um dicionário vazio
-d2 = {
-  1: 'S1', 
-  2:'s2'
-} # forma de criar um dicionário com elementos já
-d3 = {x: x**2 for x in range(10)} # declarar um dicionario com elementos dinamicos
-
-bool1 = 1 in d1 # forma de verificar se a chave existe no dicionario
-bool2 = 2 not in d1 # forma de verificar se a chave não existe no dicionario
-
-d1[1] = 'ola mundo' # forma de adicionar item no dicionario
-d1[1] += '!' # é possivel manipular os itens do dicionaro também
-
-del d1[1] # deleta o item com a chave 1 do dicionário
 
 
-for key in d1:  # essa é a forma de iterar sobre o dicionário, porém o valor que é iterado é sobre as chaves, e não sobre os valores
-    print(key,d1[key])
+```c++
+#include <iostream>       // std::cout
+#include <deque>
 
-for key,val in d1.items():  # essa é a forma de iterar sobre o dicionário incluindo os valores
-    print(key,val)
+using namespace std;
 
-l = list(d1)  # cria uma lista com todas as chaves do dicionário
-l = list(d1.items())  # cria uma lista com tuplas contendo a relação entre chave e valor
+int main ()
+{
+    deque<int> second(4,100);                       // four ints with value 100
+    deque<int> third(second.begin(),second.end());  // iterating through second
+    deque<int> fourth(third);                       // a copy of third
+
+    // the iterator constructor can be used to copy arrays:
+    int myints[] = {16,2,77,29};
+    deque<int> fifth(myints, myints + sizeof(myints) / sizeof(int) );
+
+    cout << "The contents of fifth are:";
+    for(deque<int>::iterator it = fifth.begin(); it!=fifth.end(); ++it)
+        cout << ' ' << *it;
+    cout << '\n';
+
+    deque<int> mydeque;
+    mydeque.push_back(100);
+    mydeque.push_back(200);
+    mydeque.push_back(300);
+    mydeque.push_front(255);
+
+    cout << mydeque.front() << " | .. | " << mydeque.back() << endl;
+
+    // This do not return the content, only eliminate then!
+    mydeque.pop_front();
+    mydeque.pop_back();
+    cout << mydeque.front() << " | .. | " << mydeque.back() << endl;
+}
 
 ```
 
-# Conjutos (Set)
 
-## C++ - [std::unordered_set](https://cplusplus.com/reference/unordered_set/unordered_set/)
+# Minimum Queue
 
-As principais funções utilizadas em sets são as citadas abaixo:
+Essa estrutura serve para adicionar e remover elementos de um conjunto em tempo constante, e consultar o menor elemento do conjunto em tempo constante.
 
-### Iteração:
-- begin(): retorna um iterador a partir do inicio da lista; 
-- end(): retorna um iterador a partir do fim da lista (não pega a ultima casa);
-- rbegin(): retorna um iterador _reverso_ a partir do fim da lista; 
-- rend(): retorna um iterador _reverso_ a partir do inicido da lista (não pega a primeira casa);
+Para essa estrutura funcionar de maneira correta, cada elementos inserido na stack deve ser removido somente após todos os elementos que já foram inseridos antes tenham sido removidos. Exemplo: insere(A),insere(B),insere(C),remove(A),remove(B),remove(C).
 
-### Capacidade:
-- size(): retorna o tamanho da lista;
-- empty(): retorna true se a lista estiver vazio;
+Dessa forma os itens só podem serem removidos na ordem que foram inseridos.
 
-### Modificadores:
-- insert(): existem algumas versões para o insert, sendo elas:
- - insert(val): insere o item val;
- - insert(iterator pos, val): a partir da posição passada insere o item val, ainda vai manter a ordem, porém pode adicionar eficiencia se a posição do iterator passada estiver próxima do local onde o item deve ser inserido;
-- erase(): apaga um elemento na posição passada, a posição passada sempre é um iterator na posição que deseja remover;
-- clear(): limpa todos os dados do set;
+Tempos de inserção, remoção e consulta são em média O(1).
 
-### Getters:
-- find(): retorna um iterator se existir aquele dado no set, se não existir ele retorna um iterator end()
+Mais informações pode ser visto [aqui](https://cp-algorithms.com/data_structures/stack_queue_modification.html).
 
 
+Obs: É possivel adaptar o código para ter a _Maximum Queue_, no qual o valor importante é o máximo.
 
-## Python - [set](https://docs.python.org/3/tutorial/datastructures.html#sets)
+## C++ - [Minimum Queue](https://cp-algorithms.com/data_structures/stack_queue_modification.html) 
 
 
-As principais funções de set em python são exemplificadas abaixo:
+```C++
+class MinimiumQueue{
+private:
+    deque<int> queue;
 
-```python
+public:
+    int getMin(){
+        return queue.front();
+    }
 
-v = {'banana', 'tomate', 'arroz'} # create a set
+    void add(int new_element){
+        while(!queue.empty() && queue.back()>new_element){
+            queue.pop_back();
+        }
+        queue.push_back(new_element);
+    }
 
-'banana' in v # True
-
-for s in v: # for each item in set
-    pass
-
-v.add('laranja') # add item to set
-v.remove('banana') # remove item from set
-
-d = {'banana', 'tomate', 'feijão'}
-
-d | v # in set d or v
-d - v # in d but not in v (order matters)
-d & v # in both sets (d and v)
-d ^ v # in set d or in set v but not in both
-
+    void rem(int element){
+        if (!queue.empty() && queue.front()==element)
+            queue.pop_front();
+    }
+};
 ```
+
+## Outra Implementação para Minimum Queue
+
+```cpp
+struct MinQueue
+{
+    deque<pair<int, int>> minQueue;
+    int contPush = 0;
+
+    void add(int num)
+    {
+        // se (minQueue.back().first < num), vira maxQueue
+        while(!minQueue.empty() && minQueue.back().first > num)
+        {
+            minQueue.pop_back();
+        }
+
+        minQueue.push_back({num, contPush});
+        contPush++;
+    }
+
+    int getMin(int start = 0)
+    {
+        while(start > minQueue.front().second)
+        {
+            minQueue.pop_front();
+        }
+
+        return minQueue.front().first;
+    }
+};
+```
+
+Para utilizar, considere que `m` seja o tamanho dos subvetores e `n` o tamanho total do vetor.
+
+```cpp
+MinQueue minq;
+
+for(int i = 0; i < m; i++)
+{
+    minq.add(v[i]);
+}
+
+// start = 0
+cout << minq.getMin() << endl;
+
+for(int i = 1; i <= v.size() - m; i++)
+{
+    minq.add(v[i + m - 1]);
+       
+    // start = i  
+    cout << minq.getMin(i) << endl;
+}
+```
+
+## Exercícios
+
+- [Queries with Fixed Length](https://www.hackerrank.com/challenges/queries-with-fixed-length/problem)
+- [Binary Land](https://www.codechef.com/MAY20A/problems/BINLAND)
+
+
 
 # Heap (Arvore binaria em array)
 
+O heap simula uma arvore binária em um array e sempre mantem o elemento de maior prioridade mais próximo do topo. Consegue ser muito eficiente na inserção de itens e remoção do item de maior prioridade. Com essa estrutura não é possivel acessar elementos sem ser o elemento do topo.
+
+Aplicações:
+ - Dijkstra
+ - Priority Queue (fila)
+
 ## C++ - [std::priority_queue](https://cplusplus.com/reference/queue/priority_queue/)
+
+Priority queues are a type of container adaptors, specifically designed such that its first element is always the greatest of the elements it contains, according to some strict weak ordering criterion.
+
+This context is similar to a heap, where elements can be inserted at any moment, and only the max heap element can be retrieved (the one at the top in the priority queue).
 
 ### Default behavior
 
@@ -417,141 +509,153 @@ v2 = heapq.heappushpop(arr,4) # return the smallest elemento and push 4 to heap 
 
 ```
 
+# Hash Map
 
-# Heap + Dictionary
+Em um HashMap, o valor da chave geralmente é usado para identificar exclusivamente o elemento, enquanto o valor mapeado é um objeto com o conteúdo associado a essa chave. Os tipos de chave e valor mapeado podem ser diferentes.
 
-# Python - HeapDictionary
+Internamente, os elementos no HashMap não são classificados em nenhuma ordem específica com relação a sua chave ou valores mapeados, mas organizados em baldes dependendo de seus valores de hash para permitir acesso rápido a elementos individuais diretamente por seus valores de chave (com uma constante complexidade de tempo média em média).
 
-Implementação do HeapDictionary feita por [Crazynds](https://github.com/crazynds)
 
-Ja vou mandar a dica também, em python a biblioteca _heapq_ é otimizada para rodar de forma nativa, já uma implementação manual como a abaixo, a estrutura heap acaba perdendo um pouco de performance. As vezes o desempenho que tu ganha na utilização de um _HeapDictionary_ não compensa por conta da biblioteca _heapq_ rodar de forma nativa.
 
-Mas para linguagens compiladas como __C++__ pode tacar-lhe o pau na implementação, que o boost vai ser imenso. Use como referencia o código em python para fazer a sua implementação.
+## C++ - [std::unsorted_map](https://cplusplus.com/reference/unordered_map/unordered_map/)
+
+Vale destacar que a ```std::unsortedmap``` é implementada utilizando um hashmap, o que faz com que sua inserção, busca e remoção seja feito em tempo O(1), enquanto a ```std::map``` utiliza a implementação de uma [árvore binária](./BinaryTree.md) Red-Black, que já se mantém balanceada, então suas operações tem custo O(log n).
+
+Nesse tópico vou apresentar as principais características da estrutura ```std::unsortedmap```
+Para saber mais sobre ```std::map```, [clique aqui](./BinaryTree.md)
+
+### Associativo
+Os elementos em contêineres associativos são referenciados por sua chave e não por sua posição absoluta no contêiner.
+
+### Não ordenado
+Os contêineres não ordenados organizam seus elementos usando tabelas de hash que permitem acesso rápido aos elementos por sua chave.
+
+### Mapa
+Cada elemento associa uma chave a um valor mapeado: As chaves servem para identificar os elementos cujo conteúdo principal é o valor mapeado.
+
+### Iteração:
+- begin(): retorna um iterador a partir do inicio do vetor; 
+- end(): retorna um iterador a partir do fim do vetor (não pega a ultima casa);
+
+### Getters:
+- operator[]: retorna o elemento da _chave_ indicada dentro do operator. Caso seja uma chave que não existe é inserido um novo item com o construtor padrão (para números geralmente é zero) e retornado uma referencia desse item;
+- find(): retorna um iterador a partir desse elemento, caso não encontre retorna o map.end();
+
+### Capacidade:
+- size(): retorna o tamanho do vetor;
+- empty(): retorna true se o vetor estiver vazio;
+
+### Modificadores:
+- insert(): existem algumas versões para o insert, sendo elas:
+ - insert(std::pair<K,V>): insere um objeto par dentro do map;
+ - insert(K,V): insere o valor V na posição K;
+- erase(): apaga um elemento na posição passada, note que para remover o elemento da posição 4 deve-se chamar a função begin() e somar a 4;
+ - erase(iterator): remove o item dessa posição do iterador;
+ - erase(start,end): remove os items desde a posição start até end;
+
+
+## Python - [dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries)
+
+Os _dictionaries_ não possuem nenhuma função importante, e todos as manipulações deles são exemplificadas abaixo:
 
 ```python
-class HeapDictionary:
 
-    # Execution time: O(N)
-    def __init__(self, iterable, key: callable):
-        '''
-            Iterable is the content you want initialize
-            key is the function to extract the key value from the itens
-        '''
-        self.heap = list(iterable)
-        heapq.heapify(self.heap)
-        self.dict = {}
-        self.extractor = key
-        for i,v in enumerate(self.heap):
-            key = self.extractor(v)
-            if key in self.dict:
-                raise Exception('No duplicate keys allowed during class initialization!')
-            self.dict[key] = i
+d1 = {} # forma de criar um dicionário vazio
+d2 = {
+  1: 'S1', 
+  2:'s2'
+} # forma de criar um dicionário com elementos já
+d3 = {x: x**2 for x in range(10)} # declarar um dicionario com elementos dinamicos
 
-    def len(self):
-        return len(self.heap)
+bool1 = 1 in d1 # forma de verificar se a chave existe no dicionario
+bool2 = 2 not in d1 # forma de verificar se a chave não existe no dicionario
 
-    # Execution time: O(log N)
-    def push(self,item):
-        key = self.extractor(item)
-        # If item already in the heap and is bigger than the current value, so ignore
-        if key in self.dict:
-            position = self.dict[key]
-            if self.heap[position] <= item:
-                return
-            self.heap[position] = item
-            self.__siftdown(0,position)
-        else:
-            self.heap.append(item)
-            self.__siftdown(0, len(self.heap)-1)
+d1[1] = 'ola mundo' # forma de adicionar item no dicionario
+d1[1] += '!' # é possivel manipular os itens do dicionaro também
 
-    # Execution time: O(log N)
-    def pop(self):
-        lastelt = self.heap.pop()
-        if self.heap:
-            returnitem,self.heap[0] = self.heap[0],lastelt
-            self.__update_dict(returnitem,None)
-            self.__siftup(0)
-            return returnitem
-        return lastelt
+del d1[1] # deleta o item com a chave 1 do dicionário
 
-    # Optional function, faster than push and pop separately
-    # Execution time: O(log N)
-    def pushpop(self,item):
-        key = self.extractor(item)
-        # If item already in the heap and is bigger than the current value, so ignore
-        if key in self.dict:
-            position = self.dict[key]
-            if self.heap[position] <= item:
-                return
-            self.push(item)
-            item = self.pop()
-        elif self.heap and self.heap[0] < item:
-            item, self.heap[0] = self.heap[0], item
-            self.__update_dict(item,None)
-            self.__siftup(0)
-        return item
-    
-    # Optional function
-    # Execution time: O(log N)
-    def removebykey(self,key):
-        if key not in self.dict:
-            return
-        position = self.dict[key]
-        lastlt = self.heap.pop()
-        if self.heap and len(self.heap)!=position:
-            self.heap[position] = lastlt
-            self.__siftup(position)
 
-        del self.dict[key]
-    
-    def __update_dict(self,item,pos):
-        item = self.extractor(item)
-        if pos == None:
-            del self.dict[item]
-        else:
-            self.dict[item] = pos
+for key in d1:  # essa é a forma de iterar sobre o dicionário, porém o valor que é iterado é sobre as chaves, e não sobre os valores
+    print(key,d1[key])
 
-    def __siftdown(self,start,position):
-        newitem = self.heap[position]
-        # Follow the path to the root, moving parents down until finding a place
-        # newitem fits.
-        while position > start:
-            parentpos = (position - 1) >> 1
-            parent = self.heap[parentpos]
-            if not newitem < parent:
-                break
-            self.heap[position] = parent
-            self.__update_dict(parent,position)
-            position = parentpos
+for key,val in d1.items():  # essa é a forma de iterar sobre o dicionário incluindo os valores
+    print(key,val)
 
-        self.heap[position] = newitem
-        self.__update_dict(newitem,position)
+l = list(d1)  # cria uma lista com todas as chaves do dicionário
+l = list(d1.items())  # cria uma lista com tuplas contendo a relação entre chave e valor
 
-    def __siftup(self,position):
-        endpos = len(self.heap)
-        startpos = position
-        newitem = self.heap[position]
-        # Bubble up the smaller child until hitting a leaf.
-        childpos = 2*position + 1    # leftmost child position
-        while childpos < endpos:
-            # Set childpos to index of smaller child.
-            rightpos = childpos + 1
-            if rightpos < endpos and not self.heap[childpos] < self.heap[rightpos]:
-                childpos = rightpos
-            # Move the smaller child up.
-            self.heap[position] = self.heap[childpos]        
-            self.__update_dict(self.heap[position],position)
+```
 
-            position = childpos
-            childpos = 2*position + 1
-        # The leaf at position is empty now.  Put newitem there, and bubble it up
-        # to its final resting place (by sifting its parents down).
-        self.heap[position] = newitem
-        self.__update_dict(newitem,position)
-        self.__siftdown(startpos, position)
+
+# Conjutos (Set)
+
+Conjutos (set) são container que armazenam valores em uma estrutura de dados, com inserção, remoção e acesso constante. Geralmente usam [HashMap](./HashMap.md).
+
+## C++ - [std::unordered_set](https://cplusplus.com/reference/unordered_set/unordered_set/)
+
+Unordered sets are containers that store unique elements in no particular order, and which allow for fast retrieval of individual elements based on their value.
+
+
+### Associação 
+Elements in associative containers are referenced by their key and not by their absolute position in the container.
+
+### Set
+The value of an element is also the key used to identify it.
+
+As principais funções utilizadas em sets são as citadas abaixo:
+
+### Iteração:
+- begin(): retorna um iterador a partir do inicio da lista; 
+- end(): retorna um iterador a partir do fim da lista (não pega a ultima casa);
+- rbegin(): retorna um iterador _reverso_ a partir do fim da lista; 
+- rend(): retorna um iterador _reverso_ a partir do inicido da lista (não pega a primeira casa);
+
+### Capacidade:
+- size(): retorna o tamanho da lista;
+- empty(): retorna true se a lista estiver vazio;
+
+### Modificadores:
+- insert(): existem algumas versões para o insert, sendo elas:
+ - insert(val): insere o item val;
+ - insert(iterator pos, val): a partir da posição passada insere o item val, ainda vai manter a ordem, porém pode adicionar eficiencia se a posição do iterator passada estiver próxima do local onde o item deve ser inserido;
+- erase(): apaga um elemento na posição passada, a posição passada sempre é um iterator na posição que deseja remover;
+- clear(): limpa todos os dados do set;
+
+### Getters:
+- find(): retorna um iterator se existir aquele dado no set, se não existir ele retorna um iterator end()
+
+
+
+## Python - [set](https://docs.python.org/3/tutorial/datastructures.html#sets)
+
+
+As principais funções de set em python são exemplificadas abaixo:
+
+```python
+
+v = {'banana', 'tomate', 'arroz'} # create a set
+
+'banana' in v # True
+
+for s in v: # for each item in set
+    pass
+
+v.add('laranja') # add item to set
+v.remove('banana') # remove item from set
+
+d = {'banana', 'tomate', 'feijão'}
+
+d | v # in set d or v
+d - v # in d but not in v (order matters)
+d & v # in both sets (d and v)
+d ^ v # in set d or in set v but not in both
+
 ```
 
 # Disjoin
+
+É uma estrutura capaz de manter rastreamento de quais 'chaves' pertencem a quais conjuntos em tempo O(1) e fazer a união de conjuntos em tempo O(n) ao menos. É muito útil quando trabalhando com grafos usando o algoritmo Kruskal's e precisa rastrear quais nós percencem a quais conjuntos para evitar criar um ciclo. 
 
 Possue no mínimo duas funções:
 
@@ -648,667 +752,85 @@ class DisjointSetUnion:
         self.parent[root_y] = root_x
 ```
 
-# AVL Tree
 
-A arvore AVL é uma arvore binária que implementa um algoritmo que mantém a arvore balanceada. Como a arvore se mantém balanceada é ótimo para executar consultas em tempo $log N$.
+# Disjoint Sparse Table
 
-Inserção: O(log N)  
-Remoção: O(log N)  
-Espaço: O(N)
+Eu realmente não entendi direito. É uma estrutura de segtree porém utiliza operações de bitwise para achar o nó do range correto em $O(1)$ fazer queries executarem em $O(1)$
 
-Esse tipo de arvore de acordo com o algoritmo as chaves podem ser únicas, ou podem repetir. Nas arvores binárias podem otimizar consultas (min, max, search, etc...) em tempo $log N$ com caches em cada nó.
+Build: $O(N log N)$
+Query: $O(1)$
 
 
-# Python - AVL Tree
+### C++
 
-Implementação que permite chaves duplicas.
+```c++
+#define MAXN 1000000
+#define MAXPOWN 1048576 // 2^(ceil(log_2(MAXN)))
+#define MAXLEV 21       // ceil(log_2(MAXN)) + 1
 
-```python
-# Create a tree node
-class TreeNode():
-    def __init__(self, key):
-        self.key = key
-        self.left = None
-        self.right = None
-        self.height = 1
+int arr[MAXPOWN] = {6, 2, 4, 3, 9, 10, 4, 2, 7, 4, 8, 12};
+int table[MAXLEV][MAXPOWN];
+int maxlev, size;
 
-    # Get the height of the node
-    def getHeight(self):
-        return self.height
-
-    # Get balance factore of the node
-    def getBalance(self):
-        return (self.left.getHeight() if self.left else 0) - (self.right.getHeight() if self.right else 0)
-
-    def getMinNode(self):
-        if not self.left:
-            return self
-        return self.left.getMinNode()
-
-    def find(self,key):
-        if self.key == key:
-            return True
-        elif self.key > key and self.left:
-            return self.left.find(key)
-        elif self.key > key and self.right:
-            return self.right.find(key)
-        return False
-
-        # Function to perform left rotation
-    def leftRotate(self):
-        y = self.right
-        temp = y.left
-        y.left = self
-        self.right = temp
-        self.height = 1 + max(self.left.getHeight() if self.left else 0,
-                           self.right.getHeight() if self.right else 0)
-        y.height = 1 + max(y.left.getHeight() if y.left else 0,
-                           y.right.getHeight() if y.right else 0)
-        return y
-
-    # Function to perform right rotation
-    def rightRotate(self):
-        if not self.left:
-            return self
-        y = self.left
-        temp = y.right
-        y.right = self
-        self.left = temp
-        self.height = 1 + max(self.left.getHeight() if self.left else 0,
-                           self.right.getHeight() if self.right else 0)
-        y.height = 1 + max(y.left.getHeight() if y.left else 0,
-                           y.right.getHeight() if y.right else 0)
-        return y
-
-    def insert_node(self, key):
-
-        # Find the correct location and insert the node
-        if key < self.key:
-            self.left = self.left.insert_node(key) if self.left else TreeNode(key)
-        else:
-            self.right = self.right.insert_node(key) if self.right else TreeNode(key)
-
-        self.height = 1 + max(self.left.getHeight() if self.left else 0,
-                              self.right.getHeight() if self.right else 0)
-
-        # Update the balance factor and balance the tree
-        balanceFactor = self.getBalance()
-        if balanceFactor > 1:
-            if key < self.left.key:
-                return self.rightRotate()
-            else:
-                self.left = self.left.leftRotate()
-                return self.rightRotate()
-
-        if balanceFactor < -1:
-            if key > self.right.key:
-                return self.leftRotate()
-            else:
-                self.right = self.right.rightRotate()
-                return self.leftRotate()
-
-        return self
-
-    # Function to delete a node
-    def delete_node(self, key):
-
-        if key < self.key:
-            self.left = self.left.delete_node(key) if self.left else None
-        elif key > self.key:
-            self.right = self.right.delete_node(key) if self.right else None
-        else:
-            if self.left is None:
-                temp = self.right
-                self = None
-                return temp
-            elif self.right is None:
-                temp = self.left
-                self = None
-                return temp
-            temp = self.right.getMinNode()
-            self.key = temp.key
-            self.right = self.right.delete_node(temp.key) if self.right else None
-        if self is None:
-            return self
-
-        # Update the balance factor of nodes
-        self.height = 1 + max(self.left.getHeight() if self.left else 0,
-                              self.right.getHeight() if self.right else 0)
-
-        balanceFactor = self.getBalance()
-
-        # Balance the tree
-        if balanceFactor > 1:
-            if self.left.getBalance() >= 0:
-                return self.rightRotate()
-            else:
-                self.left = self.left.leftRotate() if self.left else None
-                return self.rightRotate()
-        if balanceFactor < -1:
-            if self.right.getBalance() <= 0:
-                return self.leftRotate()
-            else:
-                self.right = self.right.rightRotate() if self.right else None
-                return self.leftRotate()
-        return self        
-    
-    def iterate(self,reverse= False):
-        if reverse:
-            if self.right:
-                for key in self.right.iterate(reverse):
-                    yield key
-            yield self.key
-            if self.left:
-                for key in self.left.iterate(reverse):
-                    yield key
-        else:
-            if self.left:
-                for key in self.left.iterate(reverse):
-                    yield key
-            yield self.key
-            if self.right:
-                for key in self.right.iterate(reverse):
-                    yield key
-    
-    def __str__(self):
-        return str(self.key)
-
-
-
-class AVLTree(object):
-
-    def __init__(self) -> None:
-        self.root = None
-        self.size = 0
-        self.min = None
-        self.max = None
-        pass
-
-    def insert(self,value):
-        self.size += 1
-        self.min = min(self.min if self.min else float('inf'),value)
-        self.max = max(self.max if self.max else float('-inf'),value)
-        if not self.root:
-            self.root = TreeNode(value)
-        else:
-            self.root = self.root.insert_node(value)
-
-    def find(self,value):
-        if not self.root:
-            return False
-        return self.root.find(value)
-
-    def delete(self,value):
-        if not self.root:
-            return None
-        if self.root.find(value):
-            self.root = self.root.delete_node(value)
-            self.size-=1
-            if value == self.min:
-                self.min = next(self.root.iterate()) if self.root else None
-            if value == self.max:
-                self.max = next(self.root.iterate(reverse=True)) if self.root else None
-    
-    def empty(self):
-        return self.size==0
-
-    def iterate(self,reverse= False):
-        if not self.root:
-            return range(0)
-        return self.root.iterate(reverse)
-
-```
-
-# Arvore Segmentada
-
-2 Funções importantes
-
-- Query: realiza a consulta (Operação, calculo, etc...) a partir de um range de valor dado (inicial e final);
-- Update: faz a troca de um valor de uma posição;
-
-Build: O(N)
-Atualização: O(log N)
-Consulta: O(log N)
-Espaço: O(4N)
-
-
-# C - [SegTree](https://cp-algorithms.com/data_structures/segment_tree.html)
-
-Versão mais simples de segtree.
-Resolve atualização de valores e consultas da soma de um range de valores.
-
-```C
-int t[4*MAXN];
-
-void build(int a[], int v, int tl, int tr) {
-    if (tl == tr) {
-        t[v] = a[tl];
-    } else {
-        int tm = (tl + tr) / 2;
-        build(a, v*2, tl, tm);
-        build(a, v*2+1, tm+1, tr);
-        // the line above you execute your process
-        t[v] = t[v*2] + t[v*2+1];
-    }
-}
-int sum(int v, int tl, int tr, int l, int r) {
-    if (l > r) // the default value for empty 
-        return 0;
-    if (l == tl && r == tr) {
-        return t[v];
-    }
-    int tm = (tl + tr) / 2;
-    // the line above you execute your process
-    return sum(v*2, tl, tm, l, min(r, tm))
-           + sum(v*2+1, tm+1, tr, max(l, tm+1), r);
-}
-void update(int v, int tl, int tr, int pos, int new_val) {
-    if (tl == tr) {
-        t[v] = new_val;
-    } else {
-        int tm = (tl + tr) / 2;
-        if (pos <= tm)
-            update(v*2, tl, tm, pos, new_val);
-        else
-            update(v*2+1, tm+1, tr, pos, new_val);
-        // the line above you execute your process
-        t[v] = t[v*2] + t[v*2+1];
-    }
-}
-
-```
-
-
-# C++ - SegTree
-
-Variação da SegTree de C usando classes e feita por [Crazynds](https://github.com/crazynds)
-
-```C++
-template <typename T>
-class SegTree{
-private:
-    int size;
-
-    T *t;
-
-    void __build(T a[], int v, int tl, int tr) {
-        if (tl == tr) {
-            t[v] = a[tl];
-        } else {
-            int tm = (tl + tr) / 2;
-            __build(a, v*2, tl, tm);
-            __build(a, v*2+1, tm+1, tr);
-            // the line above you execute your process
-            t[v] = t[v*2] + t[v*2+1];
-        }
-    }
-    T __query(int v, int tl, int tr, int l, int r) {
-        if (l > r) // Change here the default value for empty
-            return 0;
-        if (l == tl && r == tr) {
-            return t[v];
-        }
-        int tm = (tl + tr) / 2;
-        int v1 = __query(v*2, tl, tm, l, std::min(r, tm));
-        int v2 = __query(v*2+1, tm+1, tr, std::max(l, tm+1), r);
-        // the line above you execute your process
-        return v1+v2;
-    }
-    void __update(int v, int tl, int tr, int pos, T new_val) {
-        if (tl == tr) {
-            t[v] = new_val;
-        } else {
-            int tm = (tl + tr) / 2;
-            if (pos <= tm)
-                __update(v*2, tl, tm, pos, new_val);
-            else
-                __update(v*2+1, tm+1, tr, pos, new_val);
-            // the line above you execute your process
-            t[v] = t[v*2] + t[v*2+1];
-        }
-    }
-
-public:
-    SegTree(T a[], int size){
-        this->t = new T[size*4+1];
-        this->size = size;
-        __build(a,1,0,size-1);
-    }
-    ~SegTree(){
-        delete[] this->t;
-    }
-    
-    T query(int l, int r) {
-        return this->__query(1,0,this->size-1,l,r);
-    }
-        
-    void update(int pos, int new_val) {
-        this->__update(1,0,this->size-1,pos,new_val);
-    }
-};
-```
-
-
-# Python - SegTree
-
-Variação da SegTree de C usando classes e feita por [Crazynds](https://github.com/crazynds)
-
-Em python usualmente é mais bem mais lento que C++, se der timelimit, tente usar o código de C++ que pode ser que passe.
-
-
-```python
-class SegTree:
-
-    def __init__(self,arr,start,end) -> None:
-        self.t = [0 for _ in range(len(arr)*4+1)]
-        self.left = 0
-        self.right = len(arr)-1
-        self.vertex_start = 1
-        self.__build(arr,self.vertex_start,self.left,self.right)
-        pass
-            
-    def __build(self,arr,vertex,left,right):
-        if left == right:
-            self.t[vertex] = arr[left]
-        else:
-            middle = (left+right) // 2
-            self.__build(arr,vertex*2,left,middle)
-            self.__build(arr,vertex*2+1,middle+1,right)
-            # the line above you execute your process
-            self.t[vertex] = self.t[vertex*2] + self.t[vertex*2+1]
-        
-    def query(self,left_query,right_query):
-        return self.__query(self.vertex_start,self.left,self.right,left_query,right_query)
-    def __query(self,vertex,left,right,left_query,right_query):
-        if left_query>right_query: # Change here the default value for empty
-            return 0
-        if left_query==left and right_query == right:
-            return self.t[vertex]
-        
-        middle = (left+right)//2
-        l_val = self.__query(vertex*2,left,middle,left_query,min(right_query,middle))
-        r_val = self.__query(vertex*2+1,middle+1,right,max(middle+1,left_query),right_query)
-        # the line above you execute your process
-        return  l_val + r_val
-
-    def update(self, pos, val):
-        return self.__update(self.vertex_start,self.left,self.right,pos,val)
-    def __update(self,vertex,left, right, pos, val):
-        if left == right:
-            self.t[vertex] = val
-        else:
-            middle = (left+right)//2
-            if pos <= middle:
-                self.__update(vertex*2,left,middle,pos,val)
-            else:
-                self.__update(vertex*2+1,middle+1,right,pos,val)
-            # the line above you execute your process
-            self.t[vertex] = self.t[vertex*2] + self.t[vertex*2+1]
-```
-
-# BizarreTree
-
-É uma criação minha que implementa as funcionalidades de uma arvore sem uma árvore.
-
-Isso é util em python que não tem uma implementação nativa, e implementar uma árvore manualmente pode ser muito demorado além dela ser extremamente lenta na execução. Tem também o problema de balanceamento que deve se levar em conta dependendo do problema.
-
-A _BizarreTree_ não é uma árvore de fato, ela utiliza um _dictionary_ e duas _heap_ para simular as funções principais de uma árvore, podendo assim pegar o menor valor, o maior e iterar sobre ela de maneira crescente e decrescente.
-
-Os custos das operações seguem abaixo:
-
- - Inserção: O(log n) _heap push_
- - Remoção: O(1) _dictionary acess_
- - Find: O(1) _dictionary acess_
- - Min: O(k log n) k* _heap pop_
- - Max: O(k log n) k* _heap pop_
- - Iterate: O(n log n + (n + k)) _sort_ + (_valid values_ + _deleted value_)
-
-Para k sendo a quantidade de elementos que foram removidos da árvore entre as chamadas de _min_ e _max_.
-
-- [Crazynds](https://github.com/crazynds)
-
-## Python
-
-Como eu fiz ela especialmente para resolver as funções de árvores em python, só faz sentido a implementação em python. Mas é possivel adaptar em qualquer outra linguagem. 
-
-```python
-import heapq
-from collections import defaultdict
-
-class BizarreTree:
-
-    def __init__(self) -> None:
-        self.minArr = []
-        self.maxArr = []
-        self.size = 0
-        self.data = defaultdict(int)
-        pass
-
-    def find(self,val):
-        return self.data[val] > 0
-
-    def insert(self,val):
-        self.data[val] += 1
-        self.size += 1
-        heapq.heappush(self.minArr,val)
-        heapq.heappush(self.maxArr,-val)
-
-    def delete(self,val):
-        if self.data[val] > 0:
-            self.size -= 1
-            self.data[val] -= 1
-    
-    def min(self):
-        while self.data[self.minArr[0]] == 0:
-            heapq.heappop(self.minArr)
-        return self.minArr[0]
-
-    def max(self):
-        while self.data[-self.maxArr[0]] == 0:
-            heapq.heappop(self.maxArr)
-        return -self.maxArr[0]
-
-    def iterate(self,reverse = False):
-        # https://stackoverflow.com/questions/59903948/how-to-iterate-heapq-without-losing-data
-        if not reverse:
-            self.minArr.sort()  # using heap structure makes sort faster
-            # sorted array is also a valid heap
-            it = self.minArr
-        else:
-            self.maxArr.sort()
-            it = map(lambda a: -a,self.maxArr)
-        cont = 0
-        lastI = 0
-        for i in self.minArr:
-            cont = (cont+1) if i == lastI else 1
-            if self.data[i] >= cont:
-                yield i
-
-```
-
-
-# Fenwick Tree
-
-Parecido com [SegTree](./SegTree.md), porém consome menos espaço e é mais fácil de implementar.
-
-
-Funções importantes
-
-- Query: realiza a consulta (Operação, calculo, etc...) a partir de um range de valor dado (inicial e final);
-- Update: faz a troca de um valor de uma posição;
-
-  Build: O(N)  
-Atualização: O(log N)  
-Consulta: O(log N)  
-Espaço: O(N)  
-
-
-
-# C++ - [Fenwick Tree](https://cp-algorithms.com/data_structures/fenwick.html#finding-sum-in-one-dimensional-array)
-
-Versão mais simples de Fenwick Tree.
-Resolve atualização de valores e consultas da soma dos valores de range de valores.
-
-```C++
-struct FenwickTree {
-    vector<int> bit;  // binary indexed tree
-    vector<int> currentArray;  // array
-    int n;
-
-    FenwickTree(vector<int> const &a){
-        this->n = a.size();
-        currentArray.assign(this->n, 0);
-        bit.assign(this->n, 0);
-        for (size_t i = 0; i < this->n; i++)
-            this->update(i, a[i]);
-    }
-
-    
-    // make f(a[l..r]) = f(a[0..r]) - f(a[0..l-1])
-    int query(int l, int r) {
-        return query(r) - v(l - 1);
-    }
-
-    // make f(a[0..r])
-    int query(int r) {
-        int ret = 0;
-        // OMG - ULTRA FAST WTF?
-        for (; r >= 0; r = (r & (r + 1)) - 1)
-            ret += bit[r];
-        return ret;
-    }
-
-    void update(int idx, int newVal) {
-        int delta = newVal - this->currentArray[idx];
-        this->currentArray[idx] = newVal;
-        // OMG - ULTRA FAST WTF?
-        for (; idx < n; idx = idx | (idx + 1))
-            bit[idx] += delta;
-    }
-};
-
-```
-
-# Python - [FenwickTree](#)
-
-Adaptação feita por [Crazynds](https://github.com/crazynds)
-
-```python
-class FenwickTree:
-    def __init__(self,arr: list) -> None:
-        self.n = len(arr)
-        self.original_arr = [0]*self.n
-        self.bit = [0]*self.n
-        for i in range(self.n):
-            self.update(i,arr[i])
-        pass
-
-    def update(self,idx, newVal):
-        delta = newVal - self.original_arr[idx]
-        self.original_arr[idx] = newVal
-        # OMG - ULTRA FAST WTF?
-        while idx < self.n:
-            self.bit[idx] += delta
-            idx |= (idx + 1)
-    
-    # make f(a[0..r])
-    def query_zero(self,r):
-        ret = 0
-        # OMG - ULTRA FAST WTF?
-        while r>=0:
-            ret += self.bit[r]
-            r = (r & (r + 1)) - 1
-        return ret
-    
-    # make f(a[l..r]) = f(a[0..r]) - f(a[0..l-1])
-    def query(self,l, r):
-        return self.query_zero(r) - self.query_zero(l - 1)
-```
-
-
-
-
-# Arvores em C++
-
-
-# C++ - [std::set](https://cplusplus.com/reference/set/set/) [std::multiset](https://cplusplus.com/reference/set/multiset/)
-
-
-A única diferença entre o set e o multiset é que no caso do multiset ele permite a inserção de valores duplicados, que no caso do set se um valor já existir ele não cria uma nova entrada. 
-Para o multiset, deve-se incluir a mesma biblioteca ```#include <set>```.
-
-
-
-# C++ - [std::map](https://cplusplus.com/reference/map/map/)
-
-Em C++ existe a implementação de árvore binária na biblioteca padrão. A estrutura de dados ```std::map``` por padrão implementa uma árvore binária Red-Black, que já traz uma estrutura de balanceamento da árvore. Geralmente a ```std::map``` já implementa a versão mais omitizada de uma árvore binária. 
-
-### Associativo
-Elementos em contêineres associativos são referenciados por sua chave e não por sua posição absoluta no contêiner.
-### Ordenado
-Os elementos no contêiner seguem uma ordem estrita o tempo todo. Todos os elementos inseridos recebem uma posição nesta ordem.
-### Tuplas
-Cada elemento associa uma chave a um valor mapeado: As chaves servem para identificar os elementos cujo conteúdo principal é o valor mapeado.
-### Chaves únicas
-Dois elementos no contêiner não podem ter chaves equivalentes.
-### Memória auto gerenciada
-O contêiner usa um objeto alocador para lidar dinamicamente com suas necessidades de armazenamento.
-
-As principais funções utilizadas no map são as citadas abaixo:
-
-### Iteração:
-- begin(): retorna um iterador a partir do inicio do vetor; 
-- end(): retorna um iterador a partir do fim do vetor (não pega a ultima casa);
-- rbegin(): retorna um iterador _reverso_ a partir do fim do vetor; 
-- rend(): retorna um iterador _reverso_ a partir do inicido do vetor (não pega a primeira casa);
-
-### Getters:
-- operator[]: retorna o elemento da _chave_ indicada dentro do operator. Caso seja uma chave que não existe é inserido um novo item com o construtor padrão (para números geralmente é zero) e retornado uma referencia desse item;
-- find(): retorna um iterador a partir desse elemento, caso não encontre retorna o map.end();
-- lower_bound(K): retorna um iterator para o maior elemento que é menor que K;
-- upper_bound(K): retorna um iterator para o menor elemento que é maior que K;
-
-### Capacidade:
-- size(): retorna o tamanho do vetor;
-- empty(): retorna true se o vetor estiver vazio;
-
-### Modificadores:
-- insert(): existem algumas versões para o insert, sendo elas:
- - insert(std::pair<K,V>): insere um objeto par dentro do map;
- - insert(K,V): insere o valor V na posição K;
-- erase(): apaga um elemento na posição passada, note que para remover o elemento da posição 4 deve-se chamar a função begin() e somar a 4;
- - erase(iterator): remove o item dessa posição do iterador;
- - erase(start,end): remove os items desde a posição start até end;
-
-
-Exemplo de uso do std::map
-
-```C++
-// map::lower_bound/upper_bound
-#include <iostream>
-#include <map>
-
-int main ()
+using namespace std;
+void init(int n)
 {
-  std::map<char,int> mymap;
-  std::map<char,int>::iterator itlow,itup;
-
-  mymap['a']=20;
-  mymap['b']=40;
-  mymap['c']=60;
-  mymap['d']=80;
-  mymap['e']=100;
-
-  itlow=mymap.lower_bound ('b');  // itlow points to b
-  itup=mymap.upper_bound ('d');   // itup points to e (not d!)
-
-  mymap.erase(itlow,itup);        // erases [itlow,itup)
-
-  // print content:
-  for (std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
-
-  return 0;
+    size = n;
+    maxlev = __builtin_clz(n) ^ 31; // floor(log_2(n))
+    if ((1 << maxlev) != n)
+        size = 1 << ++maxlev;
 }
+inline int compute(int a, int b)
+{
+    return min(a, b);
+    // return max(a,b);
+    // return a^b;
+    // return a+b;
+    // return ((long long)a*b)%SOME_PRIME
+}
+void build(int level = 0, int l = 0, int r = size)
+{
+    int m = (l + r) / 2;
+
+    table[level][m] = arr[m];
+    for (int i = m - 1; i >= l; i--)
+        table[level][i] = compute(table[level][i + 1], arr[i]);
+
+    if (m + 1 < r)
+    {
+        table[level][m + 1] = arr[m + 1];
+        for (int i = m + 2; i < r; i++)
+            table[level][i] = compute(table[level][i - 1], arr[i]);
+    }
+
+    if (l + 1 != r) // r - l > 1
+    {
+        build(level + 1, l, m);
+        build(level + 1, m, r);
+    }
+}
+
+int query(int x, int y)
+{
+    if (x == y)
+        return arr[x];
+    int k2 = __builtin_clz(x ^ y) ^ 31;
+    int lev = maxlev - 1 - k2;
+    int ans = table[lev][x];
+    if (y & ((1 << k2) - 1)) // y % (1<<k2)
+        ans = compute(ans, table[lev][y]);
+    return ans;
+}
+
 ```
+Note:
+
+- I assume that size of int is 32 bits
+- __builtin_clz() is an inbuilt function in gcc compiler(not in C++ standard) which returns the count of leading zeroes(hence the name)
+- 31 - num = 31 ^ num. This this true for any number of the form $2^x-1$.
+
+
+
+
+
 

@@ -46,3 +46,5 @@ Este repositório tem como objetivo manter um conjunto de códigos para auxiliar
    - Programação Dinamica
      - [Problema da mochila/Knapsack (Pesos e valores)](./Algoritmos/KnownProblems/Knapsackproblem.md)
      - [Job Scheduling](./Algoritmos/KnownProblems/Job%20Scheduling.md)
+   - String
+     - [Manacher Algorithm](./Algoritmos/Strings/Manacher.md)

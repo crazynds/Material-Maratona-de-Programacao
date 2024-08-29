@@ -1,4 +1,4 @@
-# Área de Polígono (Fórmula de Surveyor) #
+# Área de Polígono (Fórmula de Surveyor) 
 
 Dados os pontos no plano cartesiano que formam um polígono, pode-se calcular a sua área.
 

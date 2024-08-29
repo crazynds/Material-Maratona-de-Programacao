@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Minimun K-cut</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="minimun-k-cut">Minimun K-cut</h1>
+<p>Esse problema consiste em dizer qual menor somatório dos pesos das arestas que devem ser removidas de um grafo <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span></span></span></span> tal que ao final o grafo fique dividido em <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> partes, e nenhuma nó de uma parte consiga chegar a nenhum nó de outra parte.</p>
+<img src="file:///e:\Workspace\Maratona\Material-da-Maratona\Algoritmos\Grafos\two-minimum-cut-problem.webp" width=400/>
+<p>Para um <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> fixo, esse problema pode ser resolvido em tempo polinimial, porém se <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> for parte da entrada de dados, esse é um problema NP-completo.</p>
+<h2 id="stoer-wagner-algorithm">Stoer-Wagner Algorithm</h2>
+<p>Para grafos com pesos não negativos, e <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">K=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span>, esse problema pode ser resolvido em tempo polinomial usando o algoritmo abaixo.</p>
+<pre><code class="language-c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">globalMinCut</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; &amp;mat)</span> </span>{
+    <span class="hljs-type">int</span> best = INT_MAX;
+    <span class="hljs-type">int</span> n = mat.<span class="hljs-built_in">size</span>();
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> ph = <span class="hljs-number">1</span>; ph &lt; n; ph++) {
+        vector&lt;<span class="hljs-type">int</span>&gt; w = mat[<span class="hljs-number">0</span>];
+        <span class="hljs-type">size_t</span> s = <span class="hljs-number">0</span>, t = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> it = <span class="hljs-number">0</span>; it &lt; n - ph; it++) {
+            w[t] = INT_MIN;
+            s = t, t = <span class="hljs-built_in">max_element</span>(w.<span class="hljs-built_in">begin</span>(), w.<span class="hljs-built_in">end</span>()) - w.<span class="hljs-built_in">begin</span>();
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) w[i] += mat[t][i];
+        }
+        best = <span class="hljs-built_in">min</span>(best, w[t] - mat[t][t]);
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) mat[s][i] += mat[t][i];
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) mat[i][s] = mat[s][i];
+        mat[<span class="hljs-number">0</span>][t] = INT_MIN;
+    }
+
+    <span class="hljs-keyword">return</span> best;
+}
+</code></pre>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> heapq
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">globalMinCut</span>(<span class="hljs-params">nodes: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">dict</span>]</span>):
+    <span class="hljs-string">&#x27;&#x27;&#x27;
+        complexity: avg:O(n*n*log(m)) worst:O(n*m*log(m))
+        m = edges
+        n = nodes
+
+        List of adjacency implementation of Stoer–Wagner min cut algorithm
+    &#x27;&#x27;&#x27;</span>
+    n = <span class="hljs-built_in">len</span>(nodes)
+    best = <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;inf&#x27;</span>)
+    <span class="hljs-comment">#List of merges</span>
+    <span class="hljs-comment">#Only needed to construct the sets</span>
+    contractions = []
+
+    <span class="hljs-comment"># O(N)</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n-<span class="hljs-number">1</span>):
+        heap = []
+
+        <span class="hljs-comment"># O(N) </span>
+        curCosts = [<span class="hljs-number">0</span>]*n
+        curSet = <span class="hljs-built_in">set</span>()
+        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n - i - <span class="hljs-number">1</span>):
+            cur = <span class="hljs-number">0</span>
+            <span class="hljs-comment"># O(M/N)</span>
+            <span class="hljs-keyword">while</span> cur <span class="hljs-keyword">in</span> curSet:
+                _, cur =  heapq.heappop(heap)
+            curSet.add(cur)
+            <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> nodes[cur]:
+                <span class="hljs-keyword">if</span> v <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> curSet:
+                    curCosts[v] += nodes[cur][v]
+                    heapq.heappush(heap,(-curCosts[v],v))
+        acc = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> heap:
+            w, v = heapq.heappop(heap)
+            <span class="hljs-keyword">if</span> v <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> curSet:
+                acc -= w
+                <span class="hljs-keyword">break</span>
+        best = <span class="hljs-built_in">min</span>(best,acc)
+        a = cur
+        b = v
+        
+        <span class="hljs-comment">#Merge all edges of node B to node A</span>
+        <span class="hljs-comment">#Delete node B</span>
+        <span class="hljs-comment"># O(M)</span>
+        <span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> nodes[b]:
+            <span class="hljs-keyword">if</span> key==b:
+                <span class="hljs-keyword">continue</span>
+            <span class="hljs-keyword">if</span> key <span class="hljs-keyword">in</span> nodes[a]:
+                nodes[a][key] += nodes[b][key]
+            <span class="hljs-keyword">else</span>:
+                nodes[a][key] = nodes[b][key]
+            <span class="hljs-keyword">if</span> a <span class="hljs-keyword">in</span> nodes[key]:
+                nodes[key][a] += nodes[key][b]
+            <span class="hljs-keyword">else</span>:
+                nodes[key][a] = nodes[key][b]
+            <span class="hljs-keyword">del</span> nodes[key][b]
+        nodes[b] = nodes[a]
+        contractions.append((a,b))
+        
+    <span class="hljs-keyword">return</span> best
+</code></pre>
+<h1 id="strongly-connected-components">Strongly connected components</h1>
+<p>Let  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mo stretchy="false">(</mo><mi>V</mi><mo separator="true">,</mo><mi>E</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">G=(V,E)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mclose">)</span></span></span></span>  be a directed graph with vertices  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span>  and edges  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>⊆</mo><mi>V</mi><mo>×</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">E \subseteq V \times V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.136em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⊆</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span> . We denote with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mi mathvariant="normal">∣</mi><mi>V</mi><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">n=|V|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mord">∣</span></span></span></span>  the number of vertices and with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi mathvariant="normal">∣</mi><mi>E</mi><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">m=|E|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">∣</span></span></span></span>  the number of edges in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span></span></span></span> . It is easy to extend all definitions in this article to multigraphs, but we will not focus on that.</p>
+<p>A subset of vertices <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>⊆</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">C \subseteq V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.136em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⊆</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span>  is called a strongly connected component if the following conditions hold:</p>
+<ul>
+<li>For all <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>∈</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">u,v\in C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span> , if  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo mathvariant="normal">≠</mo><mi>v</mi></mrow><annotation encoding="application/x-tex">u \neq v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span>  there exists a path from <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span> to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span>  and a path from <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span>  to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span>;</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span>  is maximal, in the sense that no vertex can be added without violating the above condition;</li>
+</ul>
+<p><img src="file:///e:\Workspace\Maratona\Material-da-Maratona\Algoritmos\Grafos\graph.svg" alt=""></p>
+<p><img src="file:///e:\Workspace\Maratona\Material-da-Maratona\Algoritmos\Grafos\cond_graph.svg" alt=""></p>
+<h3 id="c">C++</h3>
+<pre><code class="language-c++">
+vector&lt;<span class="hljs-type">bool</span>&gt; visited; <span class="hljs-comment">// keeps track of which vertices are already visited</span>
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> v, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-type">const</span>&amp; adj, vector&lt;<span class="hljs-type">int</span>&gt; &amp;output)</span> </span>{
+    visited[v] = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> u : adj[v])
+        <span class="hljs-keyword">if</span> (!visited[u])
+            <span class="hljs-built_in">dfs</span>(u, adj, output);
+    output.<span class="hljs-built_in">push_back</span>(v);
+}
+
+<span class="hljs-comment">// input: adj -- adjacency list of G</span>
+<span class="hljs-comment">// output: components -- the strongy connected components in G</span>
+<span class="hljs-comment">// output: adj_cond -- adjacency list of G^SCC (by root vertices)</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">strongy_connected_components</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-type">const</span>&amp; adj,
+                                  vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; &amp;components,
+                                  vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; &amp;adj_cond)</span> </span>{
+    <span class="hljs-type">int</span> n = adj.<span class="hljs-built_in">size</span>();
+    components.<span class="hljs-built_in">clear</span>(), adj_cond.<span class="hljs-built_in">clear</span>();
+    vector&lt;<span class="hljs-type">int</span>&gt; order; <span class="hljs-comment">// will be a sorted list of G&#x27;s vertices by exit time</span>
+    visited.<span class="hljs-built_in">assign</span>(n, <span class="hljs-literal">false</span>);
+    <span class="hljs-comment">// first series of depth first searches</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+        <span class="hljs-keyword">if</span> (!visited[i])
+            <span class="hljs-built_in">dfs</span>(i, adj, order);
+    <span class="hljs-comment">// create adjacency list of G^T</span>
+    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">adj_rev</span>(n);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> v = <span class="hljs-number">0</span>; v &lt; n; v++)
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> u : adj[v])
+            adj_rev[u].<span class="hljs-built_in">push_back</span>(v);
+    visited.<span class="hljs-built_in">assign</span>(n, <span class="hljs-literal">false</span>);
+    <span class="hljs-built_in">reverse</span>(order.<span class="hljs-built_in">begin</span>(), order.<span class="hljs-built_in">end</span>());
+
+    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">roots</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>; <span class="hljs-comment">// gives the root vertex of a vertex&#x27;s SCC</span>
+    <span class="hljs-comment">// second series of depth first searches</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> v : order)
+        <span class="hljs-keyword">if</span> (!visited[v]) {
+            std::vector&lt;<span class="hljs-type">int</span>&gt; component;
+            <span class="hljs-built_in">dfs</span>(v, adj_rev, component);
+            <span class="hljs-built_in">sort</span>(component.<span class="hljs-built_in">begin</span>(), component.<span class="hljs-built_in">end</span>());
+            components.<span class="hljs-built_in">push_back</span>(component);
+            <span class="hljs-type">int</span> root = component.<span class="hljs-built_in">front</span>();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> u : component)
+                roots[u] = root;
+        }
+    <span class="hljs-comment">// add edges to condensation graph</span>
+    adj_cond.<span class="hljs-built_in">assign</span>(n, {});
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> v = <span class="hljs-number">0</span>; v &lt; n; v++)
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> u : adj[v])
+            <span class="hljs-keyword">if</span> (roots[v] != roots[u])
+                adj_cond[roots[v]].<span class="hljs-built_in">push_back</span>(roots[u]);
+}
+</code></pre>
+<h1 id="depth-first-search">Depth First Search</h1>
+<p>A DFS ou busca em profudidade realiza uma busca iterativa sempre no próximo nó encontrado. Ela ignora nós já passados e quando a busca é completa no nó ela retorna para o seu pai. Ela é executada de forma recursiva.</p>
+<h2 id="python">Python</h2>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> sys
+<span class="hljs-comment"># Sempre bom aumentar o número de recursões</span>
+sys.setrecursionlimit(<span class="hljs-number">1000</span>)
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">graph: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">set</span>], node: <span class="hljs-built_in">int</span>, visited: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">bool</span>]</span>):
+    visited[node] = <span class="hljs-literal">True</span>
+    <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>[node]:
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> visited[child]:
+            dfs(graph,child,visited)
+
+</code></pre>
+<p>Note que esse algoritmo em python não é tão eficiente, e quando se deparar com um problema grande o suficiente é melhor fazer a solução em C/C++. Python não trabalha muito bem com recursões e gasta muita memoria para aumentar o limite de recursão.</p>
+<h2 id="c-1">C++</h2>
+<pre><code class="language-c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(vector&lt;unordered_set&lt;<span class="hljs-type">int</span>&gt;&gt; &amp;graph, <span class="hljs-type">int</span> node, vector&lt;<span class="hljs-type">bool</span>&gt; &amp;visited)</span>
+</span>{
+    visited[node] = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> child : graph[node])
+    {
+        <span class="hljs-keyword">if</span> (!visited[child])
+            <span class="hljs-built_in">dfs</span>(graph, child, visited);
+    }
+}
+
+</code></pre>
+<h2 id="topological-sorting">Topological Sorting</h2>
+<p>Usando DFS é possivel ordenar os nós de um gráfico direcionado aciclíco de forma que se tenha uma ordem de modo que cada aresta va do vértice com um índice menor a um vértice com um índice maior.</p>
+<pre><code class="language-C++"><span class="hljs-type">int</span> n; <span class="hljs-comment">// number of vertices</span>
+vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; adj; <span class="hljs-comment">// adjacency list of graph</span>
+vector&lt;<span class="hljs-type">bool</span>&gt; visited;
+vector&lt;<span class="hljs-type">int</span>&gt; ans;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> v)</span> </span>{
+    visited[v] = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> u : adj[v]) {
+        <span class="hljs-keyword">if</span> (!visited[u])
+            <span class="hljs-built_in">dfs</span>(u);
+    }
+    ans.<span class="hljs-built_in">push_back</span>(v);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">topological_sort</span><span class="hljs-params">()</span> </span>{
+    visited.<span class="hljs-built_in">assign</span>(n, <span class="hljs-literal">false</span>);
+    ans.<span class="hljs-built_in">clear</span>();
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; ++i) {
+        <span class="hljs-keyword">if</span> (!visited[i]) {
+            <span class="hljs-built_in">dfs</span>(i);
+        }
+    }
+    <span class="hljs-built_in">reverse</span>(ans.<span class="hljs-built_in">begin</span>(), ans.<span class="hljs-built_in">end</span>());
+}
+</code></pre>
+<h1 id="breadth-first-search">Breadth First Search</h1>
+<p>O BFS ou busca em largura, para cada nó, ele adiciona todos os filhos a uma fila, e sempre o próximo nó a ser executado é o primeiro da fila. Dessa forma consome mais memória, porém não depende de recursão e consegue se espalhar de maneira igual a partir do primeiro nó.</p>
+<h2 id="python-1">Python</h2>
+<pre><code class="language-python">
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> deque
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">bfs</span>(<span class="hljs-params">graph: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">set</span>], node: <span class="hljs-built_in">int</span></span>):
+    visited = [<span class="hljs-literal">False</span>] * <span class="hljs-built_in">len</span>(graph)
+    stack = deque([node])
+    <span class="hljs-comment"># check if is not empty</span>
+    <span class="hljs-keyword">while</span> stack:
+        node = stack.popleft()
+        <span class="hljs-comment">#  You need this check</span>
+        <span class="hljs-keyword">if</span> visited[node]:
+            <span class="hljs-keyword">continue</span>
+        visited[node] = <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>[node]:
+            <span class="hljs-comment">#  You need this check too</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> visited[child]:
+                stack.append(child)
+
+
+
+</code></pre>
+<h2 id="c-2">C++</h2>
+<pre><code class="language-c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">bfs</span><span class="hljs-params">(vector&lt;unordered_set&lt;<span class="hljs-type">int</span>&gt;&gt; &amp;graph, <span class="hljs-type">int</span> node)</span></span>{
+    deque&lt;<span class="hljs-type">int</span>&gt; stack;
+    <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">visited</span><span class="hljs-params">(graph.size())</span></span>;
+    stack.<span class="hljs-built_in">push_back</span>(node);
+    <span class="hljs-keyword">while</span> (!stack.<span class="hljs-built_in">empty</span>()) {
+        node = stack.<span class="hljs-built_in">front</span>();
+        stack.<span class="hljs-built_in">pop_front</span>();
+        <span class="hljs-comment">// You need this check</span>
+        <span class="hljs-keyword">if</span> (visited[node])
+            <span class="hljs-keyword">continue</span>;
+        visited[node] = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> child : graph[node])
+        {
+            <span class="hljs-comment">// You need this check too</span>
+            <span class="hljs-keyword">if</span> (!visited[child])
+                stack.<span class="hljs-built_in">push_back</span>(child);
+        }
+    }
+}
+
+</code></pre>
+<h1 id="problemas">Problemas</h1>
+<h2 id="nós-mais-distantes">Nós mais distantes</h2>
+<p>Esse é um algoritmo para encontrar quais são os dois nós mais distantes entre si em um grafo conexo sem pesos. Note que não é para encontrar o maior caminho no grafo, e sim os dois nós mais distantes entre si.</p>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">bfs_adapted</span>(<span class="hljs-params">graph: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">set</span>], node: <span class="hljs-built_in">int</span></span>):
+    visited = [-<span class="hljs-number">1</span>] * <span class="hljs-built_in">len</span>(graph)
+    stack = deque([(node,<span class="hljs-number">0</span>)])
+    maxDist = node
+    <span class="hljs-comment"># check if is not empty</span>
+    <span class="hljs-keyword">while</span> stack:
+        node,dist = stack.popleft()
+        <span class="hljs-keyword">if</span> visited[node] &gt;= <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">continue</span>
+        visited[node] = dist
+        <span class="hljs-keyword">if</span> dist &gt; visited[maxDist]:
+            maxDist = node
+        <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>[node]:
+            <span class="hljs-keyword">if</span> visited[child] &lt; <span class="hljs-number">0</span>:
+                stack.append((child,dist+<span class="hljs-number">1</span>))
+    <span class="hljs-keyword">return</span> (node,maxDist)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-params">graph: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">set</span>]</span>):
+    ponta1,dist = bfs_adapted(graph,<span class="hljs-number">0</span>)
+    ponta2,dist = bfs_adapted(graph,ponta1)
+    <span class="hljs-comment"># No1 - No2 e a distancia entre eles</span>
+    <span class="hljs-keyword">return</span> (ponta1,ponta2,dist)
+</code></pre>
+<p>Comentário: É possivel adaptar para usar uma heapq e fazer ele encontrar o maior caminho entre dois nós, sem ficar infinitamente em um ciclo.</p>
+<h1 id="algoritmo-de-dijkstra">Algoritmo de Dijkstra</h1>
+<p>Esse algoritmo serve para determinar o menor caminho entre dois vértices de um grafo, desde que o peso das arestas
+não seja negativo por conta que o Dijkstra não é capaz de detectar ciclos negativos. Caso o grafo em questão não
+contenha ciclos negativos, do algoritmo Dijkstra pode ser usado.</p>
+<p>Nota:É possivel detectar ciclos negativos em O(N).</p>
+<h3 id="python-2">Python</h3>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">dijkstra</span>(<span class="hljs-params">nodes,src</span>):
+    <span class="hljs-string">&quot;&quot;&quot;
+        complexity: O(m*log(n))
+        m = edges
+        n = nodes
+
+        this function return a list of distances from src
+
+        can be faster if you implement heapDictionary (maybe?, in C++ using heapDictionary is faster, but in python i dont think so...)
+    &quot;&quot;&quot;</span>
+    inf = <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;inf&#x27;</span>)
+    queue = []
+    dist = [inf] * <span class="hljs-built_in">len</span>(nodes)
+
+    heapq.heappush(queue,(<span class="hljs-number">0</span>,src))
+    dist[src] = <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">while</span> queue:
+        d,node = heapq.heappop(queue)
+        <span class="hljs-keyword">if</span> d &gt; dist[node]:
+            <span class="hljs-keyword">continue</span>
+        
+        <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> nodes[node]:
+            weigth = nodes[node][child]
+            aux = dist[node] + weigth
+            <span class="hljs-keyword">if</span> dist[child] &gt; aux:
+                dist[child] = aux
+                heapq.heappush(queue,(aux,child))
+    <span class="hljs-keyword">return</span> dist
+</code></pre>
+<h3 id="c-3">C++</h3>
+<pre><code class="language-C++"><span class="hljs-meta">#<span class="hljs-keyword">define</span> INF_INT (((unsigned int)-1) &gt;&gt; 1)</span>
+ 
+<span class="hljs-comment">// List of adj Obs: acredito que está funcionando. Confia! 😉 </span>
+<span class="hljs-function">vector&lt;ll&gt; <span class="hljs-title">dijkstra</span><span class="hljs-params">(vector&lt;vector&lt;pair&lt;ll, ll&gt;&gt;&gt; &amp;graph, <span class="hljs-type">int</span> src)</span>
+</span>{
+    priority_queue&lt;pair&lt;ll, ll&gt;, vector&lt;pair&lt;ll, ll&gt;&gt;, greater&lt;pair&lt;ll, ll&gt;&gt;&gt; pq;
+    <span class="hljs-function">vector&lt;ll&gt; <span class="hljs-title">resp</span><span class="hljs-params">(graph.size())</span></span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x = <span class="hljs-number">0</span>; x &lt; n; x++)
+    {
+        resp[x] = (x != src) ? INF : <span class="hljs-number">0</span>;
+    }
+    pq.<span class="hljs-built_in">emplace</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">while</span> (!pq.<span class="hljs-built_in">empty</span>())
+    {
+        <span class="hljs-keyword">auto</span> [du, u] = pq.<span class="hljs-built_in">top</span>();
+        pq.<span class="hljs-built_in">pop</span>();
+        <span class="hljs-keyword">if</span> (du &gt; dist[u])
+            <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;[v, dv] : graph[u])
+        {
+            <span class="hljs-keyword">if</span> (dist[v] &gt; dist[u] + dv)
+            {
+                pq.<span class="hljs-built_in">emplace</span>(dist[u] + dv, v);
+                dist[v] = dist[u] + dv;
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> resp;
+}
+</code></pre>
+<h2 id="apsp">APSP</h2>
+<p>Implementação de <em>All Pairs Shortest Path</em> usando Dijkstra para grafos direcionados com pesos não negativos.
+Ele apenas repete o Dijkstra para cada nó <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> como inicial e armazena numa matriz os resultados.</p>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">dijkstra_apsp</span>(<span class="hljs-params">nodes</span>):
+    <span class="hljs-string">&quot;&quot;&quot;
+        complexity: O(n*m*log(n))
+        m = edges
+        n = nodes
+
+
+        this function recive a list of nodes from a graph that can be directed or not
+        this function return a matriz of shortest path from every node to other node
+    &quot;&quot;&quot;</span>
+    <span class="hljs-keyword">return</span> [dijkstra(nodes,i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nodes))]
+
+</code></pre>
+<h1 id="bellman-ford">Bellman-Ford</h1>
+<p>Esse algoritmo serve para encontrar o menor caminho entre dois vértices em um grafo com arestas com peso negativo.
+Não somente isso, ele também é o algoritmo usado para o roteamento de pacotes na internet, já que ele possibilita o processamento descentralizado de grafos, onde cada vertice precisa calcular apenas as arestas que ele está conectado, e propagar o seu valor para os vertices vizinhos.</p>
+<pre><code class="language-python">
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">bellmanford</span>(<span class="hljs-params">edges: <span class="hljs-built_in">list</span>,vertices,src</span>):
+    <span class="hljs-string">&quot;&quot;&quot;
+        complexity: O(m*n)
+        m = edges
+        n = nodes
+
+        this function recives a directed list of edges that can contain negative weights
+        this function return a list of distances from src
+        different than dijkstra, the bellman ford can compute correct distances over negative edges
+        work in directed graphs, there is no sense a non directed graph with negative edges (think about)
+
+    &quot;&quot;&quot;</span>
+    <span class="hljs-comment"># In theory, sort the edges array can make the code fast because of the sequential reading of the array, but in reality this is over engineering</span>
+    <span class="hljs-comment"># edges.sort()</span>
+    inf = <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;inf&#x27;</span>)
+    current = [inf]*vertices
+    current[src] = <span class="hljs-number">0</span>
+
+    <span class="hljs-comment">## Optional, only for backtrace</span>
+    trace = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices)]
+
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,vertices): <span class="hljs-comment"># run n-1 times</span>
+        change = <span class="hljs-literal">False</span> <span class="hljs-comment"># premature optimization</span>
+        <span class="hljs-keyword">for</span> s,d,w <span class="hljs-keyword">in</span> edges:
+            <span class="hljs-keyword">if</span> current[s]!=inf <span class="hljs-keyword">and</span> current[s] + w &lt; current[d]:
+                change = <span class="hljs-literal">True</span>
+                current[d] = current[s] + w
+                <span class="hljs-comment">## Optional, only for backtrace</span>
+                trace[d] = s
+
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> change: <span class="hljs-comment"># if any change in array ocurr, then already got the final result</span>
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">else</span>: <span class="hljs-comment"># Run one more to check infinit loops</span>
+        <span class="hljs-comment"># the path between 2 vertices has at max n-1 edges without negative loops, </span>
+        <span class="hljs-comment"># if the path has more than n-1 edges, so it has a negative loop in the graph </span>
+        <span class="hljs-keyword">for</span> s,d,w <span class="hljs-keyword">in</span> edges:
+            <span class="hljs-keyword">if</span> current[s] + w &lt; current[d]:
+                <span class="hljs-comment">## 2nd return value is optional, only for backtrace</span>
+                <span class="hljs-keyword">return</span> [<span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;-inf&#x27;</span>)]*vertices,trace
+
+    <span class="hljs-comment">## 2nd return value is optional, only for backtrace</span>
+    <span class="hljs-keyword">return</span> current,trace
+
+</code></pre>
+<h1 id="apsp-1">APSP</h1>
+<p>Existe uma variação do algoritmo no qual é possivel calcular a distancia entre todos os pares de vertices do grafo, o algoritmo é semelhante a executar o algoritmo original N vezes, sendo cada vez uma origem diferente, porém a implementação abaixo ela possibilita o uso de instruções SIMD.</p>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">bellmanford_apsp</span>(<span class="hljs-params">edges: <span class="hljs-built_in">list</span>,vertices</span>):
+    <span class="hljs-string">&quot;&quot;&quot;
+        complexity: O(m*n^2)
+        m = edges
+        n = nodes
+
+        this function recives a directed list of edges that can contain negative weights
+        this function return a list of distances from every pair of nodes
+        this is a variation of the original bellmanford algorithm that execute N * belmanford for every vertice
+
+    &quot;&quot;&quot;</span>
+    <span class="hljs-comment"># In theory, sort the edges array can make the code fast because of the sequential reading of the array, but in reality this is over engineering</span>
+    <span class="hljs-comment"># edges.sort()</span>
+    inf = <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;inf&#x27;</span>)
+    current = [[inf]*vertices  <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices)]
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices):
+        current[i][i] = <span class="hljs-number">0</span>
+
+    <span class="hljs-comment">## Optional, only for backtrace</span>
+    trace = [[i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices)] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices)]
+
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,vertices): <span class="hljs-comment"># run n-1 times</span>
+        change = <span class="hljs-literal">False</span> <span class="hljs-comment"># premature optimization</span>
+        <span class="hljs-keyword">for</span> s,d,w <span class="hljs-keyword">in</span> edges:
+
+            <span class="hljs-comment"># this for loop can be boosted if implemented using SIMD instructions</span>
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices):
+                <span class="hljs-keyword">if</span> current[s][i]!=inf <span class="hljs-keyword">and</span> current[s][i] + w &lt; current[d][i]:
+                    change = <span class="hljs-literal">True</span>
+                    current[d][i] = current[s][i] + w
+                    <span class="hljs-comment">## Optional, only for backtrace</span>
+                    trace[d][i] = s
+
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> change: <span class="hljs-comment"># if any change in array ocurr, then already got the final result</span>
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">else</span>: <span class="hljs-comment"># Run one more to check infinit loops</span>
+        <span class="hljs-comment"># the path between 2 vertices has at max n-1 edges without negative loops, </span>
+        <span class="hljs-comment"># if the path has more than n-1 edges, so it has a negative loop in the graph </span>
+        <span class="hljs-keyword">for</span> s,d,w <span class="hljs-keyword">in</span> edges:
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices):
+                <span class="hljs-keyword">if</span> current[s][i] + w &lt; current[d][i]:
+                    <span class="hljs-comment">## 2nd return value is optional, only for backtrace</span>
+                    <span class="hljs-keyword">return</span> [<span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;-inf&#x27;</span>)]*n,trace
+
+    <span class="hljs-comment"># You need to rotate the array, so the src is the first index, and the dst is the second,</span>
+    <span class="hljs-comment"># You can skip this if you wish, but the index are reversed, like: result[dst][src] = ShortestPath(src,dst)</span>
+    result = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">zip</span>(*current))
+
+    <span class="hljs-comment">## 2nd return value is optional, only for backtrace</span>
+    <span class="hljs-keyword">return</span> result,trace
+
+</code></pre>
+<p>É preferivel usar qualquer outro algoritmo para resolver esse problema, esse algoritmo é muiiiito lento, procure usar <a href="./johnson-algorithm.html">Johnson</a> para resolver esse problema.</p>
+<h1 id="the-floyd-warshall-algorithm">The Floyd Warshall Algorithm</h1>
+<p>Esse algoritmo resolve o problema APSP (All pairs shortest path), ele se traz uma ideia semelhante em alguns aspectos ao <a href="./Bellman-Ford.html">bellman-ford</a> porém ao invez de iterar sobre as arestas, ele itera apenas sobre os vertices, sendo cada vez para uma origem diferente, e retorna uma matriz com a relação de <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo>=</mo><mi>S</mi><mi>h</mi><mi>o</mi><mi>r</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>P</mi><mi>a</mi><mi>t</mi><mi>h</mi><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">A[i][j] = ShortestPath(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">A</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.02778em;">or</span><span class="mord mathnormal">t</span><span class="mord mathnormal">es</span><span class="mord mathnormal" style="margin-right:0.13889em;">tP</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span>.</p>
+<p>Complexidade desse algoritmo é <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>3</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<p>Ele também traz as vantagens do algoritmo de bellman-ford, como encontrar o menor caminho em um grafo com pesos negativos, e pode ser executado de forma distribuida.</p>
+<p>O funcionamento desse algoritmo usa uma matriz, no qual a posição <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span> contém o menor caminho do vertice <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> até o vertice <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span>. Para cada iteração de <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>, o algoritmo verifica se existe um caminho de <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> até <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span> que passe por <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>, e se ele for menor, substitui na posição da matriz. Os valores iniciais da matriz são definidos como:</p>
+<ul>
+<li>Defini-se zero quando <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i=j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span>;</li>
+<li>Defini-se <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">w_{i,j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> quando existir uma aresta de <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> para <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span>;</li>
+<li>Defini-se <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mi>i</mi><mi>n</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">+inf</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">+</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span> para todos os outros casos;</li>
+</ul>
+<pre><code class="language-python">
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">floydwarshall</span>(<span class="hljs-params">edges: <span class="hljs-built_in">list</span>, vertices</span>):
+    <span class="hljs-string">&quot;&quot;&quot;
+        complexity: O(n^3 + m)
+        m = edges
+        n = nodes
+
+        this function recives a directed list of edges that can contain negative weights
+        this function return a list of distances from every pair of nodes
+
+    &quot;&quot;&quot;</span>
+    inf = <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;inf&#x27;</span>)
+    current = [[<span class="hljs-number">0</span> <span class="hljs-keyword">if</span> j==i <span class="hljs-keyword">else</span> inf <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices)] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices)]
+
+    <span class="hljs-keyword">for</span> s,d,w <span class="hljs-keyword">in</span> edges:
+        current[s][d] = w
+
+    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices):
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices):
+                <span class="hljs-keyword">if</span> current[i][j] &gt; current[i][k] + current[k][j]:
+                    current[i][j] = current[i][k] + current[k][j]
+                    
+    <span class="hljs-comment"># check if exists a negative cycle</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices):
+        <span class="hljs-keyword">if</span> current[i][i] &lt; <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> [[<span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;-inf&#x27;</span>)]*vertices <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span> (vertices)]
+
+    <span class="hljs-keyword">return</span> current
+
+</code></pre>
+<h2 id="vantagens">Vantagens</h2>
+<p>A grande vantagem de se usar esse algoritmo ao invez de executar o <a href="./Bellman-Ford.html">bellman-ford</a> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> vezes, uma para cada vertice como origem, é no tempo de execução. O tempo de execução do bellman-ford tem como um de seus parametros o número de arestas <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> no qual todos os grafos conexos não arvores vão ter a seguinte equação verdadeira <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>&gt;</mo><mo>=</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">M &gt;= N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>.</p>
+<p>Dessa forma, é possivel deduzir que a complexidade do bellman-ford sempre será igual ou maior ao da execução desse algoritmo, e quanto mais denso do grafo for (maior o numero de arestas) maior será a eficiencia do uso desse algoritmo ao invez do bellman-ford.</p>
+<p>Para <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>&gt;</mo><mo>=</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">M &gt;= N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> então <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>M</mi><mo>∗</mo><msup><mi>N</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mo>&gt;</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>3</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(M*N^2) &gt;= O(N^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<h2 id="reconstruindo-o-caminho">Reconstruindo o caminho</h2>
+<p>É possivel reconstruir o caminho. Não entendi a explicação, mas você que é esperto, vai descobrir e adicionar um commit nesse repositório. 😉</p>
+<h1 id="johnson-algorithm">Johnson Algorithm</h1>
+<p>Ele tenta adaptar o algoritmo de <a href="./dijkstra.html">Dijkstra</a> para grafos com pesos negativos. Esse algoritmo aplica um <em>shift</em> (incremento) dos valores das arestas do grafo para que não haja arestas com valores negavitos.</p>
+<p>Esse algoritmo usa o algoritmo de <a href="./Bellman-Ford.html">Bellman-Ford</a> no primeiro passo para calcular o valor <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>v</mi></msub></mrow><annotation encoding="application/x-tex">P_v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> para cada vertice. Usando esses valores <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>v</mi></msub></mrow><annotation encoding="application/x-tex">P_v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> de cada vertice, é aplicado o seguinte calculo para fazer o incremento de cada aresta:</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mi>d</mi><mi>g</mi><mi>e</mi><mo>=</mo><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo separator="true">,</mo><mi>w</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">    Edge=(i,j,w)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mclose">)</span></span></span></span></span></p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>w</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>=</mo><mi>w</mi><mo>+</mo><msub><mi>P</mi><mi>i</mi></msub><mo>−</mo><msub><mi>P</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">    w&#x27; = w + P_i - P_j
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8019em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8019em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<p>Após aplicada a formula, todas as arestas devem estar com pesos não negativos. Então é aplicado o algoritmo de Dijkstra para encontrar o menor caminho.</p>
+<p>Agora a prova do porque e como que funciona fica com você, boa sorte. Saiba que funciona.</p>
+<p>O algoritmo abaixo depende dessas seguintes funções:</p>
+<ul>
+<li><a href="./Bellman-Ford.html">bellmanford</a></li>
+<li><a href="./GrafosCrazynds/conversao_estruturas.html">convertEdgesArrayToDirectedSimpleGraph</a></li>
+<li><a href="./dijkstra.html">dijkstra</a></li>
+</ul>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">johnson</span>(<span class="hljs-params">edges: <span class="hljs-built_in">list</span>, vertices</span>):
+    <span class="hljs-string">&quot;&quot;&quot;
+        complexity: O(n + m*n + m + n*m log n + n^2) = O(n*m log n)
+        m = edges
+        n = nodes
+
+        this function recives a directed list of edges that can contain negative weights
+        this function return a list of distances from every pair of nodes
+
+    &quot;&quot;&quot;</span>
+    <span class="hljs-comment"># Add a new Vertice and add an edge from this vertice to every other vertice with weight zero</span>
+    newVertice = vertices
+    edges.extend([(newVertice,i,<span class="hljs-number">0</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices)])
+
+    <span class="hljs-comment"># Compute a P_v for every vertice</span>
+    vW,_ = bellmanford(edges,vertices+<span class="hljs-number">1</span>,newVertice)
+
+    <span class="hljs-comment"># Remove the edges previously added</span>
+    <span class="hljs-keyword">del</span> edges[-vertices:]
+
+    <span class="hljs-keyword">if</span> vW[<span class="hljs-number">0</span>] == <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;-inf&#x27;</span>):
+        <span class="hljs-keyword">return</span> [[<span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;-inf&#x27;</span>)]*vertices <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices)]
+
+    <span class="hljs-comment"># Apply the function to every edge</span>
+    newEdges = [(s,d,w+vW[s]-vW[d]) <span class="hljs-keyword">for</span> s,d,w <span class="hljs-keyword">in</span> edges]
+
+    <span class="hljs-comment"># Convert the new edges to a grahp</span>
+    nodes = convertEdgesArrayToDirectedSimpleGraph(newEdges,vertices)
+
+    <span class="hljs-comment"># Compute dijkstra to get the APSP</span>
+    bestPaths = [dijkstra(nodes,i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices)]
+
+    <span class="hljs-comment"># Correct the values of the paths</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(vertices):
+            bestPaths[i][j] = bestPaths[i][j] - vW[i] + vW[j]
+
+    <span class="hljs-keyword">return</span> bestPaths
+</code></pre>
+<h1 id="prims-algorithm">Prim's Algorithm</h1>
+<p>O algoritmo de prim's se baseia em uma ideia muito parecida do algoritmo Dijkstra. Ele seleciona um nó aletório para começar a busca, e adiciona todas as arestas que ele está ligado a uma lista Heap, e sempre remove a menor.</p>
+<p>Se ambos os nós da aresta removida da Heap já está na MST, então a aresta é descartada, se todos os nós do grafo estão na MST, então o algoritmo finaliza. Prim's algoritmo é provado que consegue chegar sempre na MST em tempo O(m*log(n)), é possivel melhorar o desepenho se usado uma estrutura <a href="./../../Estrutura%20de%20Dados/HeapDictionaried.html">heap com dicionário</a>.</p>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">primAlgorithm</span>(<span class="hljs-params">graph,initialNode = <span class="hljs-number">0</span></span>):
+    <span class="hljs-string">&#x27;&#x27;&#x27;
+        complexity: O(m*log(n))
+        m = edges
+        n = nodes
+
+        this function return a list of edges of MST
+
+        can be faster if you replace s(set) to a array of True or False
+            - code needs to be adapted to this change;
+    &#x27;&#x27;&#x27;</span>
+    s = <span class="hljs-built_in">set</span>()
+    s.add(initialNode)
+    tree = []
+
+    arr = []
+    a = initialNode
+    <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> graph[a]:
+        heapq.heappush(arr,(graph[a][b],a,b))
+
+    <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(s)!=<span class="hljs-built_in">len</span>(graph) <span class="hljs-keyword">and</span> <span class="hljs-built_in">len</span>(arr)&gt;<span class="hljs-number">0</span>:
+        (cost,a,b) = heapq.heappop(arr)
+        <span class="hljs-keyword">if</span> b <span class="hljs-keyword">in</span> s:
+            <span class="hljs-keyword">continue</span>
+        
+        tree.append((a,b,cost))
+        s.add(b)
+        
+        a = b
+        <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> graph[a]:
+            <span class="hljs-keyword">if</span> b <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> s:
+                heapq.heappush(arr,(graph[a][b],a,b))
+
+        <span class="hljs-keyword">pass</span>
+    <span class="hljs-keyword">return</span> tree 
+</code></pre>
+<h1 id="kruskals-mst">Kruskal's MST</h1>
+<p>O algoritmo de Kruskal se baseia no conceito ordenar as arestas e ir iterando sobre elas em ordem crescente de peso. Dessa forma se a aresta que está sendo consultada não vai gerar um ciclo dentro do novo grafo, então insere essa aresta no grafo.</p>
+<p>Para verificar se existe ciclos no grafo, é usado uma estrutura de <a href="./../../Estrutura%20de%20Dados/DisjoinSet.html">DisjoinSet</a>. A ideia por tras disso é que se uma aresta <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span> que liga o vertice <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> com o vertice <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span> e se os vertices pertencessem ao mesmo cluster, então um ciclo vai ser criado se adicionar essa aresta ao novo grafo.</p>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">kruskalsMST</span>(<span class="hljs-params">edges: <span class="hljs-built_in">list</span>,nodes: <span class="hljs-built_in">int</span></span>):
+    <span class="hljs-string">&#x27;&#x27;&#x27;
+        complexity: O(m*alpha(n)) + (sort operation)
+        m = edges
+        n = nodes
+
+        this function return a list of edges of MST
+
+        can be faster if yout implementation of SetUnion are better
+    &#x27;&#x27;&#x27;</span>
+    union = DisjointSetUnion(nodes)
+    nEdges = []
+    edges.sort(key=<span class="hljs-keyword">lambda</span> e: e[<span class="hljs-number">2</span>])
+    <span class="hljs-keyword">for</span> (a,b,cost) <span class="hljs-keyword">in</span> edges:
+        <span class="hljs-comment"># Check if &#x27;a&#x27; and &#x27;b&#x27; already are in the same cluster</span>
+        <span class="hljs-keyword">if</span> union.find(a) != union.find(b):
+            union.union(a,b)
+            nEdges.append((a,b,cost))
+    <span class="hljs-keyword">return</span> nEdges
+</code></pre>
+<h2 id="algoritmo-em-c">Algoritmo em C++</h2>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-comment">// Estrutura para representar uma aresta</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span>
+{
+    <span class="hljs-type">int</span> u, v, weight;
+    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-type">const</span> Edge&amp; other) <span class="hljs-type">const</span>
+    {
+        <span class="hljs-keyword">return</span> weight &lt; other.weight;
+    }
+};
+
+<span class="hljs-comment">// Função para encontrar o representante (ou &quot;pai&quot;) de um conjunto</span>
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findSet</span><span class="hljs-params">(<span class="hljs-type">int</span> v, vector&lt;<span class="hljs-type">int</span>&gt;&amp; parent)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (v == parent[v])
+        <span class="hljs-keyword">return</span> v;
+    <span class="hljs-keyword">return</span> parent[v] = <span class="hljs-built_in">findSet</span>(parent[v], parent);
+}
+
+<span class="hljs-comment">// Função para unir dois subconjuntos</span>
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">unionSets</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, vector&lt;<span class="hljs-type">int</span>&gt;&amp; parent, vector&lt;<span class="hljs-type">int</span>&gt;&amp; rank)</span>
+</span>{
+    a = <span class="hljs-built_in">findSet</span>(a, parent);
+    b = <span class="hljs-built_in">findSet</span>(b, parent);
+    <span class="hljs-keyword">if</span> (a != b)
+    {
+        <span class="hljs-keyword">if</span> (rank[a] &lt; rank[b])
+            <span class="hljs-built_in">swap</span>(a, b);
+        parent[b] = a;
+        <span class="hljs-keyword">if</span> (rank[a] == rank[b])
+            rank[a]++;
+    }
+}
+
+<span class="hljs-comment">// n = número de vértices</span>
+<span class="hljs-comment">// Função principal do algoritmo de Kruskal</span>
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">kruskal</span><span class="hljs-params">(<span class="hljs-type">int</span> n, vector&lt;Edge&gt;&amp; edges)</span>
+</span>{
+    <span class="hljs-built_in">sort</span>(edges.<span class="hljs-built_in">begin</span>(), edges.<span class="hljs-built_in">end</span>());  <span class="hljs-comment">// Ordena as arestas por peso</span>
+    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">parent</span><span class="hljs-params">(n)</span></span>;
+    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">rank</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+        parent[i] = i;
+
+    <span class="hljs-type">int</span> mstWeight = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (Edge&amp; edge : edges)
+    {
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">findSet</span>(edge.u, parent) != <span class="hljs-built_in">findSet</span>(edge.v, parent))
+        {
+            mstWeight += edge.weight;
+            <span class="hljs-built_in">unionSets</span>(edge.u, edge.v, parent, rank);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> mstWeight;
+}
+</code></pre>
+<h1 id="maximum-flow">Maximum flow</h1>
+<h3 id="edmonds-karp-algorithm">Edmonds-Karp algorithm</h3>
+<p>The algorithm runs in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo>∗</mo><msup><mi>M</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N*M^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> time:</p>
+<pre><code class="language-c++"><span class="hljs-type">int</span> n;
+vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; capacity;
+vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; adj;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">bfs</span><span class="hljs-params">(<span class="hljs-type">int</span> s, <span class="hljs-type">int</span> t, vector&lt;<span class="hljs-type">int</span>&gt;&amp; parent)</span> </span>{
+    <span class="hljs-built_in">fill</span>(parent.<span class="hljs-built_in">begin</span>(), parent.<span class="hljs-built_in">end</span>(), <span class="hljs-number">-1</span>);
+    parent[s] = <span class="hljs-number">-2</span>;
+    queue&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;&gt; q;
+    q.<span class="hljs-built_in">push</span>({s, INF});
+
+    <span class="hljs-keyword">while</span> (!q.<span class="hljs-built_in">empty</span>()) {
+        <span class="hljs-type">int</span> cur = q.<span class="hljs-built_in">front</span>().first;
+        <span class="hljs-type">int</span> flow = q.<span class="hljs-built_in">front</span>().second;
+        q.<span class="hljs-built_in">pop</span>();
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> next : adj[cur]) {
+            <span class="hljs-keyword">if</span> (parent[next] == <span class="hljs-number">-1</span> &amp;&amp; capacity[cur][next]) {
+                parent[next] = cur;
+                <span class="hljs-type">int</span> new_flow = <span class="hljs-built_in">min</span>(flow, capacity[cur][next]);
+                <span class="hljs-keyword">if</span> (next == t)
+                    <span class="hljs-keyword">return</span> new_flow;
+                q.<span class="hljs-built_in">push</span>({next, new_flow});
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxflow</span><span class="hljs-params">(<span class="hljs-type">int</span> s, <span class="hljs-type">int</span> t)</span> </span>{
+    <span class="hljs-type">int</span> flow = <span class="hljs-number">0</span>;
+    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">parent</span><span class="hljs-params">(n)</span></span>;
+    <span class="hljs-type">int</span> new_flow;
+
+    <span class="hljs-keyword">while</span> (new_flow = <span class="hljs-built_in">bfs</span>(s, t, parent)) {
+        flow += new_flow;
+        <span class="hljs-type">int</span> cur = t;
+        <span class="hljs-keyword">while</span> (cur != s) {
+            <span class="hljs-type">int</span> prev = parent[cur];
+            capacity[prev][cur] -= new_flow;
+            capacity[cur][prev] += new_flow;
+            cur = prev;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> flow;
+}
+</code></pre>
+<h2 id="max-flow-min-cut-theorem">Max-flow min-cut theorem</h2>
+<p>A <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span> - <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> -cut is a partition of the vertices of a flow network into two sets, such that a set includes the source <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>  and the other one includes the sink <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> . The capacity of a <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span> - <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> -cut is defined as the sum of capacities of the edges from the source side to the sink side.</p>
+<p>Obviously, we cannot send more flow from <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span> to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span>  than the capacity of any <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span> - <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> -cut. Therefore, the maximum flow is bounded by the minimum cut capacity.</p>
+<p>The max-flow min-cut theorem goes even further. It says that the capacity of the maximum flow has to be equal to the capacity of the minimum cut.</p>
+<p><img src="file:///e:\Workspace\Maratona\Material-da-Maratona\Algoritmos\Grafos\Cut.png" alt=""></p>
+<h2 id="ford-fulkerson">Ford-Fulkerson</h2>
+<p>Função Ford-Fulkerson(G, s, t) [Achar o fluxo máximo de um grafo]</p>
+<ul>
+<li>para cada (u, v) em E[G]
+<ul>
+<li>fluxo(u, v) := 0</li>
+<li>fluxo(v, u) := 0</li>
+<li>enquanto existir caminho de aumento p de s para t na rede residual
+<ul>
+<li>Cf(p) := capacidade do arco de menor capacidade em p</li>
+<li>para cada (u, v) em p
+<ul>
+<li>fluxo(u, v) := fluxo(u, v) + Cf(p)</li>
+<li>fluxo(v, u) := fluxo(v, u) - Cf(p)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>setar as variáveis em:</p>
+<ul>
+<li>memset(FLOW, 0, sizeof(FLOW));</li>
+<li>memset(queue, 0, sizeof(queue));</li>
+<li>memset(F, 0, sizeof(F));</li>
+</ul>
+<p>Basta apenas configurar a variável FLOW sendo:</p>
+<ul>
+<li>FLOW[A][B] = o fluxo máximo da aresta de A pra B.</li>
+</ul>
+<p>Depois basta chamar maxflow, fTotal é o fluxo total do grafo.</p>
+<pre><code class="language-C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdbool.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX 102</span>
+
+<span class="hljs-type">int</span> FLOW[MAX][MAX];
+<span class="hljs-type">int</span> queue[MAX];
+<span class="hljs-type">int</span> head, tail;
+<span class="hljs-type">int</span> parent[MAX];
+<span class="hljs-type">int</span> V, E;
+<span class="hljs-type">int</span> s, t, fTotal;
+<span class="hljs-type">int</span> F[MAX][MAX];
+
+<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">reachable</span><span class="hljs-params">(<span class="hljs-type">int</span> s, <span class="hljs-type">int</span> t)</span> </span>{
+   <span class="hljs-type">bool</span> found = <span class="hljs-literal">false</span>;
+   <span class="hljs-type">int</span> vq;
+   head = tail = <span class="hljs-number">0</span>;
+   <span class="hljs-built_in">memset</span>(parent, <span class="hljs-number">255</span>, <span class="hljs-built_in">sizeof</span>(parent));
+   queue[tail++] = s;
+   parent[s] = s;
+
+   <span class="hljs-keyword">while</span>(head &lt; tail &amp;&amp; !found) {
+      vq = queue[head++];
+      <span class="hljs-type">int</span> i;
+      <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;V; i++) {
+         <span class="hljs-keyword">if</span>(FLOW[vq][i] &amp;&amp; parent[i] == <span class="hljs-number">-1</span>) {
+            queue[tail++] = i;
+            parent[i] = vq;
+
+            <span class="hljs-keyword">if</span>(i == t) {
+               found = <span class="hljs-literal">true</span>;
+               <span class="hljs-keyword">break</span>;
+            }
+         }
+      }
+   }
+   <span class="hljs-keyword">return</span> found;
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">maxflow</span><span class="hljs-params">()</span> </span>{
+   <span class="hljs-type">int</span> vj, min;
+   fTotal = <span class="hljs-number">0</span>;
+   <span class="hljs-keyword">while</span>(<span class="hljs-built_in">reachable</span>(s, t)) {
+       min = FLOW[parent[t]][t];
+       vj = t;
+       <span class="hljs-keyword">while</span>(parent[vj] != vj) {
+          <span class="hljs-keyword">if</span>(FLOW[parent[vj]][vj] &lt; min)
+             min = FLOW[parent[vj]][vj];
+             vj = parent[vj];
+       }
+
+       vj = t;
+       <span class="hljs-keyword">while</span>(parent[vj] != vj) {
+          FLOW[parent[vj]][vj] -= min;
+          FLOW[vj][parent[vj]] += min;
+          F[parent[vj]][vj] += min;
+          vj = parent[vj];
+       }
+       fTotal += min;
+   }
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">/*Inicio do programa*/</span>
+    <span class="hljs-comment">/*While para repetição dependendo do problema*/</span>
+    <span class="hljs-built_in">memset</span>(FLOW, <span class="hljs-number">0</span>, <span class="hljs-built_in">sizeof</span>(FLOW));
+    <span class="hljs-built_in">memset</span>(queue, <span class="hljs-number">0</span>, <span class="hljs-built_in">sizeof</span>(queue));
+    <span class="hljs-built_in">memset</span>(F, <span class="hljs-number">0</span>, <span class="hljs-built_in">sizeof</span>(F));
+    <span class="hljs-comment">/*Setar o FLOW (fluxo entre vértices*/</span>
+    <span class="hljs-built_in">maxflow</span>();
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;O Fluxo total é %d.\n&quot;</span>,++cases,fTotal);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>,&amp;V);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h1 id="espaçamento-entre-clusters">Espaçamento entre clusters</h1>
+<p>Esse algoritmo é bem confuso. Apesar o nome ser Maximum Spacing of k-clustering, ele quer a menor distancia entre clusters. O <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> indica a quantidade de clusters que devem existir, e você que deve descobrir eles. Da pra usar o algoritmo de Kruskal para resolver a parte da geração de um cluster.</p>
+<p>Um cluster deve ser gerado a partir da união dos vertices mais próximos. É ordenado de forma crescente pelo peso as arestas e iterado no qual o vertice <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> se funde com o vertice <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span> formando um cluster, e assim até que sobrem apenas <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> clusters. Se <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> ou <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span> já fizerem parte de algum cluster, os clusters deles devem ser fundidos.</p>
+<p>O que você quer no final é a menor distancia entre quaisquer 2 clusters. O algoritmo abaixo utiliza a estrutura de dados <a href="./../../Estrutura%20de%20Dados/DisjoinSet.html">DisjointSet</a> adaptada para facilitar a contagem dos clusters, efetuando em tempo constante O(1) a contagem de clusters.</p>
+<p>Esse algoritmo tem a mesma alma que o algoritmo de <a href="./kruskalsmst.html">Kruskal</a> para encontrar MST.</p>
+<pre><code class="language-python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> deque
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">DisjointSetUnion</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, n</span>):
+        self.parent = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)]
+        self.size = [<span class="hljs-number">1</span>] * n
+        self.groups = <span class="hljs-built_in">set</span>(self.parent)
+ 
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">find</span>(<span class="hljs-params">self, x</span>):
+       <span class="hljs-keyword">if</span> self.parent[x] != x:
+           self.parent[x] = self.find(self.parent[x])
+       <span class="hljs-keyword">return</span> self.parent[x] 
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">union</span>(<span class="hljs-params">self, x, y</span>):
+        root_x = self.find(x)
+        root_y = self.find(y)
+        <span class="hljs-keyword">if</span> root_x == root_y:
+            <span class="hljs-keyword">return</span>
+
+        <span class="hljs-keyword">if</span> self.size[root_y] &gt; self.size[root_x]:
+            root_x, root_y = root_y, root_x
+        <span class="hljs-keyword">elif</span> self.size[root_y] == self.size[root_x]:
+            self.size[root_x] += <span class="hljs-number">1</span>
+
+        <span class="hljs-comment"># delete root_y group</span>
+        self.groups.remove(root_y)
+        self.parent[root_y] = root_x
+    
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">num_groups</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(self.groups)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">maxSpacingClustering</span>(<span class="hljs-params">kClusters: <span class="hljs-built_in">int</span>,nodes: <span class="hljs-built_in">int</span>,edges: <span class="hljs-built_in">list</span></span>):
+    edges.sort(reverse=<span class="hljs-literal">True</span>,key=<span class="hljs-keyword">lambda</span> e: e[<span class="hljs-number">2</span>])
+    union = DisjointSetUnion(nodes)
+    <span class="hljs-comment"># Une os vertices até que sobre apenas k clusters</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(edges)&gt;<span class="hljs-number">0</span>:
+        <span class="hljs-comment"># Note que a aresta é removida do array, sabe dizer porque?</span>
+        (a,b,_) = edges.pop()
+        union.union(a,b)
+        <span class="hljs-comment"># Condição de parada</span>
+        <span class="hljs-keyword">if</span> union.num_groups()&lt;=kClusters:
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-comment"># Procura a menor distancia entre 2 clusters</span>
+    minCost = <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;inf&#x27;</span>)
+    <span class="hljs-keyword">for</span> (a,b,minCost) <span class="hljs-keyword">in</span> <span class="hljs-built_in">reversed</span>(edges):
+        <span class="hljs-keyword">if</span> union.find(a)!=union.find(b):
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">return</span> minCost
+</code></pre>
+<p>Complexidade de tempo: O(M * alpha(n)) + sorting time (M * log M)</p>
+<h1 id="perfect-matching-graph">Perfect matching Graph</h1>
+<blockquote>
+<p>In graph theory, a perfect matching in a graph is a matching that covers every vertex of the graph. More formally, given a graph G = (V, E), a perfect matching in G is a subset M of edge set E, such that every vertex in the vertex set V is adjacent to exactly one edge in M.</p>
+</blockquote>
+<p>Tem q escrever melhor isso ae</p>
+<pre><code class="language-python">
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">perfectMatchGraph</span>(<span class="hljs-params">graph</span>):
+    <span class="hljs-string">&#x27;&#x27;&#x27;
+        Check if in one graph every vertice can be matched with other vertice.
+            without any vertice stays alone.
+
+        If a vertice is matched with other, it can&#x27;t be matched with any other vertice.
+    &#x27;&#x27;&#x27;</span>
+    nodes = <span class="hljs-built_in">len</span>(graph)
+    vert = [<span class="hljs-built_in">len</span>(graph[a]) <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(nodes)]
+    hp = [(<span class="hljs-built_in">len</span>(graph[a]),a) <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(nodes)]
+    heapq.heapify(hp)
+    
+    revGraph = getReverseGraph(graph)
+    
+    <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(hp)&gt;<span class="hljs-number">0</span>:
+        g,a = heapq.heappop(hp)
+        <span class="hljs-keyword">if</span> vert[a] != g <span class="hljs-keyword">or</span> vert[a]&lt;<span class="hljs-number">0</span>:
+            <span class="hljs-keyword">continue</span>
+        <span class="hljs-keyword">if</span> g==<span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        
+        <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> graph[a]:
+            <span class="hljs-keyword">if</span> vert[b]&gt;<span class="hljs-number">0</span>:
+                vert[b] = -<span class="hljs-number">1</span>
+                vert[a] = -<span class="hljs-number">1</span>
+                <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> revGraph[a]:
+                    <span class="hljs-keyword">if</span> vert[c] != -<span class="hljs-number">1</span>:
+                        vert[c] -= <span class="hljs-number">1</span>
+                        heapq.heappush(hp,(vert[c],c))
+                <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> revGraph[b]:
+                    <span class="hljs-keyword">if</span> vert[c] != -<span class="hljs-number">1</span>:
+                        vert[c] -= <span class="hljs-number">1</span>
+                        heapq.heappush(hp,(vert[c],c))
+                <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(vert)&lt;<span class="hljs-number">0</span>
+
+</code></pre>
+<h1 id="remover-ciclos">Remover ciclos</h1>
+<p>O código abaixo remove ciclos de um grafo direcionado. A forma que ele faz isso é transformar todos os nós pertencentes a um ciclo em um único nó, dessa forma facilita quando se calcula o <em>In-degree</em> e o <em>Out-Degree</em> e não se quer um ciclo.</p>
+<p>De uma olhada no seguinte exercício para mais detalhes de onde usar:</p>
+<ul>
+<li><a href="https://www.beecrowd.com.br/judge/pt/runs/code/35267180">3431 - Habilitando a Movimentação</a></li>
+</ul>
+<pre><code class="language-python">
+n,m = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">input</span>().split())
+
+nodes = [<span class="hljs-built_in">set</span>() <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)]
+
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):
+    r,s = <span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> a:<span class="hljs-built_in">int</span>(a)-<span class="hljs-number">1</span>,<span class="hljs-built_in">input</span>().split())
+    nodes[r].add(s)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">recursivaRemoveCiclo</span>(<span class="hljs-params">nodeId,nodes:<span class="hljs-built_in">list</span>[<span class="hljs-built_in">set</span>],nodeStack: <span class="hljs-built_in">set</span>,nodesVisited:<span class="hljs-built_in">list</span></span>):
+    <span class="hljs-comment"># check if this node is in cicle</span>
+    <span class="hljs-keyword">if</span> nodeId <span class="hljs-keyword">in</span> nodeStack:
+        <span class="hljs-keyword">return</span> nodeId
+    <span class="hljs-comment"># check if this node already was visited</span>
+    <span class="hljs-keyword">if</span> nodesVisited[nodeId]:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+
+    <span class="hljs-comment"># mark this node in stack and visited</span>
+    nodeStack.add(nodeId)
+    nodesVisited[nodeId] = <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> nodes[nodeId].copy():
+        newNodeId = recursivaRemoveCiclo(child,nodes,nodeStack,nodesVisited)
+        <span class="hljs-keyword">if</span> newNodeId != <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">if</span> newNodeId != nodeId:
+                nodes[nodeId].remove(child)
+                nodes[newNodeId] |= nodes[nodeId]
+                <span class="hljs-keyword">if</span> nodeId <span class="hljs-keyword">in</span> nodes[newNodeId]:
+                    nodes[newNodeId].remove(nodeId)
+                nodes[nodeId] = nodes[newNodeId]
+                nodesVisited[nodeId] = <span class="hljs-number">2</span> <span class="hljs-comment"># Mark to destroy this node later</span>
+                <span class="hljs-keyword">return</span> newNodeId
+            <span class="hljs-keyword">else</span>:
+                nodesVisited[nodeId] = <span class="hljs-literal">False</span>
+                
+            
+    <span class="hljs-comment"># remove node of stack</span>
+    nodeStack.remove(nodeId)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">removeCiclo</span>(<span class="hljs-params">nodes:<span class="hljs-built_in">list</span>[<span class="hljs-built_in">set</span>]</span>):
+    nodesVisited = [<span class="hljs-literal">False</span>] * <span class="hljs-built_in">len</span>(nodes)
+    <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nodes)):
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> nodesVisited[node]:
+            recursivaRemoveCiclo(node,nodes,<span class="hljs-built_in">set</span>(),nodesVisited)
+    
+    <span class="hljs-built_in">print</span>(nodes)
+    nodes = [nodes[node] <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nodes)) <span class="hljs-keyword">if</span> nodesVisited[node]!=<span class="hljs-number">2</span>]
+    <span class="hljs-keyword">return</span> nodes
+
+</code></pre>
+<h1 id="contagem-de-arestas-pintadas-em-uma-árvore">Contagem de arestas pintadas em uma árvore</h1>
+<p>Esse código resolve problemas de query e atualização de uma árvore com arestas pintadas.
+A query que ele responde é: De um vértice A até um vértice B, quantas arestas estão pintadas?
+Ele usa o conceito do Euler Tour para gerar uma segtree.</p>
+<h1 id="c-4">C++</h1>
+<pre><code class="language-cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> INF = <span class="hljs-number">1000</span> * <span class="hljs-number">1000</span> * <span class="hljs-number">1000</span>;
+
+<span class="hljs-keyword">typedef</span> vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; graph;
+
+vector&lt;<span class="hljs-type">int</span>&gt; dfs_list;
+vector&lt;<span class="hljs-type">int</span>&gt; edges_list;
+vector&lt;<span class="hljs-type">int</span>&gt; h;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">const</span> graph&amp; g, <span class="hljs-type">const</span> graph&amp; edge_ids, <span class="hljs-type">int</span> cur_h = <span class="hljs-number">1</span>)</span> </span>{
+    h[v] = cur_h;
+    dfs_list.<span class="hljs-built_in">push_back</span>(v);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; g[v].<span class="hljs-built_in">size</span>(); ++i) {
+        <span class="hljs-keyword">if</span> (h[g[v][i]] == <span class="hljs-number">-1</span>) {
+            edges_list.<span class="hljs-built_in">push_back</span>(edge_ids[v][i]);
+            <span class="hljs-built_in">dfs</span>(g[v][i], g, edge_ids, cur_h + <span class="hljs-number">1</span>);
+            edges_list.<span class="hljs-built_in">push_back</span>(edge_ids[v][i]);
+            dfs_list.<span class="hljs-built_in">push_back</span>(v);
+        }
+    }
+}
+
+vector&lt;<span class="hljs-type">int</span>&gt; lca_tree;
+vector&lt;<span class="hljs-type">int</span>&gt; first;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">lca_tree_build</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>{
+    <span class="hljs-keyword">if</span> (l == r) {
+        lca_tree[i] = dfs_list[l];
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-type">int</span> m = (l + r) &gt;&gt; <span class="hljs-number">1</span>;
+        <span class="hljs-built_in">lca_tree_build</span>(i + i, l, m);
+        <span class="hljs-built_in">lca_tree_build</span>(i + i + <span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>, r);
+        <span class="hljs-type">int</span> lt = lca_tree[i + i], rt = lca_tree[i + i + <span class="hljs-number">1</span>];
+        lca_tree[i] = h[lt] &lt; h[rt] ? lt : rt;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">lca_prepare</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>{
+    lca_tree.<span class="hljs-built_in">assign</span>(dfs_list.<span class="hljs-built_in">size</span>() * <span class="hljs-number">8</span>, <span class="hljs-number">-1</span>);
+    <span class="hljs-built_in">lca_tree_build</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, (<span class="hljs-type">int</span>)dfs_list.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>);
+
+    first.<span class="hljs-built_in">assign</span>(n, <span class="hljs-number">-1</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; (<span class="hljs-type">int</span>)dfs_list.<span class="hljs-built_in">size</span>(); ++i) {
+        <span class="hljs-type">int</span> v = dfs_list[i];
+        <span class="hljs-keyword">if</span> (first[v] == <span class="hljs-number">-1</span>)
+            first[v] = i;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lca_tree_query</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> tl, <span class="hljs-type">int</span> tr, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>{
+    <span class="hljs-keyword">if</span> (tl == l &amp;&amp; tr == r)
+        <span class="hljs-keyword">return</span> lca_tree[i];
+    <span class="hljs-type">int</span> m = (tl + tr) &gt;&gt; <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">if</span> (r &lt;= m)
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">lca_tree_query</span>(i + i, tl, m, l, r);
+    <span class="hljs-keyword">if</span> (l &gt; m)
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">lca_tree_query</span>(i + i + <span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>, tr, l, r);
+    <span class="hljs-type">int</span> lt = <span class="hljs-built_in">lca_tree_query</span>(i + i, tl, m, l, m);
+    <span class="hljs-type">int</span> rt = <span class="hljs-built_in">lca_tree_query</span>(i + i + <span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>, tr, m + <span class="hljs-number">1</span>, r);
+    <span class="hljs-keyword">return</span> h[lt] &lt; h[rt] ? lt : rt;
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> </span>{
+    <span class="hljs-keyword">if</span> (first[a] &gt; first[b])
+        <span class="hljs-built_in">swap</span>(a, b);
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">lca_tree_query</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, (<span class="hljs-type">int</span>)dfs_list.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, first[a], first[b]);
+}
+
+vector&lt;<span class="hljs-type">int</span>&gt; first1, first2;
+vector&lt;<span class="hljs-type">char</span>&gt; edge_used;
+vector&lt;<span class="hljs-type">int</span>&gt; tree1, tree2;
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">query_prepare</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>{
+    first1.<span class="hljs-built_in">resize</span>(n - <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>);
+    first2.<span class="hljs-built_in">resize</span>(n - <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; (<span class="hljs-type">int</span>)edges_list.<span class="hljs-built_in">size</span>(); ++i) {
+        <span class="hljs-type">int</span> j = edges_list[i];
+        <span class="hljs-keyword">if</span> (first1[j] == <span class="hljs-number">-1</span>)
+            first1[j] = i;
+        <span class="hljs-keyword">else</span>
+            first2[j] = i;
+    }
+
+    edge_used.<span class="hljs-built_in">resize</span>(n - <span class="hljs-number">1</span>);
+    tree1.<span class="hljs-built_in">resize</span>(edges_list.<span class="hljs-built_in">size</span>() * <span class="hljs-number">8</span>);
+    tree2.<span class="hljs-built_in">resize</span>(edges_list.<span class="hljs-built_in">size</span>() * <span class="hljs-number">8</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">sum_tree_update</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; tree, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> j, <span class="hljs-type">int</span> delta)</span> </span>{
+    tree[i] += delta;
+    <span class="hljs-keyword">if</span> (l &lt; r) {
+        <span class="hljs-type">int</span> m = (l + r) &gt;&gt; <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (j &lt;= m)
+            <span class="hljs-built_in">sum_tree_update</span>(tree, i + i, l, m, j, delta);
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-built_in">sum_tree_update</span>(tree, i + i + <span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>, r, j, delta);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">sum_tree_query</span><span class="hljs-params">(<span class="hljs-type">const</span> vector&lt;<span class="hljs-type">int</span>&gt;&amp; tree, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> tl, <span class="hljs-type">int</span> tr, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>{
+    <span class="hljs-keyword">if</span> (l &gt; r || tl &gt; tr)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (tl == l &amp;&amp; tr == r)
+        <span class="hljs-keyword">return</span> tree[i];
+    <span class="hljs-type">int</span> m = (tl + tr) &gt;&gt; <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">if</span> (r &lt;= m)
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum_tree_query</span>(tree, i + i, tl, m, l, r);
+    <span class="hljs-keyword">if</span> (l &gt; m)
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum_tree_query</span>(tree, i + i + <span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>, tr, l, r);
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum_tree_query</span>(tree, i + i, tl, m, l, m) +
+           <span class="hljs-built_in">sum_tree_query</span>(tree, i + i + <span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>, tr, m + <span class="hljs-number">1</span>, r);
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> v1, <span class="hljs-type">int</span> v2)</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum_tree_query</span>(tree1, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, (<span class="hljs-type">int</span>)edges_list.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, first[v1], first[v2] - <span class="hljs-number">1</span>) -
+           <span class="hljs-built_in">sum_tree_query</span>(tree2, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, (<span class="hljs-type">int</span>)edges_list.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, first[v1], first[v2] - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// reading the graph</span>
+    <span class="hljs-type">int</span> n;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);
+    <span class="hljs-function">graph <span class="hljs-title">g</span><span class="hljs-params">(n)</span>, <span class="hljs-title">edge_ids</span><span class="hljs-params">(n)</span></span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n - <span class="hljs-number">1</span>; ++i) {
+        <span class="hljs-type">int</span> v1, v2;
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;v1, &amp;v2);
+        --v1, --v2;
+        g[v1].<span class="hljs-built_in">push_back</span>(v2);
+        g[v2].<span class="hljs-built_in">push_back</span>(v1);
+        edge_ids[v1].<span class="hljs-built_in">push_back</span>(i);
+        edge_ids[v2].<span class="hljs-built_in">push_back</span>(i);
+    }
+
+    h.<span class="hljs-built_in">assign</span>(n, <span class="hljs-number">-1</span>);
+    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>, g, edge_ids);
+    <span class="hljs-built_in">lca_prepare</span>(n);
+    <span class="hljs-built_in">query_prepare</span>(n);
+
+    <span class="hljs-keyword">for</span> (;;) {
+        <span class="hljs-keyword">if</span> () {
+            <span class="hljs-comment">// request for painting edge x;</span>
+            <span class="hljs-comment">// if start = true, then the edge is painted, otherwise the painting</span>
+            <span class="hljs-comment">// is removed</span>
+            edge_used[x] = start;
+            <span class="hljs-built_in">sum_tree_update</span>(tree1, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, (<span class="hljs-type">int</span>)edges_list.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, first1[x],
+                            start ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>);
+            <span class="hljs-built_in">sum_tree_update</span>(tree2, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, (<span class="hljs-type">int</span>)edges_list.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, first2[x],
+                            start ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// query the number of colored edges on the path between v1 and v2</span>
+            <span class="hljs-type">int</span> l = <span class="hljs-built_in">lca</span>(v1, v2);
+            <span class="hljs-type">int</span> result = <span class="hljs-built_in">query</span>(l, v1) + <span class="hljs-built_in">query</span>(l, v2);
+            <span class="hljs-comment">// result - the answer to the request</span>
+        }
+    }
+}
+</code></pre>
+<h1 id="caixeiro-viajante-traveling-sailsman-problem---tsp">Caixeiro Viajante (Traveling Sailsman Problem - TSP)</h1>
+<h2 id="algoritmo-de-held-karp">Algoritmo de Held-Karp</h2>
+<ul>
+<li>Complexidade: O(n^2 * 2^n)</li>
+<li>Utiliza Programação Dinâmica</li>
+</ul>
+<pre><code class="language-c++">
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cmath&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;limits&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tspHeldKarp</span><span class="hljs-params">(<span class="hljs-type">const</span> vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; adjMatrix)</span>
+</span>{
+    <span class="hljs-type">int</span> numCities = adjMatrix.<span class="hljs-built_in">size</span>();
+    <span class="hljs-type">int</span> numSubsets = <span class="hljs-number">1</span> &lt;&lt; numCities; <span class="hljs-comment">// 2^numCities</span>
+    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(numSubsets, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(numCities, numeric_limits&lt;<span class="hljs-type">int</span>&gt;::<span class="hljs-built_in">max</span>()));
+
+    <span class="hljs-comment">// Base case: o custo de visitar a cidade inicial é 0</span>
+    dp[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// Iterar sobre todos os subconjuntos de cidades</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> subset = <span class="hljs-number">1</span>; subset &lt; numSubsets; ++subset)
+    {
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> last = <span class="hljs-number">0</span>; last &lt; numCities; ++last)
+        {
+            <span class="hljs-comment">// Verificar se a cidade &#x27;last&#x27; está no subconjunto atual</span>
+            <span class="hljs-keyword">if</span> (!(subset &amp; (<span class="hljs-number">1</span> &lt;&lt; last))) <span class="hljs-keyword">continue</span>;
+
+            <span class="hljs-comment">// Tentar adicionar uma nova cidade ao caminho</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> next = <span class="hljs-number">0</span>; next &lt; numCities; ++next)
+            {
+                <span class="hljs-comment">// Verificar se a cidade &#x27;next&#x27; não está no subconjunto atual</span>
+                <span class="hljs-keyword">if</span> (subset &amp; (<span class="hljs-number">1</span> &lt;&lt; next)) <span class="hljs-keyword">continue</span>;
+
+                <span class="hljs-type">int</span> nextSubset = subset | (<span class="hljs-number">1</span> &lt;&lt; next);
+                dp[nextSubset][next] = <span class="hljs-built_in">min</span>(
+                    dp[nextSubset][next],
+                    dp[subset][last] + adjMatrix[last][next]
+                );
+            }
+        }
+    }
+
+    <span class="hljs-comment">// Retornar à cidade inicial, encontrando o custo mínimo</span>
+    <span class="hljs-type">int</span> minCost = numeric_limits&lt;<span class="hljs-type">int</span>&gt;::<span class="hljs-built_in">max</span>();
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> last = <span class="hljs-number">1</span>; last &lt; numCities; ++last)
+    {
+        minCost = <span class="hljs-built_in">min</span>(minCost, dp[numSubsets - <span class="hljs-number">1</span>][last] + adjMatrix[last][<span class="hljs-number">0</span>]);
+    }
+
+    <span class="hljs-keyword">return</span> minCost;
+}
+
+</code></pre>
+<p><strong>OBS:</strong> Pode-se alterar o algoritmo para não se retornar à cidade de origem. Basta remover <code>adjMatrix[last][0]</code> quando se calcula o <code>minCost</code> no fim.</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
