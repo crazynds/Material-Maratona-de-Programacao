@@ -69,6 +69,32 @@ void strongy_connected_components(vector<vector<int>> const& adj,
 }
 ```
 
+### Versao do post-order DFS com pilha em vez de recursão
+```cpp
+void dfs(int v, map<int, set<int>> &connections, vector<int> &output)
+{
+    stack<int> pilha;
+    pilha.push(v);
+
+    while (pilha.size())
+    {
+        int current = pilha.top();
+        if (visited.count(current) != 0 || connections.count(current) == 0)
+        {
+            visited.insert(current);
+            output.push_back(current);
+            pilha.pop();
+            continue;
+        }
+
+        for (auto neighbour : connections[current])
+            if (visited.count(neighbour) == 0)
+                pilha.push(neighbour);
+        visited.insert(current);
+    }
+}
+```
+
 ## Ref
 
 - https://cp-algorithms.com/graph/strongly-connected-components.html
