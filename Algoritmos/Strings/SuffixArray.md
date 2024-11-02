@@ -217,11 +217,12 @@ int main()
     }
 
     return 0;
-}```
+}
+```
 
 ## LCP
 
-Esse código aqui ele calcula o longest common prefix entre um suffix array e uma sequencia. Geralmente se usa o suffix array criado a partir da sequencia contra a propria sequencia.
+Esse código aqui calcula o longest common prefix entre um suffix array e uma sequencia. Geralmente se usa o suffix array criado a partir da sequencia contra a propria sequencia.
 ```cpp
 vector<int> longestCommonPrefix(vector<int> const& s, vector<int> const& p) {
     int n = s.size();

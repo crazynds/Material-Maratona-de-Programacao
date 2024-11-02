@@ -178,15 +178,6 @@ while True:
     graph, start, end = BuildGraph(regex)
     q = int(input())
 
-    # for i in range(len(graph)):
-    #     if not len(graph[i]):
-    #         break
-    #     print("Estado: ", i)
-    #     for conexoes in graph[i]:
-    #         print("    Conexao: ", conexoes)
-    #         for conexao in graph[i][conexoes]:
-    #             print("        ", conexao)
-
     for _ in range(q):
         query = input()
         if CheckQuery(query, graph, start, end):
